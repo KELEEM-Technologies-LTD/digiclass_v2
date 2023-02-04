@@ -1,3 +1,4 @@
+import localforage from "localforage";
 import React, { useEffect, useState } from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Spinner from "./component/spinner";
@@ -21,8 +22,15 @@ function App() {
     checkStatus()
   }, [])
 
-  const checkStatus = () => {
-    setIsLogged(true)
+
+
+  const checkStatus = async () => {
+    try {
+      const token = await localforage.getItem('token');
+      token !== null ? setIsLogged(true) : setIsLogged(false)
+    } catch (err) {
+      setIsLogged(false)
+    }
   }
 
   return (

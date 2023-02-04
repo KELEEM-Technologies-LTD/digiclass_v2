@@ -1,0 +1,18 @@
+import Logo from "./svgs/logo.png";
+import playIcon from "./svgs/play.png";
+import logoTransparent from "./svgs/logotransparent.png";
+export { ReactComponent as googlelogo } from "./svgs/google.svg";
+export { ReactComponent as StarOutline } from "./svgs/star-outline.svg";
+export { ReactComponent as StarFill } from "./svgs/star-fill.svg";
+export { ReactComponent as CaretDown } from "./svgs/caret-down.svg";
+export { ReactComponent as LoveIcon } from "./svgs/love.svg";
+export { ReactComponent as CartIcon } from "./svgs/cart.svg";
+export { ReactComponent as BellIcon } from "./svgs/bell.svg";
+export { ReactComponent as MenuIcon } from "./svgs/menu.svg";
+export { ReactComponent as SearchIcon } from "./svgs/search.svg";
+export { ReactComponent as GrillIcon } from "./svgs/grillbg.svg";
+export { ReactComponent as PDFIcon } from "./svgs/pdf.svg";
+export { ReactComponent as ChevronLeft } from "./svgs/chevron-left.svg";
+export { ReactComponent as ArrowBack } from "./svgs/ion_arrow-back.svg";
+export { ReactComponent as GreenCheckMark } from "./svgs/green-checkmark.svg";
+export { Logo, playIcon, logoTransparent };

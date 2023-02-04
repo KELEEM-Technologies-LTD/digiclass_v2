@@ -1,0 +1,155 @@
+@font-face {
+  font-family: "SF Pro Display";
+  src: url("./assets/fonts/SFProDisplay-Regular.woff2") format("woff2"),
+    url("./assets/fonts/SFProDisplay-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+option {
+  color: #000000;
+}
+select {
+  color: #000000;
+}
+@font-face {
+  font-family: "Work Sans";
+  src: url("./assets/fonts/WorkSans-VariableFont_wght.woff2") format("woff2"),
+    url("./assets/fonts/WorkSans-VariableFont_wght.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+h1,
+h2,
+h3,
+h4,
+p {
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+h4,
+p.bold {
+  font-weight: 700;
+}
+
+:root {
+  font-size: 14px;
+  --color-button-text: #fff;
+  --color-primary-100: #f7fafc;
+  --color-primary-200: #edf2f7;
+  --color-primary-300: #e2e8f0;
+  --color-primary-400: #cbd5e0;
+  --color-primary-500: #a0aec0;
+  --color-primary-600: #718096;
+  --color-primary-700: #4a5568;
+  --color-primary-800: #2d3748;
+  --color-primary-900: #1a202c;
+
+  --color-secondary-100: #ebf8ff;
+  --color-secondary-200: #bee3f8;
+  --color-secondary-300: #90cdf4;
+  --color-secondary-400: #63b3ed;
+  --color-secondary-500: #4299e1;
+  --color-secondary-600: #4080FF; 
+  --color-secondary-700: #5350c5;
+  --color-secondary-800: #004dff;
+  --color-secondary-900: #4080ff;
+
+  --color-text: #787878;
+
+  --color-accent: #ed8936;
+  --color-green: #4caf50;
+  --color-red: #ff3d00;
+  --color-accent-hover: #ed8936;
+  --color-accent-disabled: #f8e2d3;
+  --screen-height-reduction: 0px;
+  --color-primary-100-translucent: rgba(222, 227, 234, 0.15);
+}
+
+h1 {
+  font-size: 4rem;
+}
+
+h2 {
+  font-size: 2.8rem;
+}
+
+h3 {
+  font-size: 2rem;
+}
+
+h4 {
+  font-size: 1.4rem;
+}
+
+p {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-text);
+}
+.text-white {
+  color: #ffffff;
+}
+
+.bg-white {
+  color: #ffffff;
+}
+.course-card:hover {
+  border-width: 2px;
+}
+.text-dark {
+  color: #000000;
+}
+
+p.small {
+  font-size: 0.85rem;
+}
+.testimonial-card:hover {
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+/* for firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-secondary-600) rgba(0, 0, 0, 0);
+}
+
+/* for non-firefox */
+::-webkit-scrollbar {
+  overflow: overlay;
+  width: 2px;
+  /* shouldnt hardcode width, pls find way to make it dynamic, thin wasn't working for me...*/
+}
+
+::-webkit-scrollbar-track {
+  display: initial;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-secondary-600);
+  border-radius: 5px;
+}
+/* html,
+body{
+  background-color: var(--color-primary-100);
+  height: 100%;
+  width: 100%;
+  display: flex;
+} */
+hr {
+  color: var(--color-primary-300);
+}
+.border-1 {
+  border-width: 1px;
+}
+button:focus {
+  outline: none;
+}
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

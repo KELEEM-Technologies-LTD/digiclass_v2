@@ -25,7 +25,7 @@ const Signin = () => {
             };
 
             try {
-                const res = await (await Services()).post('https://109.205.180.74:2000/api/v1/auth/login',sigininData)
+                const res = await (await Services()).post('http://109.205.180.74:2000/api/v1/auth/login',sigininData)
                 console.log(res)
 
                 displaySuccMsg('')

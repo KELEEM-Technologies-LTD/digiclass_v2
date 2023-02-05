@@ -1,9 +1,44 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { displayErrMsg, displayLoading, displaySuccMsg } from "../component/alerts/alerts";
 import InputWithIcon from "../component/InputFields/InputWithIcon";
 import PasswordInput from "../component/InputFields/PasswordInput";
+import { Services } from "../mixing/services";
 
 
 const Signin = () => {
+    const [email, setEmail] = useState('');
+    const [pwd, setPwd] = useState('');
+
+    const siginin = async () => {
+        console.log(email)
+        console.log(pwd)
+        displayLoading('authenticating....')
+        if (email === "") {
+            displayErrMsg('Please input a valid email Address')
+        } else if (pwd === "") {
+            displayErrMsg('Please input your password')
+        } else {
+            var sigininData = {
+                username: email,
+                password: pwd
+            };
+
+            try {
+                const res = await (await Services()).post('https://109.205.180.74:2000/api/v1/auth/login',sigininData)
+                console.log(res)
+
+                displaySuccMsg('')
+
+            } catch (err) {
+                console.log(err)
+                displayErrMsg()
+            }
+
+        }
+    }
+
+
     return (<>
         <div
             style={{}}
@@ -20,8 +55,8 @@ const Signin = () => {
                         type="email"
                         className=" py-5 border-primary-600 border flex  rounded-5 bg-primary-100  justify-between"
                         name="email"
-                    // value={state.email}
-                    // onChange={handleChange}
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
                     />
                 </div>
 
@@ -31,8 +66,8 @@ const Signin = () => {
                         style={{ borderWidth: "2px" }}
                         className="flex py-5 border-primary-600 border rounded-5 bg-primary-100  justify-between"
                         name="password"
-                    // value={state.password}
-                    // onChange={handleChange}
+                        value={pwd}
+                        onChange={e => setPwd(e.target.value)}
                     />
                 </div>
 
@@ -40,6 +75,7 @@ const Signin = () => {
                 <div className="mt-6 text-center">
                     <button
                         type="button"
+                        onClick={siginin}
                         className="whitespace-nonwrap border py-2 px-12 bg-secondary-600 text-base font-medium text-white hover:bg-secondary-800"
                     >
                         Sign in

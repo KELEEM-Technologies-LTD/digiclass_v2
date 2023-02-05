@@ -1,13 +1,23 @@
 import axios from "axios";
-const baseUrl = "";
+import localforage from "localforage";
 
-export const Services = (token) => {
+export const Services = async () => {
+
+  let token = '';
+
+  try {
+    token = await localforage.getItem('token');
+  } catch (err) {
+    token = ''
+  }
+
+
   return {
     post: async (route, data) => {
       // const token = getToken();
       var config = {
         method: "post",
-        url: `${baseUrl}/${route}`,
+        url: `${route}`,
         headers: {
           Accept: "application/json",
           Authorization: `Bearer ${token || ""}`,
@@ -21,7 +31,7 @@ export const Services = (token) => {
       //include should be a string of values separated by commas
       var config = {
         method: "get",
-        url: `${baseUrl}/${route}`,
+        url: `${route}`,
         headers: {
           Accept: "application/json",
           Authorization: `Bearer ${token || ""}`,
@@ -35,7 +45,7 @@ export const Services = (token) => {
       const requests = routes.map((route) => {
         var config = {
           method: "get",
-          url: `${baseUrl}/${route}`,
+          url: `${route}`,
           headers: {
             Accept: "application/json",
             Authorization: `Bearer ${token || ""}`,
@@ -51,7 +61,7 @@ export const Services = (token) => {
     delete: async (route) => {
       var config = {
         method: "delete",
-        url: `${baseUrl}/${route}`,
+        url: `${route}`,
         headers: {
           Accept: "application/json",
           Authorization: `Bearer ${token || ""}`,
@@ -64,7 +74,7 @@ export const Services = (token) => {
     patch: async (route, data) => {
       var config = {
         method: "patch",
-        url: `${baseUrl}/${route}`,
+        url: `${route}`,
         headers: {
           Accept: "application/json",
           Authorization: `Bearer ${token || ""}`,

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function PasswordInput({ icon, className, error, placeholder, ...props }) {
+function PasswordInput({ icon, className, error, placeholder,onChange, ...props }) {
   const [show, setShow] = useState(false);
   const ring = error ? `ring-1 ring-secondary` : "";
   return (
@@ -10,6 +10,7 @@ function PasswordInput({ icon, className, error, placeholder, ...props }) {
         className={`focus:outline-none px-4 font-serif  bg-primary-100   w-full ${ring} `}
         type={show ? "text" : "password"}
         placeholder={placeholder}
+        onChange={onChange}
       />
 
       <span

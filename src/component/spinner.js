@@ -7,7 +7,7 @@ const override = css`
 `;
 function Spinner() {
   return (
-    <div className="flex justify-center items-center">
+    <div className="flex justify-center items-center h-screen mt-10">
       <HashLoader  color="#4080ff" css={override} loading={true} size={100} />
     </div>
   );

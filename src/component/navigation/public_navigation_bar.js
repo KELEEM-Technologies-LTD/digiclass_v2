@@ -9,11 +9,16 @@ import {
     XMarkIcon,
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
-import { Fragment } from 'react'
+import { Fragment, useContext } from 'react'
 import { Popover, Transition } from '@headlessui/react'
 import { Link } from 'react-router-dom'
 import { Logo } from '../../assets'
-import MyCartIcon from '../cart'
+import MyCartIcon from './cart'
+import GeneralContext from '../../context/general_context'
+import NavBarSeacrhField from './search_onNav'
+import MyNotificationIcon from './notifications'
+import MyFavorites from './LoveIcon'
+import UserDropDown from './userDropDown'
 
 const solutions = [
     {
@@ -36,10 +41,10 @@ const solutions = [
         icon: CpuChipIcon,
     }
 ]
-const callsToAction = [
-    { name: 'Watch Demo', href: '#', icon: PlayIcon },
-    { name: 'Contact Sales', href: '#', icon: PhoneIcon },
-]
+// const callsToAction = [
+//     { name: 'Watch Demo', href: '#', icon: PlayIcon },
+//     { name: 'Contact Sales', href: '#', icon: PhoneIcon },
+// ]
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -47,13 +52,18 @@ function classNames(...classes) {
 
 const NavigationBar = () => {
 
+
+
+    const { isLogged } = useContext(GeneralContext)
+
+
     return <>
         <Popover className="relative bg-white">
             <div className="mx-auto max-w-7xl px-6">
                 <div className="flex items-center justify-between border-b-2 border-primary-100 py-6 md:justify-start md:space-x-10">
                     <div className="flex justify-start lg:w-0 lg:flex-1">
                         <Link to="/">
-                            <span className="sr-only">Your Company</span>
+                            <span className="sr-only">DigiClass</span>
                             <img
                                 className="h-8 w-auto sm:h-10"
                                 src={Logo}
@@ -74,7 +84,7 @@ const NavigationBar = () => {
                                     <Popover.Button
                                         className={classNames(
                                             open ? 'text-primary-900' : 'text-primary-500',
-                                            'group inline-flex items-center rounded-md bg-white text-base font-medium hover:text-primary-900 focus:outline-none focus:ring-2 focus:ring-secondary-500 focus:ring-offset-2'
+                                            'group inline-flex items-center rounded-md bg-white text-base font-medium hover:text-primary-900 focus:outline-none focus:ring-2 focus:ring-secondary-500 focus:ring-offset-2 mt-1'
                                         )}
                                     >
                                         <span>Solutions</span>
@@ -95,9 +105,9 @@ const NavigationBar = () => {
                                         leave="transition ease-in duration-150"
                                         leaveFrom="opacity-100 translate-y-0"
                                         leaveTo="opacity-0 translate-y-1"
-                                        
+
                                     >
-                                        <Popover.Panel className="absolute z-10 -ml-4 mt-3 w-screen max-w-md transform px-2 sm:px-0 lg:left-1/2 lg:ml-0 lg:-translate-x-1/2">
+                                        <Popover.Panel className="absolute z-10 -ml-4 mt-3 w-screen max-w-md transform px-2 sm:px-0 lg:left-1/2 lg:ml-0 lg:-translate-x-1/2" style={{ zIndex: '100' }}>
                                             <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                                                 <div className="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
                                                     {solutions.map((item) => (
@@ -114,7 +124,7 @@ const NavigationBar = () => {
                                                         </Link>
                                                     ))}
                                                 </div>
-                                                <div className="space-y-6 bg-primary-50 px-5 py-5 sm:flex sm:space-y-0 sm:space-x-10 sm:px-8">
+                                                {/* <div className="space-y-6 bg-primary-50 px-5 py-5 sm:flex sm:space-y-0 sm:space-x-10 sm:px-8" style={{ zIndex: '100' }}>
                                                     {callsToAction.map((item) => (
                                                         <div key={item.name} className="flow-root">
                                                             <Link to='#'
@@ -126,29 +136,53 @@ const NavigationBar = () => {
                                                             </Link>
                                                         </div>
                                                     ))}
-                                                </div>
+                                                </div> */}
                                             </div>
                                         </Popover.Panel>
                                     </Transition>
                                 </>
                             )}
                         </Popover>
+                        {
+                            isLogged
+                                ?
+                                <NavBarSeacrhField />
+                                :
+                                <Link to="#" className="text-base font-medium text-primary-500 hover:text-primary-900 mt-1">
+                                    Teach on DigiClass
+                                </Link>
 
-                        <Link to="#" className="text-base font-medium text-primary-500 hover:text-primary-900">
-                            Teach on DigiClass
-                        </Link>
+                        }
+
 
                     </Popover.Group>
                     <div className="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
-                        <MyCartIcon />
-                        <Link to="/login" className="whitespace-nowrap text-base font-medium text-primary-500 hover:text-primary-900">
-                            Sign in
-                        </Link>
-                        <Link to="/signup"
-                            className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-2 border border-transparent bg-secondary-600 px-4 py-2 text-base font-medium text-white shadow-xl hover:bg-secondary-800"
-                        >
-                            Sign up
-                        </Link>
+                        {
+                            isLogged
+                                ?
+                                <>
+                                    <Link to="#" className="text-base font-medium text-primary-500 hover:text-primary-900 mt-1 mr-4">
+                                        My courses
+                                    </Link>
+                                    <MyFavorites />
+                                    <MyCartIcon />
+                                    <MyNotificationIcon />
+                                    <UserDropDown />
+                                </>
+                                :
+                                <>
+                                    <MyCartIcon />
+                                    <Link to="/login" className="whitespace-nowrap text-base font-medium text-primary-500 hover:text-primary-900">
+                                        Sign in
+                                    </Link>
+                                    <Link to="/signup"
+                                        className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-2 border border-transparent bg-secondary-600 px-4 py-2 text-base font-medium text-white shadow-xl hover:bg-secondary-800"
+                                    >
+                                        Sign up
+                                    </Link>
+
+                                </>
+                        }
                     </div>
                 </div>
             </div>

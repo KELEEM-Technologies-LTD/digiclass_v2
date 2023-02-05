@@ -10,14 +10,18 @@ export const displayErrMsg = (err) => {
     });
 };
 
-export const displaySuccMsg = (msg) => {
+export const displaySuccMsg = (msg,thenFunction) => {
     Swal.fire({
         icon: "success",
         toast: true,
         showConfirmButton: false,
         text: msg,
         position: "top-right",
-    });
+        timer: 3000,
+        timerProgressBar: true
+    }).then(()=>{
+        thenFunction()
+    })
 };
 
 export const displayWarningMsg = (msg) => {

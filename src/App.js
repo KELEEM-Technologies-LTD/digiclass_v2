@@ -17,6 +17,7 @@ const MySignin = React.lazy(() => import("./pages/sign_in"))
 function App() {
 
   const [isLogged, setIsLogged] = useState(false);
+  const [user, setUser] = useState(false);
 
   useEffect(() => {
     checkStatus()
@@ -27,7 +28,11 @@ function App() {
   const checkStatus = async () => {
     try {
       const token = await localforage.getItem('token');
+      const userdata = await localforage.getItem('userdata')
       token !== null ? setIsLogged(true) : setIsLogged(false)
+      userdata !== null ? setUser(userdata) : localforage.clear()
+
+      console.log(userdata)
     } catch (err) {
       setIsLogged(false)
     }
@@ -36,7 +41,7 @@ function App() {
   return (
     <>
       <React.Suspense fallback={<Spinner />}>
-        <GeneralContext.Provider value={{ isLogged, setIsLogged }}>
+        <GeneralContext.Provider value={{ isLogged, setIsLogged, user }}>
           <Router>
             <MyNavBar />
             <Routes>

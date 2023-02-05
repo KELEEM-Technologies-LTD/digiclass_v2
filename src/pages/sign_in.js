@@ -1,9 +1,11 @@
+import localforage from "localforage";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { displayErrMsg, displayLoading, displaySuccMsg } from "../component/alerts/alerts";
 import InputWithIcon from "../component/InputFields/InputWithIcon";
 import PasswordInput from "../component/InputFields/PasswordInput";
 import { Services } from "../mixing/services";
+import global_variables from "../mixing/urls";
 
 
 const Signin = () => {
@@ -11,8 +13,6 @@ const Signin = () => {
     const [pwd, setPwd] = useState('');
 
     const siginin = async () => {
-        console.log(email)
-        console.log(pwd)
         displayLoading('authenticating....')
         if (email === "") {
             displayErrMsg('Please input a valid email Address')
@@ -25,10 +25,27 @@ const Signin = () => {
             };
 
             try {
-                const res = await (await Services()).post('http://109.205.180.74:2000/api/v1/auth/login',sigininData)
-                console.log(res)
+                const res = await (await Services()).post(global_variables().sigin, sigininData)
+                console.log(res.status)
 
-                displaySuccMsg('')
+                if (res.status === 200) {
+                    const userdata = res.data?.data?.user;
+                    const token = res.data?.data?.token;
+
+                    console.log(res)
+
+                    localforage.setItem('userdata', userdata).then(function () {
+                        return localforage.setItem('token', token);
+                    }).then(function () {
+                        displaySuccMsg('Logged in successfully', () => { window.location.href = '/' })
+                    }).catch((err) => {
+                        console.log(err)
+                        displayErrMsg('There was an error, please reload the page and try again')
+                    })
+
+                } else {
+                    displayErrMsg('There was an error, please reload the page and try again')
+                }
 
             } catch (err) {
                 console.log(err)

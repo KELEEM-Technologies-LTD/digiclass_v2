@@ -2,6 +2,8 @@ import localforage from "localforage";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { displayErrMsg, displayLoading, displaySuccMsg } from "../component/alerts/alerts";
+import GoogleButton from "../component/Buttons/GoogleButton";
+import HorizontalRule from "../component/HorizontalRule";
 import InputWithIcon from "../component/InputFields/InputWithIcon";
 import PasswordInput from "../component/InputFields/PasswordInput";
 import { Services } from "../mixing/services";
@@ -65,7 +67,8 @@ const Signin = () => {
                 <p className="text-2xl mb-3 font-bold text-dark text-center">
                     Log into your account
                 </p>
-                {/* <GoogleButton /> */}
+                <HorizontalRule />
+                <GoogleButton />
                 <div className="mt-5">
                     <InputWithIcon
                         placeholder="Enter your email "

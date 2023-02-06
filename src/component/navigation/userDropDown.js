@@ -66,7 +66,7 @@ const UserDropDown = () => {
                                     <p>{user.email}</p>
                                 </div>
                             </div>
-                            <hr class="my-1 mx-5 border-t border-secondary-400" />
+                            <hr className="my-1 mx-5 border-t border-secondary-400" />
                             <div className=" py-4 px-4">
                                 <ul>
                                     <li className="">
@@ -81,7 +81,7 @@ const UserDropDown = () => {
                                 </ul>
                             </div>
 
-                            <hr class="my-1 mx-5 border-t border-secondary-400" />
+                            <hr className="my-1 mx-5 border-t border-secondary-400" />
                             <div className=" py-4 px-4">
                                 <ul>
                                     <li className="">

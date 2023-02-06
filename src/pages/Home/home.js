@@ -9,28 +9,27 @@ import Partners from "./sections/partners";
 import StartLearningRow from "./sections/start_learning";
 
 const Home = () => {
+  const { isLogged } = useContext(GeneralContext);
 
-    const { isLogged } = useContext(GeneralContext);
-
-    return (
+  return (
+    <>
+      <HomeBanner />
+      {isLogged ? (
+        <StartLearningRow />
+      ) : (
         <>
-            <HomeBanner />
-            {
-                isLogged ? <StartLearningRow /> : <> <Partners /> <About /></>
-            }
-
-            <AddSection />
-
-            {
-                isLogged ?
-                    <CourseSection />
-                    :
-                    null
-            }
-
-            <Community />
+          {" "}
+          <Partners /> <About />
         </>
-    )
-}
+      )}
+
+      <AddSection />
+
+      <CourseSection />
+
+      <Community />
+    </>
+  );
+};
 
 export default Home;

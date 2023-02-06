@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import GoogleButton from "../component/Buttons/GoogleButton";
+import HorizontalRule from "../component/HorizontalRule";
 import InputWithIcon from "../component/InputFields/InputWithIcon";
 import PasswordInput from "../component/InputFields/PasswordInput";
 
@@ -13,7 +15,9 @@ const Signup = () => {
                 <p className="text-2xl mb-3 font-bold text-dark">
                     Sign up and start learning
                 </p>
-                {/* <GoogleButton /> */}
+                <HorizontalRule />
+
+                <GoogleButton />
                 <div className="mt-5">
                     <InputWithIcon
                         placeholder="Enter your first name "

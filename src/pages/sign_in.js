@@ -6,6 +6,8 @@ import GoogleButton from "../component/Buttons/GoogleButton";
 import HorizontalRule from "../component/HorizontalRule";
 import InputWithIcon from "../component/InputFields/InputWithIcon";
 import PasswordInput from "../component/InputFields/PasswordInput";
+import Footer from "../component/navigation/footer";
+import NavigationBar from "../component/navigation/public_navigation_bar";
 import { Services } from "../mixing/services";
 import global_variables from "../mixing/urls";
 
@@ -40,6 +42,8 @@ const Signin = () => {
                         return localforage.setItem('token', token);
                     }).then(function () {
                         displaySuccMsg('Logged in successfully', () => { window.location.href = '/' })
+                        // displaySuccMsg('Logged in successfully', () => { window.history.back() })
+
                     }).catch((err) => {
                         console.log(err)
                         displayErrMsg('There was an error, please reload the page and try again')
@@ -59,6 +63,7 @@ const Signin = () => {
 
 
     return (<>
+    <NavigationBar />
         <div
             style={{}}
             className="flex flex-col justify-center  md:items-center py-16"
@@ -125,6 +130,8 @@ const Signin = () => {
                 />}
             /> */}
         </div>
+
+        <Footer />
     </>)
 }
 

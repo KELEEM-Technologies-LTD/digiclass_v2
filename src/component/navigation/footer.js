@@ -1,4 +1,5 @@
 import React from "react";
+import logo from './../../assets/svgs/logo.svg'
 
 const row1 = [
   {
@@ -82,7 +83,7 @@ function Footer() {
           </ul>
         </div>
       </div>
-      <img src="./img/logo.svg" alt="logo" className="mt-12" />
+      <img src={logo} alt="logo" className="mt-12" />
     </div>
   );
 }

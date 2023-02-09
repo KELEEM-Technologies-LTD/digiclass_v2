@@ -17,7 +17,7 @@ const GeneralContextProvider = (props) => {
       token !== null ? setIsLogged(true) : setIsLogged(false);
       userdata !== null ? setUser(userdata) : localforage.clear();
 
-      // console.log(userdata);
+      // console.log(token);
     } catch (err) {
       setIsLogged(false);
     }

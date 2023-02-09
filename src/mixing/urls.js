@@ -7,7 +7,9 @@ const global_variables = () => {
 
         //Course related
         getCourses: `${base}:1906/api/v1/courses`,
-        getCategories: `${base}:1906/api/v1/categories`
+        getCategories: `${base}:1906/api/v1/categories`,
+        getSections: `${base}:1906/api/v1/sections`,
+        getReviews: `${base}:1908/api/v1/reviews`
     }
 }
 

@@ -3,10 +3,13 @@ import GoogleButton from "../component/Buttons/GoogleButton";
 import HorizontalRule from "../component/HorizontalRule";
 import InputWithIcon from "../component/InputFields/InputWithIcon";
 import PasswordInput from "../component/InputFields/PasswordInput";
+import Footer from "../component/navigation/footer";
+import NavigationBar from "../component/navigation/public_navigation_bar";
 
 
 const Signup = () => {
     return (<>
+    <NavigationBar />
         <div
             style={{}}
             className="flex flex-col justify-center  md:items-center py-16"
@@ -100,6 +103,8 @@ const Signup = () => {
                 />}
             /> */}
         </div>
+
+        <Footer />
     </>)
 }
 

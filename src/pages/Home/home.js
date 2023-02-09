@@ -1,5 +1,7 @@
 import { useContext } from "react";
 import Community from "../../component/Community";
+import Footer from "../../component/navigation/footer";
+import NavigationBar from "../../component/navigation/public_navigation_bar";
 import GeneralContext from "../../context/general_context";
 import About from "./sections/about_digiclass";
 import AddSection from "./sections/add_section";
@@ -13,6 +15,7 @@ const Home = () => {
 
   return (
     <>
+    <NavigationBar />
       <HomeBanner />
       {isLogged ? (
         <StartLearningRow />
@@ -28,6 +31,8 @@ const Home = () => {
       <CourseSection />
 
       <Community />
+
+      <Footer />
     </>
   );
 };

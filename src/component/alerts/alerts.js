@@ -1,13 +1,13 @@
 import Swal from "sweetalert2";
 
-export const displayErrMsg = (err) => {
+export const displayErrMsg = (err,thenFuction) => {
     Swal.fire({
         icon: "error",
         toast: true,
         showConfirmButton: false,
         text: err,
         position: "top-right",
-    });
+    }).then(()=>{thenFuction()})
 };
 
 export const displaySuccMsg = (msg,thenFunction) => {

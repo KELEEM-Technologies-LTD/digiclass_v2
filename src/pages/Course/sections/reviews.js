@@ -3,7 +3,7 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { Services } from "../../../mixing/services";
 import global_variables from "../../../mixing/urls";
-import ReviewCard from "./review_card";
+import ReviewCard from "../components/review_card";
 
 const Reviews = (props) => {
   const [loading, setLoading] = useState(true);
@@ -16,7 +16,7 @@ const Reviews = (props) => {
       const res = await (
         await Services()
       ).get(global_variables().getReviews + `?course_id=${props.courseid}`);
-      console.log(res.data?.data);
+      // console.log(res.data?.data);
       setReviews(res.data?.data?.data)
       setLoading(false)
     } catch (err) {

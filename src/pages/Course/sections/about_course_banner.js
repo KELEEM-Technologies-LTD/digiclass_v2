@@ -1,90 +1,95 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { StarFill, StarOutline } from "../../assets";
+import { StarFill, StarOutline } from "../../../assets";
 import { Dialog, Transition } from "@headlessui/react";
+import GeneralContext from "../../../context/general_context";
+import calender from "./../../../assets/svgs/wallet.svg";
+import languageicon from "./../../../assets/svgs/voice.svg";
+import moment from "moment";
 
-function AboutCourse({ isLoggedIn, manageCart, courseDetail }) {
-  const { title, short_description } = courseDetail;
+function AboutCourse({ course_detail, instructor }) {
+  const { title, short_description, course_id, language, updatedAt } =
+    course_detail;
+  const { first_name, last_name } = instructor;
 
   let [isOpen, setIsOpen] = useState(false);
-  // const navigate = useNavigate();
+  const { isLogged } = useContext(GeneralContext);
+
   return (
     <div
-      className={` flex py-20 md:px-24 px-3 md:flex-row items-center flex-col-reverse  md:gap-40 ${
-        !isLoggedIn ? "bg-black opacity-80 h-full" : ""
-      } `}
+      className={`flex py-20 md:px-24 px-3 md:flex-row items-center flex-col-reverse  md:gap-40 bg-black opacity-80 h-full`}
     >
-      {!isLoggedIn ? (
-        <>
-          <div className="flex flex-col md:mt-0 mt-6  ">
-            <p className="md:text-4xl text-3xl font-bold text-white opacity-100">
-              {title}
-            </p>
-            <p className="text-md mt-0">{short_description}</p>
-            <div className="flex mt-3">
-              <div className="flex items-center">
-                <p className="font-bold text-sm text-secondary-500 ">4.5</p>
-                <div className="flex gap-1 items-center ml-1">
-                  <StarFill width={14} />
-                  <StarFill width={14} />
-                  <StarFill width={14} />
-                  <StarOutline width={14} />
-                  <StarOutline width={14} />
-                </div>
+      <>
+        <div className="flex flex-col md:mt-0 mt-6  ">
+          <p className="md:text-4xl text-3xl font-bold text-white opacity-100">
+            {title}
+          </p>
+          <p className="text-md mt-0">{short_description}</p>
+          <div className="flex mt-3">
+            <div className="flex items-center">
+              <p className="font-bold text-sm text-secondary-500 ">4.5</p>
+              <div className="flex gap-1 items-center ml-1">
+                <StarFill width={14} />
+                <StarFill width={14} />
+                <StarFill width={14} />
+                <StarOutline width={14} />
+                <StarOutline width={14} />
               </div>
-              <p className="ml-3">(408 ratings) 16,363 students</p>
             </div>
-            <div className="flex items-center mt-3">
-              <i className="fa fa-graduation-cap text-white mr-2 "></i>
-              <p className="font-bold text-md text-white">
-                Certificate of completion
-              </p>
-            </div>
+            <p className="ml-3">(408 ratings) 16,363 students</p>
+          </div>
+          <div className="flex items-center mt-3">
+            <i className="fa fa-graduation-cap text-white mr-2 "></i>
+            <p className="font-bold text-md text-white">
+              Certificate of completion
+            </p>
+          </div>
 
+          {isLogged && (
             <div className="flex items-center mt-2">
               <p className="mr-2">Created by</p>
-              <Link to="/instructor">
+              <Link to={`/instructor/${course_detail.instructor}`}>
                 <p className="underline cursor-pointer">
-                  Sebastian Livingstone
+                  {first_name + " " + last_name}
                 </p>
               </Link>
             </div>
-            <div className="flex gap-4">
-              <div className="flex items-center mt-3">
-                <img src="../img/wallet.svg" alt="wallet" className="mr-2" />
-                <p>Last updated 02/12/2020</p>
-              </div>
-              <div className="flex items-center mt-3">
-                <img src="../img/voice.svg" alt="voice" className="mr-2" />
-                <p>English</p>
-              </div>
+          )}
+          <div className="flex gap-4">
+            <div className="flex items-center mt-3">
+              <img src={calender} alt="wallet" className="mr-2" />
+              <p>Last updated {moment(updatedAt).format("Do MMM YYYY")} </p>
             </div>
-            <div className=" grid md:grid-cols-2 grid-cols-1  gap-3 mt-6">
-              <button size="big" className="outlineLg py-4 bg-secondary-600">
-                <p className="text-white">Add to cart</p>
-              </button>
-              <button
-                size="big"
-                className="outlineLg border-2 py-4 border-secondary-600"
-              >
-                <p className="text-white">Buy course now</p>
-              </button>
+            <div className="flex items-center mt-3">
+              <img src={languageicon} alt="voice" className="mr-2" />
+              <p>{language}</p>
             </div>
-            <p className="text-center my-6">30-Day Money-Back Guarantee</p>
           </div>
-
-          <div className="flex flex-col justify-center items-center">
-            <div
-              className="flex flex-col justify-center items-center"
-              style={{ cursor: "pointer" }}
-              onClick={() => setIsOpen(true)}
+          <div className=" grid md:grid-cols-2 grid-cols-1  gap-3 mt-6">
+            <button size="big" className="outlineLg py-4 bg-secondary-600">
+              <p className="text-white">Add to cart</p>
+            </button>
+            <button
+              size="big"
+              className="outlineLg border-2 py-4 border-secondary-600"
             >
-              <img src="../img/play.png" alt="play" />
-              <p className="text-white mt-2">Play course overview</p>
-            </div>
+              <p className="text-white">Buy course now</p>
+            </button>
           </div>
-        </>
-      ) : null}
+          <p className="text-center my-6">30-Day Money-Back Guarantee</p>
+        </div>
+
+        <div className="flex flex-col justify-center items-center">
+          <div
+            className="flex flex-col justify-center items-center"
+            style={{ cursor: "pointer" }}
+            onClick={() => setIsOpen(true)}
+          >
+            <img src="../img/play.png" alt="play" />
+            <p className="text-white mt-2">Play course overview</p>
+          </div>
+        </div>
+      </>
 
       <>
         <Transition appear show={isOpen} as={Fragment}>

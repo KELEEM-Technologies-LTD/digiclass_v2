@@ -1,21 +1,20 @@
 import localforage from "localforage";
-import { Navigate, Outlet, } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Navigate, Outlet } from "react-router-dom";
 
-const PrivateRoute = async () => {
-    var token = null;
-    try {
-        token = await localforage.getItem('token');
-        token === null ? <Navigate to='/login' /> : <Outlet />
-    } catch (err) {
-        console.log(err);
-        return <Navigate />
-    }
+const PrivateRoute = () => {
+  const [token, setToken] = useState();
 
-    // let token = localStorage.getItem('token');
+  const getToken = async () => {
+    const tok = await localforage.getItem("token");
+    setToken(tok);
+  };
 
-    // return (
-    //     token ? <Outlet /> : <Navigate to="/login" />
-    // )
-}
+  useEffect(() => {
+    getToken();
+  }, []);
+
+  return token === null ? <Navigate to="/login" /> : <Outlet />;
+};
 
 export default PrivateRoute;

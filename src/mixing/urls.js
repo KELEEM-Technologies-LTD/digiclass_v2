@@ -9,7 +9,12 @@ const global_variables = () => {
         getCourses: `${base}:1906/api/v1/courses`,
         getCategories: `${base}:1906/api/v1/categories`,
         getSections: `${base}:1906/api/v1/sections`,
-        getReviews: `${base}:1908/api/v1/reviews`
+        getReviews: `${base}:1908/api/v1/reviews`,
+        getUser: `${base}:1904/api/v1/users`,
+
+
+        //Cart
+        getCart: `${base}:1911/api/v1/carts`,
     }
 }
 

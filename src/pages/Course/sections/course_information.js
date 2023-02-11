@@ -1,13 +1,20 @@
-import { useContext} from "react";
+import { useContext, useEffect } from "react";
 import AboutAuthor from "./about_the_author";
-import SkillCard from "./skill_card";
+import SkillCard from "../components/skill_card";
 import "react-loading-skeleton/dist/skeleton.css";
-import Reviews from "./sections/reviews";
-import GeneralContext from "./../../context/general_context";
+import Reviews from "./reviews";
+import GeneralContext from "../../../context/general_context";
 import { Link } from "react-router-dom";
 
-const CourseInformation = (props) => {
+const CourseInformation = ({ course, instructor }) => {
   const { isLogged } = useContext(GeneralContext);
+
+  const { about, skill_level, language, caption, certificate, description } =
+    course;
+
+  useEffect(() => {
+    console.log(course);
+  }, []);
 
   return (
     <>
@@ -16,7 +23,7 @@ const CourseInformation = (props) => {
           <div className="md:px-24 px-4 py-4">
             <div className="py-8">
               <p className="text-2xl font-bold text-black">About this course</p>
-              <p className="text-lg">{props.about}</p>
+              <p className="text-lg">{about}</p>
             </div>
             <hr />
 
@@ -25,16 +32,18 @@ const CourseInformation = (props) => {
               <div className="mt-4">
                 <ul>
                   <li>
-                    <p className="text-lg">Skill level: Beginner Level</p>
+                    <p className="text-lg">Skill level: {skill_level}</p>
                   </li>
                   <li>
-                    <p className="text-lg">Students: 29161</p>
+                    <p className="text-lg">Students: </p>
                   </li>
                   <li>
-                    <p className="text-lg">Languages: English</p>
+                    <p className="text-lg">Languages: {language}</p>
                   </li>
                   <li>
-                    <p className="text-lg">Captions: Yes</p>
+                    <p className="text-lg">
+                      Captions: {caption ? "Yes" : "No"}
+                    </p>
                   </li>
                 </ul>
                 <p></p>
@@ -42,10 +51,10 @@ const CourseInformation = (props) => {
               <div className="mt-4">
                 <ul>
                   <li>
-                    <p className="text-lg">Lectures: 50</p>
+                    <p className="text-lg">Lectures: </p>
                   </li>
                   <li>
-                    <p className="text-lg">Video: 7 total hours</p>
+                    <p className="text-lg">Video: </p>
                   </li>
                 </ul>
                 <p></p>
@@ -54,19 +63,9 @@ const CourseInformation = (props) => {
             <hr />
 
             <div className="py-8 flex md:flex-row flex-col md:justify-between">
-              <p className="text-lg">By the numbers</p>
+              <p className="text-lg">Description</p>
               <div className="mt-4 md:w-2/4 w-full">
-                <p className="text-lg">
-                  This course will teach you what you need to know in order to
-                  make a 2D sprite based game in Unity editor version 5.6
-                  (Latest Beta version at this time). The techniques used in
-                  this series are the same ones I used to make my own game Heart
-                  Battle for PC and mobile devices. Currently the course in in
-                  progress, it will be completed in the coming month and should
-                  be updated from time to time with new relevant content after
-                  that as well. The rough finished course list should look
-                  something like this when done.
-                </p>
+                <p className="text-lg">{description}</p>
               </div>
             </div>
             <hr />
@@ -102,16 +101,19 @@ const CourseInformation = (props) => {
                 Reviews
               </p>
               {isLogged ? (
-                <Reviews courseid={props.courseid} />
+                <Reviews courseid={course.courseid} />
               ) : (
                 <p>
-                  Please <Link to="/login" className="text-secondary-500">log in</Link> to view reviews on the
-                  course
+                  Please{" "}
+                  <Link to="/login" className="text-secondary-500">
+                    log in
+                  </Link>{" "}
+                  to view reviews on the course
                 </p>
               )}
             </div>
 
-            <AboutAuthor />
+            <AboutAuthor instructor={instructor} />
           </div>
         </div>
       </div>

@@ -1,9 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import NavigationBar from "../component/navigation/public_navigation_bar";
+import Footer from './../component/navigation/footer'
 
 function NotFound() {
 
     return (
+        <>
+        <NavigationBar />
         <div className="w-full h-screen bg-secondary-600 flex justify-center items-center">
             <div className="flex flex-col justify-center items-center">
                 <p className="text-10xl text-white">404</p>
@@ -12,6 +16,9 @@ function NotFound() {
                 </p>
             </div>
         </div>
+
+        <Footer />
+        </>
     );
 }
 

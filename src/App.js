@@ -13,8 +13,9 @@ const MyHome = React.lazy(() => import("./pages/Home/home"));
 const MySignup = React.lazy(() => import("./pages/sign_up"));
 const MySignin = React.lazy(() => import("./pages/sign_in"));
 const MyCourseDetail = React.lazy(() => import("./pages/Course/course_detail"));
+const MyCart = React.lazy(() => import("./pages/cart/cart"));
 
-// const MyPrivateRoute = React.lazy(()=>import("./component/hoc/private_route"))
+const MyPrivateRoute = React.lazy(()=>import("./component/hoc/private_route"))
 
 function App() {
   return (
@@ -28,13 +29,16 @@ function App() {
               <Route path="/*" exact element={<MyEror404 />} />
               <Route path="/signup" exact element={<MySignup />} />
               <Route path="/login" exact element={<MySignin />} />
+              {/* <Route path="/cart" exact element={<MyCart />} /> */}
               <Route
                 path="/course/:courseid"
                 exact
                 element={<MyCourseDetail />}
               />
 
-              {/* <Route path="/*" exact element={<MyPrivateRoute><MyEror404 /></MyPrivateRoute>} /> Private Route */}
+              <Route element={<MyPrivateRoute />}>
+                <Route exact  path="/cart" element={<MyCart />} />
+              </Route>
             </Routes>
           </Router>
         </GeneralContextProvider>

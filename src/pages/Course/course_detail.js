@@ -1,3 +1,4 @@
+import localforage from "localforage";
 import { useContext, useLayoutEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { HashLoader } from "react-spinners";
@@ -8,13 +9,14 @@ import NavigationBar from "../../component/navigation/public_navigation_bar";
 import GeneralContext from "../../context/general_context";
 import { Services } from "../../mixing/services";
 import global_variables from "../../mixing/urls";
-import AboutCourse from "./about_course";
-import CourseInformation from "./course_information";
-import CourseSection from "./course_section";
+import AboutCourse from "./sections/about_course_banner";
+import CourseInformation from "./sections/course_information";
+import CourseSection from "./sections/course_section";
 
 const CourseDetail = () => {
   const [loading, setLoading] = useState(true);
   const [course, setCourse] = useState([]);
+  const [instructor, setInstructor] = useState([]);
   const navigate = useNavigate();
 
   const { isLogged } = useContext(GeneralContext);
@@ -26,19 +28,41 @@ const CourseDetail = () => {
     try {
       const res = await (
         await Services()
-      ).get(global_variables().getCourses + `/${courseid}`);
+      ).get(
+        global_variables().getCourses +
+          `/${courseid}?query_fields=title,status,about,caption,short_description,description,about,skill_level,language,price,caption,instructor,configurations,certificate,contract_percentage,status,view_status,updatedAt,thumbnail`
+      );
       // console.log(res.data.data);
       setCourse(res.data?.data);
-      setLoading(false);
+
+      const token = await localforage.getItem("token");
+
+      if (token !== null) {
+        try {
+          const instructor_res = await (
+            await Services()
+          ).get(global_variables().getUser + `/${res?.data?.data?.instructor}`);
+          // console.log(instructor_res.data?.data);
+          setInstructor(instructor_res.data?.data);
+          setLoading(false);
+        } catch (error) {
+          displayErrMsg(error.response?.data?.message, () => {
+            navigate(-1);
+          });
+        }
+      } else {
+        setLoading(false);
+      }
     } catch (err) {
-      console.log(err);
-      console.log(err.response?.data?.message);
+      // console.log(err);
+      // console.log(err.response?.data?.message);
       setLoading(true);
       displayErrMsg(err.response?.data?.message, () => {
         navigate(-1);
       });
     }
   };
+
   useLayoutEffect(() => {
     getCourseDetail();
   }, []);
@@ -61,7 +85,7 @@ const CourseDetail = () => {
         </div>
       ) : (
         <>
-        <NavigationBar />
+          <NavigationBar />
           <div className=" font-serif">
             <MinimalMobileHeader title="The Art & Science of Drawing" />
 
@@ -76,11 +100,7 @@ const CourseDetail = () => {
                 }}
               >
                 <div>
-                  <AboutCourse
-                    courseDetail={course}
-                    // courseDetail={[]}
-                    manageCart={""}
-                  />
+                  <AboutCourse course_detail={course} instructor={instructor} />
                 </div>
               </div>
               <div className="col-span-3">
@@ -99,7 +119,10 @@ const CourseDetail = () => {
               </div>
             </div>
 
-            <CourseInformation about={course.about} courseid={course.course_id} />
+            <CourseInformation
+              course={course}
+              instructor={instructor}
+            />
           </div>
           <Footer />
         </>

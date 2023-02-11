@@ -15,6 +15,7 @@ const global_variables = () => {
 
         //Cart
         getCart: `${base}:1911/api/v1/carts`,
+        addToCart: `${base}:1911/api/v1/carts`,
     }
 }
 

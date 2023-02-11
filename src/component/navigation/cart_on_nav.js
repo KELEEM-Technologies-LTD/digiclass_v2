@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useContext, useEffect } from "react";
+import React, { useState, Fragment, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { CartIcon } from "../../assets";
 import { Dialog, Transition } from "@headlessui/react";
@@ -15,6 +15,16 @@ const MyCartIcon = () => {
   const [open, setOpen] = useState(false);
 
   const count = cart.data?.length;
+
+  const calculateTotal = () => {
+    let sum = 0;
+
+    for (let i = 0; i < cart.data.length; i++) {
+      sum += cart.data[i].price;
+    }
+
+    return sum;
+  };
 
   return (
     <>
@@ -105,7 +115,14 @@ const MyCartIcon = () => {
                                             <div>
                                               <div className="flex justify-between text-base font-medium text-primary-900">
                                                 <h3>
-                                                  <Link to="#">
+                                                  <Link
+                                                    to="#"
+                                                    onClick={() => {
+                                                      window.location.href =
+                                                        `/course/` +
+                                                        data.course_id;
+                                                    }}
+                                                  >
                                                     {data.description}
                                                   </Link>
                                                 </h3>
@@ -156,7 +173,7 @@ const MyCartIcon = () => {
                           <div className="border-t border-primary-200 py-6 px-4 sm:px-6">
                             <div className="flex justify-between text-base font-medium text-primary-900">
                               <p>Subtotal</p>
-                              <p>$262.00</p>
+                              <p>{calculateTotal()}</p>
                             </div>
                             <p className="mt-0.5 text-sm text-primary-500">
                               Taxes and discounts are calculated at checkout.

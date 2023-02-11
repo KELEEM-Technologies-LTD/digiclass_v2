@@ -1,7 +1,7 @@
 import { Checkbox } from "@mui/material";
 import React from "react";
 
-function SectionItem({ item,key }) {
+function SectionItem({ item }) {
   const { title, duration } = item;
   return (
     <div className="flex mb-3 justify-between px-2">

@@ -1,19 +1,64 @@
-import React, { Fragment, useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { Fragment, useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { StarFill, StarOutline } from "../../../assets";
 import { Dialog, Transition } from "@headlessui/react";
 import GeneralContext from "../../../context/general_context";
 import calender from "./../../../assets/svgs/wallet.svg";
 import languageicon from "./../../../assets/svgs/voice.svg";
 import moment from "moment";
+import {
+  displayErrMsg,
+  displaySuccMsg,
+} from "../../../component/alerts/alerts";
+import { Services } from "../../../mixing/services";
+import global_variables from "../../../mixing/urls";
 
 function AboutCourse({ course_detail, instructor }) {
-  const { title, short_description, course_id, language, updatedAt } =
-    course_detail;
+  const [adding, setAdding] = useState(false);
+  const navigate = useNavigate();
+  const {
+    title,
+    short_description,
+    course_id,
+    language,
+    updatedAt,
+    thumbnail,
+    price,
+  } = course_detail;
   const { first_name, last_name } = instructor;
 
+  // console.log(course_detail);
+
   let [isOpen, setIsOpen] = useState(false);
-  const { isLogged } = useContext(GeneralContext);
+  const { isLogged, getCartData } = useContext(GeneralContext);
+
+  const addCourseToCart = async () => {
+    // displaySuccMsg("");
+    setAdding(true);
+
+    const course_data = {
+      course_id: course_id,
+      description: title,
+      price: price !== null ? price : 0.01,
+      image: thumbnail,
+    };
+
+    try {
+      const res = await (
+        await Services()
+      ).post(global_variables().addToCart, course_data);
+      // console.log(res);
+      displaySuccMsg(res.data?.status + " Course added to cart", () => {
+        getCartData();
+        setAdding(false);
+      });
+    } catch (err) {
+      displayErrMsg("Error adding course to cart");
+      console.log(err);
+      setAdding(false);
+      getCartData();
+    }
+  };
 
   return (
     <div
@@ -66,8 +111,27 @@ function AboutCourse({ course_detail, instructor }) {
             </div>
           </div>
           <div className=" grid md:grid-cols-2 grid-cols-1  gap-3 mt-6">
-            <button size="big" className="outlineLg py-4 bg-secondary-600">
-              <p className="text-white">Add to cart</p>
+            <button
+              size="big"
+              className="outlineLg py-4 bg-secondary-600"
+              onClick={
+                isLogged
+                  ? addCourseToCart
+                  : () => {
+                      displayErrMsg("Please login to add item to cart", () => {
+                        navigate("/login");
+                      });
+                    }
+              }
+              disabled={adding}
+            >
+              {adding ? (
+                <div className="flex justify-center items-center">
+                  <div className="w-8 h-8 border-2 border-primary-800 rounded-full border-t-2 border-t-secondary-500 animate-spin"></div>
+                </div>
+              ) : (
+                <p className="text-white">Add to cart</p>
+              )}
             </button>
             <button
               size="big"

@@ -22,7 +22,7 @@ const CourseSection = ({ courseid }) => {
       const res = await (
         await Services()
       ).get(global_variables().getSections + `?course_id=${courseid}`);
-    //   console.log(res.data?.data?.data);
+      console.log(res.data?.data?.data);
       setSections(res.data?.data?.data);
       setLoading(false);
     } catch (err) {
@@ -53,34 +53,21 @@ const CourseSection = ({ courseid }) => {
               This course is not divided into several sub sections
             </p>
           ) : (
-            <Disclosure>
-              {({ open }) => (
-                <>
-                  <Disclosure.Button className="flex w-full justify-between rounded-lg bg-purple-100 px-4 py-2 text-left text-sm font-medium text-purple-900 hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75 text-black">
-                    <div>
-                      <p className="text-primary-800 font-bold text-lg">
-                        {" "}
-                        Section 1: Introduction
-                      </p>
-                      <p className="mt-1 text-sm">0/5 | 47min</p>
-                    </div>
-                    <ChevronUpIcon
-                      className={`${
-                        open ? "rotate-180 transform" : ""
-                      } h-5 w-5 text-purple-500`}
-                    />
-                  </Disclosure.Button>
-                  <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-primary-500">
-                    <SectionItem
-                      item={{
-                        title: "Indroduction",
-                        duration: "7:36",
-                      }}
-                    />
-                  </Disclosure.Panel>
-                </>
-              )}
-            </Disclosure>
+            sections.map((data, index) => {
+              return (
+                <div
+                  className="px-4 pt-4 pb-2 text-sm text-secondary-500"
+                  key={index}
+                >
+                  <SectionItem
+                    item={{
+                      title: data.name,
+                      duration: data.position + ':00',
+                    }}
+                  />
+                </div>
+              );
+            })
           )}
         </div>
       </div>

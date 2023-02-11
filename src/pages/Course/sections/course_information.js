@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import AboutAuthor from "./about_the_author";
 import SkillCard from "../components/skill_card";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -9,12 +9,7 @@ import { Link } from "react-router-dom";
 const CourseInformation = ({ course, instructor }) => {
   const { isLogged } = useContext(GeneralContext);
 
-  const { about, skill_level, language, caption, certificate, description } =
-    course;
-
-  useEffect(() => {
-    console.log(course);
-  }, []);
+  const { about, skill_level, language, caption, description } = course;
 
   return (
     <>

@@ -1,23 +1,5 @@
 /*    /index.html   200
-# Redirect HTTP to HTTPS
-# 301 redirect to permanent redirect
-# https://old.example.com
-
-# This line will match all requests
-# made over HTTP and redirect them to
-# their HTTPS equivalent
-
-# Matching rules are matched in order,
-# so make sure this rule is defined first!
-
-# Capture the hostname as it appears in the request
-# Replace with the same hostname over HTTPS
-# and add a trailing "/" to keep URL paths intact
-
-# Redirect rule
-
-# From field
-# http://{host}{uri}
-# To field
-# https://{host}{uri}/
-
+From field
+http://{host}{uri}
+To field
+http://{host}{uri}/

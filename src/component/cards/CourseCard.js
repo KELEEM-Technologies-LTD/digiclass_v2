@@ -1,9 +1,54 @@
-import React from "react";
+import { Star, StarHalf, StarOutline } from "@mui/icons-material";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import GeneralContext from "../../context/general_context";
+import { Services } from "../../mixing/services";
+import global_variables from "../../mixing/urls";
 
 function CourseCard({ showProgress, item }) {
+  const [loading, setLoading] = useState(true);
+  const [rating, setRating] = useState(5);
   const { thumbnail, title, course_id, price } = item;
+  const { isLogged } = useContext(GeneralContext);
+
+  const getReviews = async () => {
+    setLoading(true);
+    if (isLogged) {
+      try {
+        const res = await (
+          await Services()
+        ).get(global_variables().getReviews + `?course_id=${course_id}`);
+
+        const data = res.data?.data?.data;
+        const sum = data.reduce((acc, item) => acc + item.rating, 0);
+
+        if (sum === 0) {
+          setRating(5);
+          setLoading(false);
+        } else {
+          const mean = sum / data.length;
+          setLoading(false);
+          setRating(mean);
+        }
+      } catch (err) {}
+    }
+  };
+
+  useEffect(() => {
+    getReviews();
+  }, []);
+
   const navigate = useNavigate();
+
+  // Calculate the number of full stars
+  const fullStars = Math.floor(rating);
+
+  // Calculate the number of empty stars
+  const emptyStars = 5 - Math.ceil(rating);
+
+  // Calculate whether there should be a half star
+  const hasHalfStar = rating % 1 !== 0;
+
   return (
     <div
       onClick={() => navigate(`/course/${course_id}`)}
@@ -15,18 +60,26 @@ function CourseCard({ showProgress, item }) {
         {!showProgress ? (
           <div className="flex md:flex-col flex-col-reverse ">
             <div className="flex justify-between mt-5">
-              <p className=" font-bold text-sm"> GHS {price}</p>
-              <p className=" text-sm line-through">GHS 13.99</p>
+              <p className=" font-bold text-sm"> {price}</p>
+              {/* <p className=" text-sm line-through">GHS 13.99</p> */}
             </div>
-            <div className="flex ">
-              <p className="font-bold text-sm text-secondary-500 ">4.5</p>
-              <div className="flex justify-between items-center ml-1">
-                <i className="fa fa-star text-secondary-500 text-sm"></i>
-                <i className="fa fa-star text-secondary-500 text-sm"></i>
-                <i className="fa fa-star text-secondary-500 text-sm"></i>
-                <i className="fa fa-star text-secondary-500 text-sm"></i>
+            {!loading && (
+              <div className="flex ">
+                <p className="font-bold text-sm text-secondary-500 ">{rating.toFixed(1)}</p>
+                <div className="flex justify-between items-center ml-1">
+                  {[...Array(fullStars)].map((_, i) => (
+                    // <Star width={14} key={i} />
+                    <i className="fa fa-star text-secondary-500 text-sm" key={i}></i>
+                  ))}
+                  {hasHalfStar && (
+                    <i className="fa fa-star-half-alt text-secondary-500 text-sm"></i>
+                  )}
+                  {[...Array(emptyStars)].map((_, i) => (                    
+                    <i className="far fa-star text-secondary-500 text-sm" key={i}></i>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
           </div>
         ) : (
           <div className="flex gap-2 items-center mt-12">

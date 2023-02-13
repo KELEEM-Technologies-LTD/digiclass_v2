@@ -1,6 +1,5 @@
-import React, { Fragment, useContext, useState } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { StarFill, StarOutline } from "../../../assets";
 import { Dialog, Transition } from "@headlessui/react";
 import GeneralContext from "../../../context/general_context";
 import calender from "./../../../assets/svgs/wallet.svg";
@@ -12,9 +11,11 @@ import {
 } from "../../../component/alerts/alerts";
 import { Services } from "../../../mixing/services";
 import global_variables from "../../../mixing/urls";
+import { Star, StarBorder, StarHalf } from "@mui/icons-material";
 
-function AboutCourse({ course_detail, instructor }) {
+function AboutCourse({ course_detail, instructor, loading, reviews }) {
   const [adding, setAdding] = useState(false);
+  const [rating, setRating] = useState(5);
   const navigate = useNavigate();
   const {
     title,
@@ -39,7 +40,7 @@ function AboutCourse({ course_detail, instructor }) {
     const course_data = {
       course_id: course_id,
       description: title,
-      price: price !== null ? price : 0.01,
+      price: price !== null ? price : 0,
       image: thumbnail,
     };
 
@@ -50,8 +51,8 @@ function AboutCourse({ course_detail, instructor }) {
       // console.log(res);
       displaySuccMsg(res.data?.status + " Course added to cart", () => {
         getCartData();
-        setAdding(false);
       });
+      setAdding(false);
     } catch (err) {
       displayErrMsg("Error adding course to cart");
       console.log(err);
@@ -59,6 +60,32 @@ function AboutCourse({ course_detail, instructor }) {
       getCartData();
     }
   };
+
+  /**
+   * This side is for showing ratings
+   */
+  const checkRating = () => {
+    const sum = reviews.reduce((acc, item) => acc + item.rating, 0);
+    if (sum === 0) {
+      setRating(5);
+    } else {
+      const mean = sum / reviews.length;
+      setRating(mean);
+    }
+  };
+
+  useEffect(() => {
+    checkRating();
+  }, []);
+
+  // Calculate the number of full stars
+  const fullStars = Math.floor(rating);
+
+  // Calculate the number of empty stars
+  const emptyStars = 5 - Math.ceil(rating);
+
+  // Calculate whether there should be a half star
+  const hasHalfStar = rating % 1 !== 0;
 
   return (
     <div
@@ -70,19 +97,32 @@ function AboutCourse({ course_detail, instructor }) {
             {title}
           </p>
           <p className="text-md mt-0">{short_description}</p>
-          <div className="flex mt-3">
-            <div className="flex items-center">
-              <p className="font-bold text-sm text-secondary-500 ">4.5</p>
-              <div className="flex gap-1 items-center ml-1">
-                <StarFill width={14} />
-                <StarFill width={14} />
-                <StarFill width={14} />
-                <StarOutline width={14} />
-                <StarOutline width={14} />
+          {!loading && (
+            <div className="flex mt-3">
+              <div className="flex items-center">
+                <p className="font-bold text-sm text-secondary-500">{rating.toFixed(1)}</p>
+                <div className="flex gap-1 items-center ml-1">
+                  {[...Array(fullStars)].map((_, i) => (
+                    <Star width={14} key={i} className="text-secondary-500" />
+                  ))}
+                  {hasHalfStar && (
+                    <StarHalf width={14} className="text-secondary-500" />
+                  )}
+                  {[...Array(emptyStars)].map((_, i) => (
+                    <StarBorder
+                      width={14}
+                      key={i}
+                      className="text-secondary-500"
+                    />
+                  ))}
+                </div>
               </div>
+              <p className="ml-3">
+                ({reviews.length} ratings) {reviews.length} students
+              </p>
             </div>
-            <p className="ml-3">(408 ratings) 16,363 students</p>
-          </div>
+          )}
+
           <div className="flex items-center mt-3">
             <i className="fa fa-graduation-cap text-white mr-2 "></i>
             <p className="font-bold text-md text-white">
@@ -136,6 +176,7 @@ function AboutCourse({ course_detail, instructor }) {
             <button
               size="big"
               className="outlineLg border-2 py-4 border-secondary-600"
+              // onClick={()=>{localforage.setItem('token','lol');alert('lol')}}
             >
               <p className="text-white">Buy course now</p>
             </button>

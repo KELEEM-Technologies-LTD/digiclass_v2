@@ -1,5 +1,6 @@
 import localforage from "localforage";
 import { useEffect, useState } from "react";
+import logout_and_redirect from "../component/hoc/logout-redirect";
 import { Services } from "../mixing/services";
 import global_variables from "../mixing/urls";
 import GeneralContext from "./general_context";
@@ -42,7 +43,11 @@ const GeneralContextProvider = (props) => {
         // console.log(res.data?.data?.data);
         setCart(res.data?.data);
         setCartLoading(false);
-      } catch (err) {}
+      } catch (err) {
+        if (err.response?.status === 401) {
+          logout_and_redirect();
+        }
+      }
     }
   };
 

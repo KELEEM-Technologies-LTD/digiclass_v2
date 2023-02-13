@@ -1,18 +1,15 @@
-import { useContext, useEffect, useState } from "react";
+import localforage from "localforage";
+import { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import logout_and_redirect from "../../../component/hoc/logout-redirect";
 import { Services } from "../../../mixing/services";
 import global_variables from "../../../mixing/urls";
-import GeneralContext from "../../../context/general_context";
-import { Disclosure } from "@headlessui/react";
-import { ChevronUpIcon } from "@heroicons/react/20/solid";
 import SectionItem from "./section_item";
 
 const CourseSection = ({ courseid }) => {
   const [loading, setLoading] = useState(true);
   const [sections, setSections] = useState([]);
-
-  const { isLogged } = useContext(GeneralContext);
 
   //   console.log(isLogged);
 
@@ -22,11 +19,14 @@ const CourseSection = ({ courseid }) => {
       const res = await (
         await Services()
       ).get(global_variables().getSections + `?course_id=${courseid}`);
-      console.log(res.data?.data?.data);
+      // console.log(res.data?.data?.data);
       setSections(res.data?.data?.data);
       setLoading(false);
     } catch (err) {
-      console.log(err);
+      if (err.response?.status === 401) {
+        logout_and_redirect()
+      }
+      setLoading(false)
     }
   };
 
@@ -62,7 +62,7 @@ const CourseSection = ({ courseid }) => {
                   <SectionItem
                     item={{
                       title: data.name,
-                      duration: data.position + ':00',
+                      duration: data.position + ":00",
                     }}
                   />
                 </div>

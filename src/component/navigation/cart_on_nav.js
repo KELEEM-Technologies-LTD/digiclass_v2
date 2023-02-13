@@ -6,9 +6,14 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 import GeneralContext from "../../context/general_context";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { Services } from "../../mixing/services";
+import global_variables from "../../mixing/urls";
+import { displayErrMsg, displaySuccMsg } from "../alerts/alerts";
+import logout_and_redirect from "../hoc/logout-redirect";
 
 const MyCartIcon = () => {
-  const { isLogged, cartLoading, cart } = useContext(GeneralContext);
+  const { isLogged, cartLoading, cart, getCartData } =
+    useContext(GeneralContext);
 
   const navigate = useNavigate();
 
@@ -19,11 +24,31 @@ const MyCartIcon = () => {
   const calculateTotal = () => {
     let sum = 0;
 
-    for (let i = 0; i < cart.data.length; i++) {
+    for (let i = 0; i < cart.data?.length; i++) {
       sum += cart.data[i].price;
     }
 
     return sum;
+  };
+
+  const removeFromCart = async (id) => {
+    try {
+      const res = await (
+        await Services()
+      ).delete(global_variables().delFromCart + `/${id}`);
+
+      // console.log(res);
+
+      getCartData();
+      displaySuccMsg(res.data?.data?.message, () => {});
+    } catch (err) {
+      if (err.response?.status === 401) {
+        logout_and_redirect()
+      }
+      displayErrMsg("Error removing item from cart", () => {
+        getCartData();
+      });
+    }
   };
 
   return (
@@ -100,57 +125,67 @@ const MyCartIcon = () => {
                               ) : (
                                 cart.data?.map((data, index) => {
                                   return (
-                                    <div className="flow-root" key={index}>
-                                      <ul className="-my-6 divide-y divide-primary-200">
-                                        <li className="flex py-6">
-                                          <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-primary-200">
-                                            <img
-                                              src={data.image}
-                                              alt="db"
-                                              className="h-full w-full object-cover object-center"
-                                            />
-                                          </div>
+                                    <div key={index} >
+                                      <div
+                                        className="flow-root mt-3"
+                                      >
+                                        <ul className="-my-6 divide-y divide-primary-200">
+                                          <li className="flex py-6">
+                                            <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-primary-200">
+                                              <img
+                                                src={data.image}
+                                                alt="db"
+                                                className="h-full w-full object-cover object-center"
+                                              />
+                                            </div>
 
-                                          <div className="ml-4 flex flex-1 flex-col">
-                                            <div>
-                                              <div className="flex justify-between text-base font-medium text-primary-900">
-                                                <h3>
-                                                  <Link
-                                                    to="#"
-                                                    onClick={() => {
-                                                      window.location.href =
-                                                        `/course/` +
-                                                        data.course_id;
-                                                    }}
-                                                  >
-                                                    {data.description}
-                                                  </Link>
-                                                </h3>
-                                                <p className="ml-4">
-                                                  GHS {data.price}
+                                            <div className="ml-4 flex flex-1 flex-col">
+                                              <div>
+                                                <div className="flex justify-between text-base font-medium text-primary-900">
+                                                  <h3>
+                                                    <Link
+                                                      to="#"
+                                                      onClick={() => {
+                                                        window.location.href =
+                                                          `/course/` +
+                                                          data.course_id;
+                                                      }}
+                                                    >
+                                                      {data.description}
+                                                    </Link>
+                                                  </h3>
+                                                  <p className="ml-4">
+                                                    GHS {data.price}
+                                                  </p>
+                                                </div>
+                                                <p className="mt-1 text-sm text-primary-500">
+                                                  category
                                                 </p>
                                               </div>
-                                              <p className="mt-1 text-sm text-primary-500">
-                                                category
-                                              </p>
-                                            </div>
-                                            <div className="flex flex-1 items-end justify-between text-sm">
-                                              <p className="text-primary-500">
-                                                Qty 1
-                                              </p>
+                                              <div className="flex flex-1 items-end justify-between text-sm">
+                                                <p className="text-primary-500">
+                                                  Qty 1
+                                                </p>
 
-                                              <div className="flex">
-                                                <button
-                                                  type="button"
-                                                  className="font-medium text-secondary-600 hover:text-secondary-500"
-                                                >
-                                                  Remove
-                                                </button>
+                                                <div className="flex">
+                                                  <button
+                                                    type="button"
+                                                    className="font-medium text-secondary-600 hover:text-secondary-500"
+                                                    onClick={() => {
+                                                      removeFromCart(
+                                                        data.cart_id
+                                                      );
+                                                    }}
+                                                  >
+                                                    Remove
+                                                  </button>
+                                                </div>
                                               </div>
                                             </div>
-                                          </div>
-                                        </li>
-                                      </ul>
+                                          </li>
+                                        </ul>
+                                      </div>
+                                      <hr className="my-3 mx-5 border-t border-secondary-100" />
                                     </div>
                                   );
                                 })

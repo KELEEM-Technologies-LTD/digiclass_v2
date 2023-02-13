@@ -8,14 +8,15 @@ import "./index.css";
 //   import("./component/navigation/public_navigation_bar")
 // );
 // const MyFooter = React.lazy(() => import("./component/navigation/footer"));
+const MyPrivateRoute = React.lazy(()=>import("./component/hoc/private_route"))
 const MyEror404 = React.lazy(() => import("./pages/Error404"));
 const MyHome = React.lazy(() => import("./pages/Home/home"));
 const MySignup = React.lazy(() => import("./pages/sign_up"));
 const MySignin = React.lazy(() => import("./pages/sign_in"));
 const MyCourseDetail = React.lazy(() => import("./pages/Course/course_detail"));
 const MyCart = React.lazy(() => import("./pages/cart/cart"));
+const MyAllCourse = React.lazy(() => import("./pages/allcourses/all_course"));
 
-const MyPrivateRoute = React.lazy(()=>import("./component/hoc/private_route"))
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
 
               <Route element={<MyPrivateRoute />}>
                 <Route exact  path="/cart" element={<MyCart />} />
+                <Route exact path="/all" element={<MyAllCourse />} />
               </Route>
             </Routes>
           </Router>

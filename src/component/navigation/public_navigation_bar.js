@@ -1,9 +1,15 @@
 import {
+  AcademicCapIcon,
   BanknotesIcon,
   Bars3Icon,
+  BookOpenIcon,
   ChartBarIcon,
   CpuChipIcon,
+  CreditCardIcon,
   CursorArrowRaysIcon,
+  EnvelopeIcon,
+  GlobeEuropeAfricaIcon,
+  UserCircleIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
@@ -19,6 +25,7 @@ import MyFavorites from "./LoveIcon";
 import UserDropDown from "./userDropDown";
 import SignOut from "./signout_mobile";
 import MyMiniCartIcon from "./mini_cart";
+import { AccountCircleOutlined } from "@mui/icons-material";
 
 const solutions = [
   {
@@ -226,38 +233,111 @@ const NavigationBar = () => {
                 </div>
                 <div className="mt-6">
                   <nav className="grid gap-y-8">
-                    {solutions.map((item) => (
-                      <Link
-                        to="#"
-                        key={item.name}
-                        href={item.href}
-                        className="-m-3 flex items-center rounded-md p-3 hover:bg-primary-50"
-                      >
-                        <item.icon
-                          className="h-6 w-6 flex-shrink-0 text-secondary-600"
-                          aria-hidden="true"
-                        />
-                        <span className="ml-3 text-base font-medium text-primary-900">
-                          {item.name}
-                        </span>
-                      </Link>
-                    ))}
+                    {isLogged ? (
+                      <>
+                        <Link
+                          to="/profile"
+                          className="-m-3 flex items-center rounded-md p-3 hover:bg-primary-50"
+                        >
+                          <UserCircleIcon
+                            className="h-6 w-6 flex-shrink-0 text-secondary-600"
+                            aria-hidden="true"
+                          />
+                          <span className="ml-3 text-base font-medium text-primary-900">
+                            Profile
+                          </span>
+                        </Link>
+                        <Link
+                          to="#"
+                          className="-m-3 flex items-center rounded-md p-3 hover:bg-primary-50"
+                        >
+                          <BookOpenIcon
+                            className="h-6 w-6 flex-shrink-0 text-secondary-600"
+                            aria-hidden="true"
+                          />
+                          <span className="ml-3 text-base font-medium text-primary-900">
+                            My courses
+                          </span>
+                        </Link>
+                        <Link
+                          to="/messages"
+                          className="-m-3 flex items-center rounded-md p-3 hover:bg-primary-50"
+                        >
+                          <EnvelopeIcon
+                            className="h-6 w-6 flex-shrink-0 text-secondary-600"
+                            aria-hidden="true"
+                          />
+                          <span className="ml-3 text-base font-medium text-primary-900">
+                            Messages
+                          </span>
+                        </Link>
+                        <Link
+                          to="/profile?tabindex=1"
+                          className="-m-3 flex items-center rounded-md p-3 hover:bg-primary-50"
+                        >
+                          <CreditCardIcon
+                            className="h-6 w-6 flex-shrink-0 text-secondary-600"
+                            aria-hidden="true"
+                          />
+                          <span className="ml-3 text-base font-medium text-primary-900">
+                            Payment Methods
+                          </span>
+                        </Link>
+                        <Link
+                          to="/all"
+                          className="-m-3 flex items-center rounded-md p-3 hover:bg-primary-50"
+                        >
+                          <GlobeEuropeAfricaIcon
+                            className="h-6 w-6 flex-shrink-0 text-secondary-600"
+                            aria-hidden="true"
+                          />
+                          <span className="ml-3 text-base font-medium text-primary-900">
+                            Browse course
+                          </span>
+                        </Link>
+                      </>
+                    ) : (
+                      solutions.map((item) => (
+                        <Link
+                          to="#"
+                          key={item.name}
+                          href={item.href}
+                          className="-m-3 flex items-center rounded-md p-3 hover:bg-primary-50"
+                        >
+                          <item.icon
+                            className="h-6 w-6 flex-shrink-0 text-secondary-600"
+                            aria-hidden="true"
+                          />
+                          <span className="ml-3 text-base font-medium text-primary-900">
+                            {item.name}
+                          </span>
+                        </Link>
+                      ))
+                    )}
                   </nav>
                 </div>
               </div>
+
               <div className="space-y-6 py-6 px-5">
-                <div className="grid grid-cols-2 gap-y-4 gap-x-8">
-                  <Link
-                    to="#"
-                    className="text-base font-medium text-primary-900 hover:text-primary-700"
-                  >
-                    Teach on DigiClass
-                  </Link>
-                </div>
+                {!isLogged && (
+                  <div className="grid grid-cols-2 gap-y-4 gap-x-8">
+                    <Link
+                      to="/signup"
+                      className="-m-3 flex items-center rounded-md p-3 hover:bg-primary-50"
+                    >
+                      <AcademicCapIcon
+                        className="h-6 w-6 flex-shrink-0 text-secondary-600"
+                        aria-hidden="true"
+                      />
+                      <span className="ml-3 text-base font-medium text-primary-900">
+                        Teach on DigiClass
+                      </span>
+                    </Link>
+                  </div>
+                )}
                 {isLogged ? (
                   <div className="flex justify-between">
                     <MyMiniCartIcon />
-                    <MyFavorites />
                     <MyNotificationIcon />
                     <SignOut />
                   </div>

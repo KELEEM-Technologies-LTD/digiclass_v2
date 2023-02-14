@@ -115,7 +115,7 @@ const CourseDetail = () => {
         <>
           <NavigationBar />
           <div className=" font-serif">
-            <MinimalMobileHeader title="The Art & Science of Drawing" />
+            <MinimalMobileHeader title={course.title} />
 
             <div className="bg-white grid md:grid-cols-12 grid-cols-1 gap-0">
               <div
@@ -154,7 +154,7 @@ const CourseDetail = () => {
 
             {isLogged ? (
               <Tab.Group>
-                <Tab.List className="flex overflow-x-scrol">
+                <Tab.List className="flex overflow-x-scroll">
                   <Tab className="px-6 py-3 flex justify-center items-center cursor-pointer md:border-b-0 border-b border-primary-300 ">
                     Overview
                   </Tab>

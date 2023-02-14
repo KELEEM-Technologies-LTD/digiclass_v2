@@ -16,6 +16,7 @@ const MySignin = React.lazy(() => import("./pages/sign_in"));
 const MyCourseDetail = React.lazy(() => import("./pages/Course/course_detail"));
 const MyCart = React.lazy(() => import("./pages/cart/cart"));
 const MyAllCourse = React.lazy(() => import("./pages/allcourses/all_course"));
+const MyProfilePage = React.lazy(()=>import("./pages/profile/profile"))
 
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
               <Route element={<MyPrivateRoute />}>
                 <Route exact  path="/cart" element={<MyCart />} />
                 <Route exact path="/all" element={<MyAllCourse />} />
+                <Route exact path="/profile" element={<MyProfilePage />} />
               </Route>
             </Routes>
           </Router>

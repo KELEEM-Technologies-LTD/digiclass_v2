@@ -69,8 +69,8 @@ const UserDropDown = () => {
                   leaveFrom="opacity-100 translate-y-0"
                   leaveTo="opacity-0 translate-y-1"
                 >
-                  <Dialog.Panel className="pointer-events-auto w-screen max-w-md">
-                    <div className="flex font-serif flex-col overflow-y-scroll bg-transparent">
+                  <Dialog.Panel className="pointer-events-auto w-screen max-w-md pl-6 pr-6">
+                    <div className="flex font-serif flex-col overflow-y-scroll bg-transparent px-5">
                       <div className="flex-1 overflow-y-auto py-6 px-4 sm:px-6">
                         <div className="mt-8">
                           <div className="bg-white rounded-5 font-serif overflow-y-hidden">
@@ -119,32 +119,28 @@ const UserDropDown = () => {
                             <div className=" py-4 px-4">
                               <ul>
                                 <li className="">
-                                  <Link to="/profile">
+                                  <Link to="/profile?tabindex=2">
                                     <p>Notifications</p>
                                   </Link>
                                 </li>
-                                <li className="mt-2">
+                                <li className="mt-5">
                                   <Link to="/messages">
-                                    {" "}
                                     <p>Message</p>
                                   </Link>
                                 </li>
-                                <li className="mt-2">
-                                  <Link to="/profile">
-                                    {" "}
+                                <li className="mt-5">
+                                  <Link to="/profile?tabindex=0">
                                     <p>Account</p>
                                   </Link>
                                 </li>
-                                <li className="mt-2">
-                                  <Link to="/profile">
-                                    {" "}
+                                <li className="mt-5">
+                                  <Link to="/profile?tabindex=1">
                                     <p>Payment Methods</p>
                                   </Link>
                                 </li>
 
-                                <li className="mt-2">
+                                <li className="mt-5">
                                   <Link to="/profile">
-                                    {" "}
                                     <p>Edit Profile</p>
                                   </Link>
                                 </li>
@@ -153,7 +149,7 @@ const UserDropDown = () => {
 
                             <button
                               onClick={handleLogoutUser}
-                              className="flex gap-6 px-4 my-12 "
+                              className="flex gap-6 px-4 mt-7 mb-5"
                             >
                               <img src={logoutIcon} alt="logout" />
                               <p>Logout</p>

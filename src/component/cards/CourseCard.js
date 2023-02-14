@@ -1,4 +1,3 @@
-import { Star, StarHalf, StarOutline } from "@mui/icons-material";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import GeneralContext from "../../context/general_context";

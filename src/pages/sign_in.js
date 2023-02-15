@@ -35,13 +35,13 @@ const Signin = () => {
         const res = await (
           await Services()
         ).post(global_variables().sigin, sigininData);
-        console.log(res.status);
+        // console.log(res.status);
 
         if (res.status === 200) {
           const userdata = res.data?.data?.user;
           const token = res.data?.data?.token;
 
-          console.log(res);
+          // console.log(res);
 
           localforage
             .setItem("userdata", userdata)

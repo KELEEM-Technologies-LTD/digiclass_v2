@@ -15,7 +15,7 @@ const PaymentSettings = () => {
         <div className="flex flex-col font-serif ">
           <Tab.List>
             <div className="grid grid-cols-2 mt-4">
-              <div className="col-span-1 flex ">
+              <div className="col-span-1 flex">
                 {tabs.map((data, index) => {
                   return (
                     <Tab

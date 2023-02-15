@@ -8,7 +8,7 @@ import GeneralContext from "../../context/general_context";
 import logoutIcon from "./../../assets/svgs/logout.svg";
 
 const UserDropDown = () => {
-  const { user } = useContext(GeneralContext);
+  const { user, complete_user } = useContext(GeneralContext);
   const [open, setOpen] = useState(false);
 
   const handleLogoutUser = () => {
@@ -33,15 +33,29 @@ const UserDropDown = () => {
 
   return (
     <>
-      <div
-        className="h-12 w-12  rounded-full bg-secondary-600 flex justify-center items-center"
-        style={{ cursor: "pointer" }}
-        onClick={() => setOpen(true)}
-      >
-        <p className="text-white text-xs">
-          {user.first_name[0]} {user.last_name[0]}
-        </p>
-      </div>
+      {complete_user.profile_pic ? (
+        <div
+          className="h-12 w-12  rounded-full flex justify-center items-center"
+          style={{ cursor: "pointer" }}
+          onClick={() => setOpen(true)}
+        >
+          <img
+            src="https://media.publit.io/file/PACKAGING_ORIGINE_Ghana_1kg_en1000x1000_en.jpg.jpg"
+            alt=""
+            className="h-12 w-12  rounded-full"
+          />
+        </div>
+      ) : (
+        <div
+          className="h-12 w-12  rounded-full bg-secondary-600 flex justify-center items-center"
+          style={{ cursor: "pointer" }}
+          onClick={() => setOpen(true)}
+        >
+          <p className="text-white text-xs">
+            {complete_user.first_name[0]} {complete_user.last_name[0]}
+          </p>
+        </div>
+      )}
 
       <Transition.Root show={open} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={setOpen}>
@@ -75,10 +89,10 @@ const UserDropDown = () => {
                         <div className="mt-8">
                           <div className="bg-white rounded-5 font-serif overflow-y-hidden">
                             <div className="grid grid-cols-12 gap-3 py-3 px-4 ">
-                              {user.profile_pic ? (
+                              {complete_user.profile_pic ? (
                                 <div className="col-span-3 h-16 w-16 bg-secondary-600 rounded-full flex items-center justify-center">
                                   <img
-                                    src={user.profile_pic}
+                                    src={complete_user.profile_pic}
                                     alt="profileimage"
                                     className="h-16 w-16 rounded-full"
                                   />
@@ -89,7 +103,8 @@ const UserDropDown = () => {
                                   className="col-span-3 h-16 w-16 bg-secondary-600 rounded-full flex items-center justify-center"
                                 >
                                   <p className="text-white font-bold text-lg">
-                                    {user.first_name[0]} {user.last_name[0]}
+                                    {complete_user.first_name[0]}{" "}
+                                    {complete_user.last_name[0]}
                                   </p>
                                 </Link>
                               )}

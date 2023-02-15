@@ -21,15 +21,15 @@ const AllCourses = () => {
   const [loading, setLoading] = useState(true);
   const [courses, setCourses] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
-  const [filter, setFilter] = useState("");
+  const [filter, setFilter] = useState("title");
 
-  const get_courses = async (p, s) => {
+  const get_courses = async (s) => {
     setLoading(true);
 
     try {
       const res = await (
         await Services()
-      ).get(global_variables().getCourses + `?page=${p}&size=${s}`);
+      ).get(global_variables().getCourses + `?page=1&size=${s}`);
 
       // console.log(res.data?.data);
       setTotalPages(res.data?.data?.totalPages);
@@ -51,8 +51,34 @@ const AllCourses = () => {
   };
 
   useEffect(() => {
-    get_courses(1, size);
+    get_courses(size);
   }, []);
+
+  const handleSearch = async (e) => {
+    if (e.target.value.length > 3) {
+      setLoading(true);
+      const query = e.target.value;
+      // console.log(query);
+
+      try {
+        const res = await (
+          await Services()
+        ).get(
+          global_variables().getCourses +
+            `?page=1&size=${size}&filter=${filter}=${query}`
+        );
+
+        setTotalPages(res.data?.data?.totalPages);
+        setLoading(false);
+        setCourses(res.data?.data?.data);
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      setLoading(false)
+    }
+  };
+
 
   return (
     <>
@@ -80,21 +106,25 @@ const AllCourses = () => {
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   value={filter}
-                  label="Age"
+                  label="filter"
                   onChange={handleChangeFilter}
                 >
-                  <MenuItem value="Ten">Ten</MenuItem>
-                  <MenuItem value="Twenty">Twenty</MenuItem>
-                  <MenuItem value="Thirty">Thirty</MenuItem>
+                  <MenuItem value="title">Title</MenuItem>
+                  <MenuItem value="language">Language</MenuItem>
+                  <MenuItem value="short_description">Short description</MenuItem>
                 </Select>
               </FormControl>
             </div>
             <div className="">
               <FormControl>
                 <InputLabel htmlFor="my-input">Search</InputLabel>
-                <Input id="my-input" aria-describedby="my-helper-text" />
+                <Input
+                  id="my-input"
+                  aria-describedby="my-helper-text"
+                  onChange={handleSearch}
+                />
                 <FormHelperText id="my-helper-text">
-                 Search course by name
+                  Search course by name
                 </FormHelperText>
               </FormControl>
             </div>
@@ -111,7 +141,7 @@ const AllCourses = () => {
           ) : (
             <div className="grid md:grid-cols-4 md:gap-2 gap-1 grid-cols-1 mt-6">
               {courses.length === 0 ? (
-                <></>
+                <p className="text-center">No courses found</p>
               ) : (
                 courses.map((d, index) => {
                   return <CourseCard item={d} key={index} />;
@@ -120,11 +150,13 @@ const AllCourses = () => {
             </div>
           )}
           <div className="flex justify-center mt-12 mr-5">
-            <Pagination
-              count={totalPages}
-              color="primary"
-              onChange={handleChange}
-            />
+            {courses.length !== 0 && (
+              <Pagination
+                count={totalPages}
+                color="primary"
+                onChange={handleChange}
+              />
+            )}
           </div>
         </div>
       </div>

@@ -6,33 +6,30 @@ import CourseSpinner from "../../../component/spinners/course_spinner";
 import GeneralContext from "../../../context/general_context";
 import { Services } from "../../../mixing/services";
 import global_variables from "../../../mixing/urls";
-// import { courses } from "../data/courses";
 
-// const topics = [
-//   "Design",
-//   "Excel",
-//   "Web Development",
-//   "Javascript",
-//   "Data Science",
-// ];
 const CourseSection = () => {
   const { isLogged } = useContext(GeneralContext);
-  const [selected, setSelected] = useState("");
+  const [selected, setSelected] = useState("ad286f8d09924bfb862204def35d8b57");
   const [laoding, setLoading] = useState(true);
   const [courses, setCourses] = useState([]);
-  const [topics, setTopics] = useState([])
+  const [topics, setTopics] = useState([]);
 
   useEffect(() => {
-    getCourses(10);
-    getCategories()
+    getCourses(selected);
+    getCategories();
   }, []);
 
-  const getCourses = async (limit) => {
+  const getCourses = async (course_id) => {
+    setLoading(true)
     try {
-      const res = await (await Services()).get(global_variables().getCourses + `?size=4`);
-    //   console.log(res.data.data.data[0])
-      setCourses(res.data?.data?.data)
-      setLoading(false)
+      const res = await (
+        await Services()
+      ).get(
+        global_variables().getCourses + `?size=4&filter=category=${course_id}`
+      );
+      //   console.log(res.data.data.data[0])
+      setCourses(res.data?.data?.data);
+      setLoading(false);
     } catch (err) {
       displayErrMsg("Error loading data, please reload page");
     }
@@ -40,13 +37,15 @@ const CourseSection = () => {
 
   const getCategories = async () => {
     try {
-        const res = await (await Services()).get(global_variables().getCategories + `?size=4`);
-        // console.log(res.data?.data?.data[0])
-        setTopics(res.data?.data?.data)
-      } catch (err) {
-        displayErrMsg("Error loading data, please reload page");
-      }
-  }
+      const res = await (
+        await Services()
+      ).get(global_variables().getCategories + `?size=4`);
+      // console.log(res.data?.data?.data);
+      setTopics(res.data?.data?.data);
+    } catch (err) {
+      displayErrMsg("Error loading data, please reload page");
+    }
+  };
 
   // const history = useNavigate()
 
@@ -67,9 +66,14 @@ const CourseSection = () => {
           <div className="flex justify-between">
             {topics.map((item, index) => (
               <div
-                onClick={() => setSelected(item.name)}
+                onClick={() => {
+                  setSelected(item.category_id);
+                  getCourses(item.category_id);
+                }}
                 className={`mr-3 py-3 px-6 flex justify-center items-center cursor-pointer ${
-                  selected === item.name ? "border-b-2 border-secondary-400" : ""
+                  selected === item.category_id
+                    ? "border-b-2 border-secondary-400"
+                    : ""
                 }`}
                 key={index}
               >
@@ -86,10 +90,13 @@ const CourseSection = () => {
           {topics.map((item, index) => (
             <div
               key={index}
-              onClick={() => setSelected(item)}
+              onClick={() => {
+                setSelected(item.category_id);
+                getCourses(item.category_id);
+              }}
               style={{ borderWidth: "1px" }}
               className={` text-primary-600 mr-4 mt-1 flex justify-center items-center bg-primary-200 px-5 py-2 border-primary-500 rounded-full ${
-                selected === item
+                selected === item.category_id
                   ? "bg-secondary-800 text-white border-primary-100 border-0"
                   : ""
               } `}
@@ -100,21 +107,12 @@ const CourseSection = () => {
         </div>
         <div className="grid md:grid-cols-4 grid-cols-1 md:gap-2 gap-1 mt-12">
           {laoding
-            ? ["", "", "", ""].map((d,index) => {
+            ? ["", "", "", ""].map((d, index) => {
                 return <CourseSpinner key={index} />;
               })
             : courses.map((item, index) => {
                 return <CourseCard item={item} key={index} />;
               })}
-
-          {/* Get courses from here and display : http://109.205.180.74:1906/api/v1/courses?page=1&size=20 */}
-          {/* {!isLogged ? generalCourses.data.slice(0, limit ? limit : 8).map((item, index) => {
-            item.id = item.course_id
-            return (<CourseCard item={item} />)
-          }) : courses.data.slice(0, limit ? limit : 8).map((item, index) => {
-            item.id = item.course_id;
-            return (<CourseCard item={item} />)
-          })} */}
         </div>
       </div>
 

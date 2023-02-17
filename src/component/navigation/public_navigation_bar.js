@@ -174,7 +174,7 @@ const NavigationBar = () => {
               {isLogged ? (
                 <>
                   <Link
-                    to="#"
+                    to="/my-course"
                     className="text-base font-medium text-primary-500 hover:text-primary-900 mt-1 mr-4"
                   >
                     My courses
@@ -248,7 +248,7 @@ const NavigationBar = () => {
                           </span>
                         </Link>
                         <Link
-                          to="#"
+                          to="/my-course"
                           className="-m-3 flex items-center rounded-md p-3 hover:bg-primary-50"
                         >
                           <BookOpenIcon

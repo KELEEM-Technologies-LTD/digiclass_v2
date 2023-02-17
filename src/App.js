@@ -21,7 +21,7 @@ const MyAllCourse = React.lazy(() => import("./pages/allcourses/all_course"));
 const MyProfilePage = React.lazy(() => import("./pages/profile/profile"));
 const MyCourses = React.lazy(() => import("./pages/mycourses/mycourses"));
 const MyUserCourseDetail = React.lazy(()=>import("./pages/mycoursedetail/my_course_detail"))
-
+//comment 
 function App() {
   return (
     <>

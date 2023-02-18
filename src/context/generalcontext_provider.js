@@ -9,7 +9,7 @@ const GeneralContextProvider = (props) => {
   const [isLogged, setIsLogged] = useState(false);
   const [user, setUser] = useState([]);
   const [complete_user, setcomplete_user] = useState([]);
-  const [cartLoading, setCartLoading] = useState([]);
+  const [cartLoading, setCartLoading] = useState(false);
   const [cart, setCart] = useState([]);
 
   useEffect(() => {

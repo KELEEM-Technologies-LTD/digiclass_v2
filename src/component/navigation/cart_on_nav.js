@@ -10,6 +10,7 @@ import { Services } from "../../mixing/services";
 import global_variables from "../../mixing/urls";
 import { displayErrMsg, displaySuccMsg } from "../alerts/alerts";
 import logout_and_redirect from "../hoc/logout-redirect";
+import { formatCedis } from "../Helpers/money";
 
 const MyCartIcon = () => {
   const { isLogged, cartLoading, cart, getCartData } =
@@ -43,7 +44,7 @@ const MyCartIcon = () => {
       displaySuccMsg(res.data?.data?.message, () => {});
     } catch (err) {
       if (err.response?.status === 401) {
-        logout_and_redirect()
+        logout_and_redirect();
       }
       displayErrMsg("Error removing item from cart", () => {
         getCartData();
@@ -125,10 +126,8 @@ const MyCartIcon = () => {
                               ) : (
                                 cart.data?.map((data, index) => {
                                   return (
-                                    <div key={index} >
-                                      <div
-                                        className="flow-root mt-3"
-                                      >
+                                    <div key={index}>
+                                      <div className="flow-root mt-3">
                                         <ul className="-my-6 divide-y divide-primary-200">
                                           <li className="flex py-6">
                                             <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-primary-200">
@@ -155,7 +154,7 @@ const MyCartIcon = () => {
                                                     </Link>
                                                   </h3>
                                                   <p className="ml-4">
-                                                    GHS {data.price}
+                                                    {formatCedis(data.price)}
                                                   </p>
                                                 </div>
                                                 <p className="mt-1 text-sm text-primary-500">
@@ -208,7 +207,7 @@ const MyCartIcon = () => {
                           <div className="border-t border-primary-200 py-6 px-4 sm:px-6">
                             <div className="flex justify-between text-base font-medium text-primary-900">
                               <p>Subtotal</p>
-                              <p>{calculateTotal()}</p>
+                              <p>{formatCedis(calculateTotal())}</p>
                             </div>
                             <p className="mt-0.5 text-sm text-primary-500">
                               Taxes and discounts are calculated at checkout.

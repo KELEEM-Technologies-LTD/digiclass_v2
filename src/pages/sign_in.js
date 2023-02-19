@@ -1,5 +1,5 @@
 import localforage from "localforage";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   displayErrMsg,
@@ -14,8 +14,77 @@ import Footer from "../component/navigation/footer";
 import NavigationBar from "../component/navigation/public_navigation_bar";
 import { Services } from "../mixing/services";
 import global_variables from "../mixing/urls";
+import jwtDecode from "jwt-decode";
 
 const Signin = () => {
+  const handleHandleCallbackResponse = async (response) => {
+    // console.log(response);
+    // console.log(response.credential);
+
+    var user = jwtDecode(response.credential);
+
+    // console.log(user);
+    try {
+      displayLoading("authenticating....");
+      const res = await (
+        await Services()
+      ).post(global_variables().sigin, {
+        username: user.email,
+        password:
+          "880710449497-8k8qttcfig311nqmh16l0qjbd53er8he.apps.googleusercontent.com",
+      });
+
+      if (res.status === 200) {
+        const userdata = res.data?.data?.user;
+        const token = res.data?.data?.token;
+
+        // console.log(res);
+
+        localforage
+          .setItem("userdata", userdata)
+          .then(function () {
+            return localforage.setItem("token", token);
+          })
+          .then(function () {
+            displaySuccMsg("Logged in successfully", () => {
+              window.location.href = "/";
+            });
+            // displaySuccMsg('Logged in successfully', () => { window.history.back() })
+          })
+          .catch((err) => {
+            console.log(err);
+            displayErrMsg(
+              "There was an error, please reload the page and try again"
+            );
+          });
+      } else {
+        displayErrMsg(
+          "There was an error, please reload the page and try again"
+        );
+      }
+    } catch (err) {
+      // console.log(err.response?.data?.message);
+      displayErrMsg(err.response?.data?.message, () => {});
+    }
+  };
+
+  useEffect(() => {
+    /* global google */
+
+    google.accounts.id.initialize({
+      client_id:
+        "880710449497-8k8qttcfig311nqmh16l0qjbd53er8he.apps.googleusercontent.com",
+      callback: handleHandleCallbackResponse,
+    });
+
+    google.accounts.id.renderButton(
+      document.getElementById("google_sign_icon"),
+      { theme: "outline", size: "large" }
+    );
+
+    // console.log(google);
+  }, []);
+
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
 
@@ -67,7 +136,7 @@ const Signin = () => {
         }
       } catch (err) {
         console.log(err);
-        displayErrMsg();
+        displayErrMsg(err.response?.data?.message, () => {});
       }
     }
   };
@@ -84,7 +153,8 @@ const Signin = () => {
             Log into your account
           </p>
           <HorizontalRule />
-          <GoogleButton />
+
+          <div id="google_sign_icon"></div>
           <div className="mt-5">
             <InputWithIcon
               placeholder="Enter your email "

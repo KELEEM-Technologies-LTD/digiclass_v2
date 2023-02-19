@@ -20,7 +20,7 @@ const MyCourses = () => {
       <div className="flex flex-col font-serif">
         <div className="flex flex-col bg-secondary-600 md:px-16 px-3 justify-end">
           <div className="flex justify-between items-center">
-            <p className=" text-2xl md:text-4xl md:font-bold text-white py-16">
+            <p className=" text-2xl md:text-4xl md:font-bold text-white py-7">
               My Courses
             </p>
           </div>

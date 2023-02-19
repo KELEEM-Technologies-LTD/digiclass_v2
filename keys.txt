@@ -1,0 +1,63 @@
+client ID = 880710449497-8k8qttcfig311nqmh16l0qjbd53er8he.apps.googleusercontent.com
+Client Secrete = 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
+
+
+
+<>
+      <div
+        onClick={() => navigate(`/course/${course_id}`)}
+        className=" cursor-pointer md:shadow-outlineLg course-card flex md:flex-col mr-1 md:bg-white rounded-5 hover:border-secondary-500 mb-5"
+        onMouseEnter={() => setIsHovering(true)}
+        onMouseLeave={() => setIsHovering(false)}
+      >
+        <img src={thumbnail} alt="courseimage" className="w-36 md:w-full" />
+        <div className="p-3 md:bg-white ">
+          <p className="md:text-lg text-sm font-bold">{title}</p>
+          {!showProgress ? (
+            <div className="flex md:flex-col flex-col-reverse ">
+              <div className="flex justify-between mt-5">
+                <p className=" font-bold text-sm"> {formatCedis(price)}</p>
+                {/* <p className=" text-sm line-through">GHS 13.99</p> */}
+              </div>
+              {!loading && (
+                <div className="flex ">
+                  <p className="font-bold text-sm text-secondary-500 ">
+                    {rating.toFixed(1)}
+                  </p>
+                  <div className="flex justify-between items-center ml-1">
+                    {[...Array(fullStars)].map((_, i) => (
+                      // <Star width={14} key={i} />
+                      <i
+                        className="fa fa-star text-secondary-500 text-sm"
+                        key={i}
+                      ></i>
+                    ))}
+                    {hasHalfStar && (
+                      <i className="fa fa-star-half-alt text-secondary-500 text-sm"></i>
+                    )}
+                    {[...Array(emptyStars)].map((_, i) => (
+                      <i
+                        className="far fa-star text-secondary-500 text-sm"
+                        key={i}
+                      ></i>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="flex gap-2 items-center mt-12">
+              <img src="./img/smallplay.svg" alt="playicon" />
+              <p className="text-secondary-700">0/50</p>
+              <p className="text-secondary-700">Complete</p>
+            </div>
+          )}
+        </div>
+      </div>
+      {/* content to show on hover */}
+      {isHovering && (
+        <div className="absolute right-0 top-0 w-1/3 h-full bg-secondary-900 shadow-lg rounded-l-lg p-4">
+          {/* add content here */}
+        </div>
+      )}
+    </>

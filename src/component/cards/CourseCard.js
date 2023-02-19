@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import GeneralContext from "../../context/general_context";
 import { Services } from "../../mixing/services";
 import global_variables from "../../mixing/urls";
+import { formatCedis } from "../Helpers/money";
 
 function CourseCard({ showProgress, item }) {
   const [loading, setLoading] = useState(true);
@@ -59,22 +60,30 @@ function CourseCard({ showProgress, item }) {
         {!showProgress ? (
           <div className="flex md:flex-col flex-col-reverse ">
             <div className="flex justify-between mt-5">
-              <p className=" font-bold text-sm"> {price}</p>
+              <p className=" font-bold text-sm"> {formatCedis(price)}</p>
               {/* <p className=" text-sm line-through">GHS 13.99</p> */}
             </div>
             {!loading && (
               <div className="flex ">
-                <p className="font-bold text-sm text-secondary-500 ">{rating.toFixed(1)}</p>
+                <p className="font-bold text-sm text-secondary-500 ">
+                  {rating.toFixed(1)}
+                </p>
                 <div className="flex justify-between items-center ml-1">
                   {[...Array(fullStars)].map((_, i) => (
                     // <Star width={14} key={i} />
-                    <i className="fa fa-star text-secondary-500 text-sm" key={i}></i>
+                    <i
+                      className="fa fa-star text-secondary-500 text-sm"
+                      key={i}
+                    ></i>
                   ))}
                   {hasHalfStar && (
                     <i className="fa fa-star-half-alt text-secondary-500 text-sm"></i>
                   )}
-                  {[...Array(emptyStars)].map((_, i) => (                    
-                    <i className="far fa-star text-secondary-500 text-sm" key={i}></i>
+                  {[...Array(emptyStars)].map((_, i) => (
+                    <i
+                      className="far fa-star text-secondary-500 text-sm"
+                      key={i}
+                    ></i>
                   ))}
                 </div>
               </div>

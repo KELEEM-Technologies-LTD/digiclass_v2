@@ -34,6 +34,26 @@ const GeneralContextProvider = (props) => {
 
   const getCartData = async () => {
     if ((await localforage.getItem("token")) !== null) {
+      const complete_user = await localforage.getItem("complete_user");
+      const u = await localforage.getItem("userdata");
+
+      if (complete_user) {
+        // console.log("Image: .............." + complete_user.profile_pic);
+      } else {
+        try {
+          const res = await (
+            await Services()
+          ).get(global_variables().getUser + `/${u.user_id}`);
+          console.log(res.data?.data);
+          localforage.setItem("complete_user", res.data?.data).then(() => {
+            window.location.reload();
+          });
+        } catch (err) {
+          console.log(err);
+          // logout_and_redirect();
+        }
+      }
+
       setCartLoading(true);
       const userdata = await localforage.getItem("userdata");
       try {
@@ -49,26 +69,6 @@ const GeneralContextProvider = (props) => {
       } catch (err) {
         if (err.response?.status === 401) {
           logout_and_redirect();
-        }
-      }
-
-      const complete_user = await localforage.getItem("complete_user");
-      const u = await localforage.getItem("userdata");
-
-      if (complete_user?.profile_pic) {
-        // console.log("Image: .............." + complete_user.profile_pic);
-      } else {
-        try {
-          const res = await (
-            await Services()
-          ).get(global_variables().getUser + `/${u.user_id}`);
-          console.log(res.data?.data);
-          localforage.setItem("complete_user", res.data?.data).then(() => {
-            window.location.reload();
-          });
-        } catch (err) {
-          console.log(err);
-          // logout_and_redirect();
         }
       }
     }

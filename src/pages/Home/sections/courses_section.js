@@ -20,12 +20,13 @@ const CourseSection = () => {
   }, []);
 
   const getCourses = async (course_id) => {
-    setLoading(true)
+    setLoading(true);
     try {
       const res = await (
         await Services()
       ).get(
-        global_variables().getCourses + `?size=4&filter=category=${course_id}`
+        global_variables().getCourses +
+          `?size=4&filter=category=${course_id}&query_fields=id,title,language,status,airtime,short_description,price`
       );
       //   console.log(res.data.data.data[0])
       setCourses(res.data?.data?.data);

@@ -1,11 +1,12 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { XMarkIcon } from "@heroicons/react/24/outline";
 import localforage from "localforage";
 import { Fragment, useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import GeneralContext from "../../context/general_context";
 import logoutIcon from "./../../assets/svgs/logout.svg";
+import Avatar from "@mui/material/Avatar";
+import { deepOrange, deepPurple, blue } from "@mui/material/colors";
 
 const UserDropDown = () => {
   const { user, complete_user } = useContext(GeneralContext);
@@ -33,28 +34,28 @@ const UserDropDown = () => {
 
   return (
     <>
-      {complete_user.profile_pic ? (
+      {complete_user?.profile_pic ? (
         <div
           className="h-12 w-12  rounded-full flex justify-center items-center"
           style={{ cursor: "pointer" }}
           onClick={() => setOpen(true)}
         >
-          <img
-            src="https://media.publit.io/file/PACKAGING_ORIGINE_Ghana_1kg_en1000x1000_en.jpg.jpg"
-            alt=""
-            className="h-12 w-12  rounded-full"
+          <Avatar
+            alt={complete_user?.profile_pic}
+            src={complete_user?.profile_pic}
           />
         </div>
       ) : (
-        <div
-          className="h-12 w-12  rounded-full bg-secondary-600 flex justify-center items-center"
-          style={{ cursor: "pointer" }}
-          onClick={() => setOpen(true)}
-        >
-          <p className="text-white text-xs">
-            {complete_user.first_name[0]} {complete_user.last_name[0]}
-          </p>
-        </div>
+        <>
+          <Avatar
+            sx={{ bgcolor: blue[600] }}
+            onClick={() => setOpen(true)}
+            style={{ cursor: "pointer" }}
+          >
+            {user.first_name[0]}
+            {user.last_name[0]}
+          </Avatar>
+        </>
       )}
 
       <Transition.Root show={open} as={Fragment}>
@@ -89,23 +90,26 @@ const UserDropDown = () => {
                         <div className="mt-8">
                           <div className="bg-white rounded-5 font-serif overflow-y-hidden">
                             <div className="grid grid-cols-12 gap-3 py-3 px-4 ">
-                              {complete_user.profile_pic ? (
-                                <div className="col-span-3 h-16 w-16 bg-secondary-600 rounded-full flex items-center justify-center">
-                                  <img
-                                    src={complete_user.profile_pic}
-                                    alt="profileimage"
-                                    className="h-16 w-16 rounded-full"
+                              {complete_user?.profile_pic ? (
+                                <div className="col-span-3 flex items-center justify-center">
+                                  <Avatar
+                                    alt={complete_user?.profile_pic}
+                                    src={complete_user?.profile_pic}
                                   />
                                 </div>
                               ) : (
                                 <Link
                                   to="/profile"
-                                  className="col-span-3 h-16 w-16 bg-secondary-600 rounded-full flex items-center justify-center"
+                                  className="col-span-3 flex items-center justify-center"
                                 >
-                                  <p className="text-white font-bold text-lg">
-                                    {complete_user.first_name[0]}{" "}
-                                    {complete_user.last_name[0]}
-                                  </p>
+                                  <Avatar
+                                    sx={{ bgcolor: blue[600] }}
+                                    onClick={() => setOpen(true)}
+                                    style={{ cursor: "pointer" }}
+                                  >
+                                    {user.first_name[0]}
+                                    {user.last_name[0]}
+                                  </Avatar>
                                 </Link>
                               )}
                               <div className="col-span-9">

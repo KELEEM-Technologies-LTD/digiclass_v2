@@ -62,7 +62,7 @@ const Cart = () => {
         {/* header with tabs */}
         <div className="flex flex-col bg-secondary-600 md:px-16 md:h-52 h-32 px-3 justify-center md:justify-end">
           <div className="flex justify-between items-center">
-            <p className=" text-2xl md:text-4xl md:font-bold text-white">
+            <p className="text-2xl md:text-4xl md:font-bold text-white">
               Shopping Cart
             </p>
             <div className="flex flex-col md:hidden">

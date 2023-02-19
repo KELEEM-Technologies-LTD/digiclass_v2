@@ -75,10 +75,9 @@ const AllCourses = () => {
         console.log(err);
       }
     } else {
-      setLoading(false)
+      setLoading(false);
     }
   };
-
 
   return (
     <>
@@ -88,7 +87,7 @@ const AllCourses = () => {
         {/* Header  */}
         <div className="flex flex-col bg-secondary-600 md:px-16 px-3 justify-end">
           <div className="flex justify-between items-center">
-            <p className=" text-2xl md:text-4xl md:font-bold text-white py-16">
+            <p className=" text-2xl md:text-4xl md:font-bold text-white py-7">
               All Courses
             </p>
           </div>
@@ -111,7 +110,9 @@ const AllCourses = () => {
                 >
                   <MenuItem value="title">Title</MenuItem>
                   <MenuItem value="language">Language</MenuItem>
-                  <MenuItem value="short_description">Short description</MenuItem>
+                  <MenuItem value="short_description">
+                    Short description
+                  </MenuItem>
                 </Select>
               </FormControl>
             </div>

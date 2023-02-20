@@ -15,14 +15,14 @@ const Home = () => {
 
   return (
     <>
-    <NavigationBar />
+      <NavigationBar />
       <HomeBanner />
       {isLogged ? (
         <StartLearningRow />
       ) : (
         <>
-          {" "}
-          <Partners /> <About />
+          <Partners />
+          <About />
         </>
       )}
 

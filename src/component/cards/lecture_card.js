@@ -1,17 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { formatCedis } from "../Helpers/money";
 
 function LectureCard({ data }) {
-  const { title, image } = data;
+  const { title, thumbnail, price, course_id } = data;
   return (
     <Link
-      to="/course"
-      className="flex gap-3 h-32 mr-4 rounded-5 "
+      to={`/course/${course_id}`}
+      className="flex gap-3 h-40 mr-4 rounded-5 "
       style={{ border: "1px solid #787878" }}
     >
       <div
         className="bg-no-repeat w-full relative"
-        style={{ backgroundImage: `url(${image})`, backgroundSize: "cover" }}
+        style={{
+          backgroundImage: `url(${thumbnail})`,
+          backgroundSize: "cover",
+        }}
       >
         <div className="absolute w-full h-full opacity-75 bg-black flex justify-center items-center">
           <button>
@@ -22,8 +26,8 @@ function LectureCard({ data }) {
       <div className="flex flex-col justify-between px-2 py-2">
         <p className="font-serif text-sm font-bold text-black">{title}</p>
         <div className="flex gap-3">
-          <p className="font-serif text-sm">Lecture</p>
-          <p className="font-serif text-sm">30m</p>
+          <p className="font-serif text-sm">Price</p>
+          <p className="font-serif text-sm">{formatCedis(price)}</p>
         </div>
       </div>
     </Link>

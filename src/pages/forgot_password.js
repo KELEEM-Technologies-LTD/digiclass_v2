@@ -1,7 +1,11 @@
 import { CircularProgress } from "@mui/material";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { displayWarningMsg } from "../component/alerts/alerts";
+import {
+  displayErrMsg,
+  displaySuccMsg,
+  displayWarningMsg,
+} from "../component/alerts/alerts";
 import InputWithIcon from "../component/InputFields/InputWithIcon";
 import Footer from "../component/navigation/footer";
 import NavigationBar from "../component/navigation/public_navigation_bar";
@@ -22,9 +26,24 @@ const ForgotPassword = () => {
         await Services()
       ).get(global_variables().checkuser + `?username=${email}`);
 
-      console.log(checkres);
+      //   console.log(checkres);
 
       if (checkres.data?.data?.exists) {
+        try {
+          const res = await (
+            await Services()
+          ).get(global_variables().resetemail + `/${email}`);
+          if (res.data.statusCode === 200) {
+            displaySuccMsg(
+              "Password reset link sent to you via email.",
+              () => {}
+            );
+          }
+          setLoading(false);
+        } catch (err) {
+          setLoading(false);
+          displayErrMsg(err.response?.data?.message);
+        }
       } else {
         setLoading(false);
         displayWarningMsg(

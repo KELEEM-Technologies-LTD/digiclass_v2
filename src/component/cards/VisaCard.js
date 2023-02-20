@@ -9,7 +9,8 @@ function VisaCard() {
       className={`${
         selected ? " border-4 border-white" : ""
       } relative px-2 py-8 rounded-8 flex flex-col justify-between cursor-pointer`}
-      style={{background: '#'+Math.floor(Math.random()*16777215).toString(16)}}
+      style={{ background: "#0074a0" }}
+      // style={{background: '#'+Math.floor(Math.random()*16777215).toString(16)}}
     >
       <div className="absolute bottom-0">
         <img src="./img/visabg.png" alt="visabg" />

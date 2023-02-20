@@ -24,9 +24,9 @@ const CourseSection = ({ courseid }) => {
       setLoading(false);
     } catch (err) {
       if (err.response?.status === 401) {
-        logout_and_redirect()
+        logout_and_redirect();
       }
-      setLoading(false)
+      setLoading(false);
     }
   };
 

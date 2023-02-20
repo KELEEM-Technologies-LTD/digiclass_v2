@@ -6,16 +6,21 @@ const CardScreen = () => {
   const [show, setShow] = useState(false);
 
   return (
-    <div className="mt-5 grid md:grid-cols-12 md:gap-12 px-5 grid-cols-1">
+    <div className="mt-5 grid md:grid-cols-12 md:gap-12 px-5 grid-cols-1  mb-10">
       <div className="flex flex-col gap-4 col-span-4">
         <VisaCard />
 
-        <button className="border-dashed px-4 py-6 border-secondary-600 border-2 rounded-5" onClick={()=>{setShow(true)}}>
+        <button
+          className="border-dashed px-4 py-6 border-secondary-600 border-2 rounded-5"
+          onClick={() => {
+            setShow(true);
+          }}
+        >
           <p>Add New Card</p>
         </button>
       </div>
       {show && (
-        <div className="bg-white py-5 px-3 col-span-5 rounded-5 flex flex-col font-serif">
+        <div className="bg-white py-5 px-3 col-span-5 rounded-5 flex flex-col font-serif mb-10">
           <form className={` px-3 py-2`}>
             <div className="">
               <p className="text-sm my-3">Card Holder</p>
@@ -80,7 +85,7 @@ const CardScreen = () => {
                   size="big"
                   className="outlineLg rounded-5"
                   type="button"
-                  onClick={()=>setShow(false)}
+                  onClick={() => setShow(false)}
                 >
                   <p className="text-lg text-red">Cancel</p>
                 </button>

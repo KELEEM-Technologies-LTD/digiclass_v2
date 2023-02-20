@@ -1,28 +1,12 @@
+import { Skeleton } from "@mui/material";
 import React, { useRef } from "react";
+import { useEffect } from "react";
+import { useState } from "react";
 import Slider from "react-slick";
 import LectureCard from "../../../component/cards/lecture_card";
-const data = [
-  {
-    title: "Complete Backend (API) Development with Python A-Z",
-    image: "./img/l1.png",
-  },
-  {
-    title: "Adobe Lightroom Masterclass - Beginner to Expert",
-    image: "./img/l2.png",
-  },
-  {
-    title: "Adobe Premiere Pro CC: Video Editing in Adobe Premiere Pro",
-    image: "./img/l3.png",
-  },
-  {
-    title: "Adobe Premiere Pro CC: Video Editing in Adobe Premiere Pro",
-    image: "./img/l3.png",
-  },
-  {
-    title: "Adobe Premiere Pro CC: Video Editing in Adobe Premiere Pro",
-    image: "./img/l3.png",
-  },
-];
+import { Services } from "../../../mixing/services";
+import global_variables from "../../../mixing/urls";
+
 var settings = {
   dots: false,
   infinite: false,
@@ -40,10 +24,36 @@ function StartLearningRow() {
   const handleNext = () => {
     SliderRef.current.slickNext();
   };
+
+  const [loading, setLoading] = useState(true);
+  const [top5, setTop5] = useState([]);
+  const get5Courses = async () => {
+    setLoading(true);
+
+    try {
+      const res = await (
+        await Services()
+      ).get(
+        global_variables().getCourses +
+          `?size=5&query_fields=id,title,language,status,airtime,short_description,price`
+      );
+      setTop5(res.data?.data?.data);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    get5Courses();
+  }, []);
+
   return (
     <div className=" py-2 md:pl-52  flex-col overflow-x-hidden md:flex hidden">
       <div className="flex justify-between">
-        <p className="text-2xl font-bold text-black font-serif">Let's start learning</p>
+        <p className="text-2xl font-bold text-black font-serif">
+          Let's start learning
+        </p>
         <div className="grid grid-cols-2 gap-6 md:pr-52">
           <button onClick={handlePrev}>
             <img src="./img/chevron-left.svg" alt="chev" />
@@ -55,9 +65,11 @@ function StartLearningRow() {
       </div>
 
       <Slider ref={SliderRef} className="mt-6 " {...settings}>
-        {data.map((item, index) => (
-          <LectureCard data={item} key={index} />
-        ))}
+        {loading ? (
+          <Skeleton height={150} style={{ marginRight: "30px" }} />
+        ) : (
+          top5.map((item, index) => <LectureCard data={item} key={index} />)
+        )}
       </Slider>
     </div>
   );

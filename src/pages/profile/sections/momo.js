@@ -7,7 +7,7 @@ const MobileMoney = () => {
   const [show, setShow] = useState(false);
   return (
     <>
-      <div className="mt-5 grid md:grid-cols-12 md:gap-12 px-5 grid-cols-1">
+      <div className="mt-5 grid md:grid-cols-12 md:gap-12 px-5 grid-cols-1 mb-10">
         <div className="flex flex-col gap-4 col-span-4">
           <MomoCard />
           <button
@@ -20,7 +20,7 @@ const MobileMoney = () => {
           </button>
         </div>
         {show && (
-          <div className="bg-white py-5 px-3 col-span-4 rounded-5 flex flex-col font-serif">
+          <div className="bg-white py-5 px-3 col-span-4 rounded-5 flex flex-col font-serif mb-10">
             <form>
               <div className="">
                 <p className="text-sm my-3">Accoun Holder</p>

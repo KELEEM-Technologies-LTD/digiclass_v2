@@ -22,14 +22,18 @@ const AllCourses = () => {
   const [courses, setCourses] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
   const [filter, setFilter] = useState("title");
+  const [cpage, setCpage] = useState(1);
 
-  const get_courses = async (s) => {
+  const get_courses = async (s, p) => {
     setLoading(true);
 
     try {
       const res = await (
         await Services()
-      ).get(global_variables().getCourses + `?page=1&size=${s}`);
+      ).get(
+        global_variables().getCourses +
+          `?page=${p}&size=${s}&query_fields=id,title,language,status,airtime,short_description,price`
+      );
 
       // console.log(res.data?.data);
       setTotalPages(res.data?.data?.totalPages);
@@ -46,12 +50,13 @@ const AllCourses = () => {
   };
 
   const handleChange = (event, value) => {
-    console.log(value);
-    get_courses(value, size);
+    // console.log(value);
+    get_courses(size, value);
+    setCpage(value);
   };
 
   useEffect(() => {
-    get_courses(size);
+    get_courses(size, cpage);
   }, []);
 
   const handleSearch = async (e) => {

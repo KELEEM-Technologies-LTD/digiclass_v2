@@ -4,6 +4,7 @@ const global_variables = () => {
   return {
     sigin: `${base}:2000/api/v1/auth/login`,
     signup: `${base}:2000/api/v1/auth/signup`,
+    checkuser: `${base}:2000/api/v1/auth/available`,
 
     //Course related
     getCourses: `${base}:1906/api/v1/courses`,

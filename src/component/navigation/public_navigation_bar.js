@@ -1,19 +1,15 @@
 import {
   AcademicCapIcon,
-  BanknotesIcon,
   Bars3Icon,
   BookOpenIcon,
-  ChartBarIcon,
-  CpuChipIcon,
   CreditCardIcon,
-  CursorArrowRaysIcon,
   EnvelopeIcon,
   GlobeEuropeAfricaIcon,
   UserCircleIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import { Fragment, useContext } from "react";
+import { Fragment, useContext, useState, useEffect } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import { Link } from "react-router-dom";
 import { Logo } from "../../assets";
@@ -25,35 +21,9 @@ import MyFavorites from "./LoveIcon";
 import UserDropDown from "./userDropDown";
 import SignOut from "./signout_mobile";
 import MyMiniCartIcon from "./mini_cart";
-import { AccountCircleOutlined } from "@mui/icons-material";
+import { Services } from "../../mixing/services";
+import global_variables from "../../mixing/urls";
 
-const solutions = [
-  {
-    name: "Development",
-    description:
-      "Get a better understanding of where your traffic is coming from.",
-    href: "#",
-    icon: ChartBarIcon,
-  },
-  {
-    name: "Business",
-    description: "Speak directly to your customers in a more meaningful way.",
-    href: "#",
-    icon: CursorArrowRaysIcon,
-  },
-  {
-    name: "Finance",
-    description: "Your customers' data will be safe and secure.",
-    href: "#",
-    icon: BanknotesIcon,
-  },
-  {
-    name: "IT & software",
-    description: "Connect with third-party tools that you're already using.",
-    href: "#",
-    icon: CpuChipIcon,
-  },
-];
 // const callsToAction = [
 //     { name: 'Watch Demo', href: '#', icon: PlayIcon },
 //     { name: 'Contact Sales', href: '#', icon: PhoneIcon },
@@ -64,7 +34,24 @@ function classNames(...classes) {
 }
 
 const NavigationBar = () => {
+  const [topics, setTopics] = useState([]);
   const { isLogged } = useContext(GeneralContext);
+
+  const getCategories = async () => {
+    try {
+      const res = await (
+        await Services()
+      ).get(global_variables().getCategories);
+      // console.log(res.data?.data?.data);
+      setTopics(res.data?.data?.data);
+    } catch (err) {
+      // displayErrMsg("Error loading data, please reload page");
+    }
+  };
+
+  useEffect(() => {
+    getCategories();
+  }, []);
 
   return (
     <>
@@ -93,7 +80,7 @@ const NavigationBar = () => {
                         "group inline-flex items-center rounded-md bg-white text-base font-medium hover:text-primary-900 focus:outline-none focus:ring-2 focus:ring-secondary-500 focus:ring-offset-2 mt-1"
                       )}
                     >
-                      <span>Solutions</span>
+                      <span>Categories</span>
                       <ChevronDownIcon
                         className={classNames(
                           open ? "text-primary-600" : "text-primary-400",
@@ -118,14 +105,17 @@ const NavigationBar = () => {
                       >
                         <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                           <div className="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
-                            {solutions.map((item) => (
+                            {topics.map((item, index) => (
                               <Link
-                                to=""
+                                to="#"
+                                onClick={() => {
+                                  window.location.href = `/category/${item.category_id}/${item.name}`;
+                                }}
                                 key={item.name}
-                                href={item.href}
+                                // href={item.href}
                                 className="-m-3 flex items-start rounded-lg p-3 hover:bg-primary-50"
                               >
-                                <item.icon
+                                <BookOpenIcon
                                   className="h-6 w-6 flex-shrink-0 text-secondary-600"
                                   aria-hidden="true"
                                 />
@@ -134,25 +124,12 @@ const NavigationBar = () => {
                                     {item.name}
                                   </p>
                                   <p className="mt-1 text-sm text-primary-500">
-                                    {item.description}
+                                    {item.name}
                                   </p>
                                 </div>
                               </Link>
                             ))}
                           </div>
-                          {/* <div className="space-y-6 bg-primary-50 px-5 py-5 sm:flex sm:space-y-0 sm:space-x-10 sm:px-8" style={{ zIndex: '100' }}>
-                                                    {callsToAction.map((item) => (
-                                                        <div key={item.name} className="flow-root">
-                                                            <Link to='#'
-                                                                href={item.href}
-                                                                className="-m-3 flex items-center rounded-md p-3 text-base font-medium text-primary-900 hover:bg-primary-100"
-                                                            >
-                                                                <item.icon className="h-6 w-6 flex-shrink-0 text-primary-400" aria-hidden="true" />
-                                                                <span className="ml-3">{item.name}</span>
-                                                            </Link>
-                                                        </div>
-                                                    ))}
-                                                </div> */}
                         </div>
                       </Popover.Panel>
                     </Transition>
@@ -163,7 +140,7 @@ const NavigationBar = () => {
                 <NavBarSeacrhField />
               ) : (
                 <Link
-                  to="#"
+                  to="/signup"
                   className="text-base font-medium text-primary-500 hover:text-primary-900 mt-1"
                 >
                   Teach on DigiClass
@@ -297,14 +274,16 @@ const NavigationBar = () => {
                         </Link>
                       </>
                     ) : (
-                      solutions.map((item) => (
+                      topics.map((item) => (
                         <Link
                           to="#"
                           key={item.name}
-                          href={item.href}
+                          onClick={() => {
+                            window.location.href = `/category/${item.category_id}/${item.name}`;
+                          }}
                           className="-m-3 flex items-center rounded-md p-3 hover:bg-primary-50"
                         >
-                          <item.icon
+                          <BookOpenIcon
                             className="h-6 w-6 flex-shrink-0 text-secondary-600"
                             aria-hidden="true"
                           />

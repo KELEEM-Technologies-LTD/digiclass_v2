@@ -15,6 +15,7 @@ const MyEror404 = React.lazy(() => import("./pages/Error404"));
 const MyHome = React.lazy(() => import("./pages/Home/home"));
 const MySignup = React.lazy(() => import("./pages/sign_up"));
 const MySignin = React.lazy(() => import("./pages/sign_in"));
+const MyForgotPassword = React.lazy(() => import("./pages/forgot_password"));
 const MyCourseDetail = React.lazy(() => import("./pages/Course/course_detail"));
 const MyCart = React.lazy(() => import("./pages/cart/cart"));
 const MyCheckOut = React.lazy(() => import("./pages/cart/checkout"));
@@ -23,6 +24,9 @@ const MyProfilePage = React.lazy(() => import("./pages/profile/profile"));
 const MyCourses = React.lazy(() => import("./pages/mycourses/mycourses"));
 const MyUserCourseDetail = React.lazy(() =>
   import("./pages/mycoursedetail/my_course_detail")
+);
+const MyCourseCategory = React.lazy(() =>
+  import("./pages/category/course_by_category")
 );
 
 function App() {
@@ -37,11 +41,21 @@ function App() {
               <Route path="/*" exact element={<MyEror404 />} />
               <Route path="/signup" exact element={<MySignup />} />
               <Route path="/login" exact element={<MySignin />} />
+              <Route
+                path="/password/reset"
+                exact
+                element={<MyForgotPassword />}
+              />
               {/* <Route path="/cart" exact element={<MyCart />} /> */}
               <Route
                 path="/course/:courseid"
                 exact
                 element={<MyCourseDetail />}
+              />
+              <Route
+                path="/category/:categoryid/:name"
+                exact
+                element={<MyCourseCategory />}
               />
 
               <Route element={<MyPrivateRoute />}>

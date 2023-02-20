@@ -2,21 +2,33 @@ import axios from "axios";
 import localforage from "localforage";
 
 export const Services = async () => {
-
-  let token = '';
+  let token = "";
 
   try {
-    token = await localforage.getItem('token');
+    token = await localforage.getItem("token");
   } catch (err) {
-    token = ''
+    token = "";
   }
-
 
   return {
     post: async (route, data) => {
       // const token = getToken();
       var config = {
         method: "post",
+        url: `${route}`,
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${token || ""}`,
+        },
+        data: data || {},
+      };
+      const res = await axios(config);
+      return res;
+    },
+    put: async (route, data) => {
+      // const token = getToken();
+      var config = {
+        method: "put",
         url: `${route}`,
         headers: {
           Accept: "application/json",

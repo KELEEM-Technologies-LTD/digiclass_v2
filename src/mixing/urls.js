@@ -17,6 +17,10 @@ const global_variables = () => {
     getCart: `${base}:1911/api/v1/carts`,
     addToCart: `${base}:1911/api/v1/carts`,
     delFromCart: `${base}:1911/api/v1/carts`,
+
+    //User profile
+    updateProfile: `${base}:1904/api/v1/users`,
+    updateinformation: `${base}:1901/api/v1/users`,
   };
 };
 

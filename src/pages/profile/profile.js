@@ -35,7 +35,7 @@ const Profile = () => {
       const res = await (
         await Services()
       ).get(global_variables().getUser + `/${userdata.user_id}`);
-      console.log(res.data?.data);
+      // console.log(res.data?.data);
       setUser(res.data?.data);
       setLoading(false);
     } catch (err) {
@@ -108,10 +108,13 @@ const Profile = () => {
           <div className="mt-4 md:px-16">
             <Tab.Panels>
               <Tab.Panel>
-                <ProfileSection user={user} />
+                <ProfileSection
+                  user={user}
+                  getUserInformation={getUserInformation}
+                />
               </Tab.Panel>
               <Tab.Panel>
-                <PaymentSettings user={user}/>
+                <PaymentSettings user={user} />
               </Tab.Panel>
               <Tab.Panel>
                 <Notifications user={user} />

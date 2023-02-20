@@ -1,18 +1,73 @@
 import { Tab } from "@headlessui/react";
 import { useState } from "react";
+import {
+  displayErrMsg,
+  displaySuccMsg,
+} from "../../../component/alerts/alerts";
 import InputWithIcon from "../../../component/InputFields/InputWithIcon";
+import { Services } from "../../../mixing/services";
+import global_variables from "../../../mixing/urls";
+import ProfilePicChange from "./profile_pict";
+import CircularProgress from "@mui/material/CircularProgress";
+import localforage from "localforage";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const ProfileSection = ({ user }) => {
-  const { first_name, last_name, profile_pic, username, dob, resume } = user;
+const ProfileSection = ({ user, getUserInformation }) => {
+  const {
+    first_name,
+    last_name,
+    profile_pic,
+    dob,
+    resume,
+    user_id,
+    location,
+    msisdn,
+  } = user;
+
+  const [updating, setUpdating] = useState(false);
 
   const [fname, setFname] = useState(first_name);
   const [lname, setlanme] = useState(last_name);
   const [formdob, setDob] = useState(dob ? dob : "");
   const [formresume, setResume] = useState(resume ? resume : "");
+  const [loc, setLoc] = useState(location ? location : "");
+  const [phone, setPhone] = useState(msisdn ? msisdn : "");
+
+  const saveChanges = async () => {
+    setUpdating(true);
+    const updateData = {
+      first_name: fname,
+      last_name: lname,
+      // dob: formdob ? formdob : "",
+      // resume: formresume ? formresume : "",
+      // location: loc ? loc : "",
+      // msisdn: phone ? phone : "",
+    };
+    // console.log(updateData);
+
+    const userdata = await localforage.getItem("userdata");
+
+    try {
+      const response = await (
+        await Services()
+      ).put(
+        global_variables().updateinformation + `/${userdata.user_id}`,
+        updateData
+      );
+
+      setUpdating(false);
+      displaySuccMsg(response.data?.data?.message, () => {});
+
+      // console.log(response);
+    } catch (error) {
+      console.log(error);
+      displayErrMsg(error.response?.data?.message, () => {});
+      setUpdating(false);
+    }
+  };
 
   return (
     <>
@@ -40,16 +95,6 @@ const ProfileSection = ({ user }) => {
                       )
                     }
                   >
-                    Contact & location
-                  </Tab>
-                  <Tab
-                    className={({ selected }) =>
-                      classNames(
-                        "mr-5",
-                        selected ? "border-b-2  border-secondary-600" : ""
-                      )
-                    }
-                  >
                     Change password
                   </Tab>
                 </div>
@@ -58,40 +103,10 @@ const ProfileSection = ({ user }) => {
           </div>
           <Tab.Panels style={{ minHeight: "50vh" }}>
             <Tab.Panel>
-              <div className="flex gap-2 mt-10">
-                <div className="h-16 w-16 rounded-full">
-                  {profile_pic !== null ? (
-                    <img
-                      src={profile_pic}
-                      alt="profileimage"
-                      className="h-16 w-16 rounded-full"
-                    />
-                  ) : (
-                    <div className="h-16 w-16 rounded-full bg-primary-500"></div>
-                  )}
-                </div>
-                <div className="flex">
-                  <div>
-                    <p className="font-bold text-lg">Change Profile Image</p>
-                    <p className="md:w-7/12">
-                      Your profile picture can be changed once per month
-                    </p>
-                  </div>
-                  <input
-                    type="file"
-                    id="file"
-                    // ref={inputFile}
-                    // onChange={handleSelectFile}
-                    style={{ display: "none" }}
-                  />
-                  <button
-                    // onClick={onUploadButtonClick}
-                    className="hover:bg-secondary-600 hover:text-white h-10 flex-col items-center flex rounded-5 border-secondary-600 border py-2 px-8 bg-transparent"
-                  >
-                    <p>Upload</p>
-                  </button>
-                </div>
-              </div>
+              <ProfilePicChange
+                profile_pic={profile_pic}
+                getUserInformation={getUserInformation}
+              />
 
               {/* General information  */}
               <div className="grid grid-cols-12">
@@ -120,6 +135,28 @@ const ProfileSection = ({ user }) => {
                       className="py-5 border-primary-600 border rounded-5 w-full  flex bg-primary-100  justify-between"
                     />
                   </div>
+                  <div className="">
+                    <p>Phone</p>
+
+                    <InputWithIcon
+                      placeholder="Phone number"
+                      type="tel"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      className="py-5 border-primary-600 border rounded-5 w-full  flex bg-primary-100  justify-between"
+                    />
+                  </div>
+                  <div className="">
+                    <p>Location</p>
+
+                    <InputWithIcon
+                      placeholder="Phone number"
+                      type="text"
+                      value={loc}
+                      onChange={(e) => setLoc(e.target.value)}
+                      className="py-5 border-primary-600 border rounded-5 w-full  flex bg-primary-100  justify-between"
+                    />
+                  </div>
                   <div>
                     <p>Date of birth</p>
                     <input
@@ -141,16 +178,20 @@ const ProfileSection = ({ user }) => {
                   </div>
                   <div className="text-right">
                     <button
-                      // onClick={handleSubject}
+                      onClick={saveChanges}
                       className="hover:bg-secondary-600 hover:text-white h-10 flex-col items-center flex rounded-5 border-secondary-600 border py-2 px-8 bg-transparent"
+                      disabled={updating}
                     >
-                      Save changes
+                      {updating ? (
+                        <CircularProgress size={24} />
+                      ) : (
+                        "Save changes"
+                      )}
                     </button>
                   </div>
                 </div>
               </div>
             </Tab.Panel>
-            <Tab.Panel>Content 2</Tab.Panel>
             <Tab.Panel>
               {/* Passowrd settings  */}
               <div className="grid grid-cols-12">

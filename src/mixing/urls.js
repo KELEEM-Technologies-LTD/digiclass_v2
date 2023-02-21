@@ -23,6 +23,13 @@ const global_variables = () => {
     //User profile
     updateProfile: `${base}:1904/api/v1/users`,
     updateinformation: `${base}:1901/api/v1/users`,
+
+    //transactions
+    getTransactions: `${base}:1098/transactions/list`,
+
+    //notification
+    getNotifications: `${base}:1099/notification/list`,
+    updateSeen: `${base}:1099/notification/seen`,
   };
 };
 

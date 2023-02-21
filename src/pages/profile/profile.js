@@ -9,6 +9,7 @@ import Notifications from "./sections/notifications";
 import PaymentSettings from "./sections/payment";
 import ProfileSection from "./sections/profile_settings";
 import { HashLoader } from "react-spinners";
+import Transactions from "./sections/transactions";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -72,7 +73,7 @@ const Profile = () => {
               </p>
             </div>
 
-            <Tab.List className="flex">
+            <Tab.List className="flex" style={{ overflowX: "scroll" }}>
               <Tab
                 className={({ selected }) =>
                   classNames(
@@ -103,6 +104,16 @@ const Profile = () => {
               >
                 Notification
               </Tab>
+              <Tab
+                className={({ selected }) =>
+                  classNames(
+                    "border-primary-100 mr-6 md:px-6 md:py-4 text-white text-lg",
+                    selected ? "border-b-2" : ""
+                  )
+                }
+              >
+                Transactions
+              </Tab>
             </Tab.List>
           </div>
           <div className="mt-4 md:px-16">
@@ -118,6 +129,9 @@ const Profile = () => {
               </Tab.Panel>
               <Tab.Panel>
                 <Notifications user={user} />
+              </Tab.Panel>
+              <Tab.Panel>
+                <Transactions user={user} />{" "}
               </Tab.Panel>
             </Tab.Panels>
           </div>

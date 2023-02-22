@@ -1,73 +1,120 @@
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import { useState } from "react";
+import localforage from "localforage";
+import { useEffect, useState } from "react";
+import { Services } from "../../mixing/services";
+import global_variables from "../../mixing/urls";
 import Footer from "./../../component/navigation/footer";
 import NavigationBar from "./../../component/navigation/public_navigation_bar";
+import React from "react";
+import { Typography, Grid, Skeleton } from "@mui/material";
+import PaidCourseCard from "./mypaidcard";
+
+const styles = {
+  root: {
+    padding: 16,
+  },
+  title: {
+    fontSize: 32,
+    fontWeight: "bold",
+    marginBottom: 24,
+  },
+  courseCard: {
+    cursor: "pointer",
+    transition: "transform 0.3s ease-in-out",
+    "&:hover": {
+      transform: "translateY(-2px)",
+    },
+  },
+  courseCardContent: {
+    display: "flex",
+    flexDirection: "column",
+    height: "100%",
+  },
+  courseImage: {
+    marginBottom: 16,
+  },
+  courseTitle: {
+    fontSize: 24,
+    fontWeight: "bold",
+  },
+  courseInstructor: {
+    color: "#6B7280",
+  },
+  courseDescription: {
+    marginTop: "auto",
+  },
+  courseButton: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 16,
+    backgroundColor: "#3B82F6",
+    color: "#FFFFFF",
+    borderRadius: 4,
+    padding: "8px 16px",
+    transition: "background-color 0.3s ease-in-out",
+    "&:hover": {
+      backgroundColor: "#2563EB",
+    },
+  },
+};
 
 const MyCourses = () => {
-  const [filter, setFilter] = useState("title");
-  const [category, setCategory] = useState("ICT");
+  const [loading, setLoading] = useState(true);
+  const [courses, setCourses] = useState([]);
 
-  const handleChangeFilter = (event) => {
-    setFilter(event.target.value);
+  const getmypaid = async () => {
+    setLoading(true);
+    const userdata = await localforage.getItem("userdata");
+    // console.log(userdata);
+    try {
+      const res = await (
+        await Services()
+      ).get(global_variables().getmypaidc + `/${userdata.user_id}`);
+
+      // console.log(res.data.payload[0]);
+      setLoading(false);
+      setCourses(res.data.payload);
+    } catch (error) {
+      console.log(error);
+    }
   };
-  const handleChangeCategory = (event) => {
-    setCategory(event.target.value);
-  };
+
+  useEffect(() => {
+    getmypaid();
+  }, []);
 
   return (
     <>
       <NavigationBar />
       <div className="flex flex-col font-serif">
-        <div className="flex flex-col bg-secondary-600 md:px-16 px-3 justify-end">
-          <div className="flex justify-between items-center">
-            <p className=" text-2xl md:text-4xl md:font-bold text-white py-7">
-              My Courses
-            </p>
-          </div>
-        </div>
-
         {/* main content */}
         <div className="mt-12 md:px-16 px-3">
-          <p>Sorty by</p>
-          <div className="flex justify-between mt-5">
-            <div className="flex gap-5">
-              <div className="w-50">
-                <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">Filter</InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={filter}
-                    label="filter"
-                    onChange={handleChangeFilter}
-                  >
-                    <MenuItem value="title">Title</MenuItem>
-                    <MenuItem value="language">Language</MenuItem>
-                    <MenuItem value="short_description">
-                      Short description
-                    </MenuItem>
-                  </Select>
-                </FormControl>
-              </div>
-              <div className="w-50">
-                <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">
-                    Category
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={category}
-                    label="category"
-                    onChange={handleChangeCategory}
-                  >
-                    <MenuItem value="ICT">ICT</MenuItem>
-                    <MenuItem value="baking">Baking</MenuItem>
-                    <MenuItem value="exercise">Exercise</MenuItem>
-                  </Select>
-                </FormControl>
-              </div>
-            </div>
+          <div style={styles.root}>
+            <Typography style={styles.title}>My Courses</Typography>
+            <Grid container spacing={4}>
+              {loading ? (
+                <Grid item xs={12} sm={6} md={4}>
+                  <Skeleton>
+                    <PaidCourseCard
+                      course={{
+                        id: 1,
+                        title: "Introduction to Programming",
+                        instructor: "John Doe",
+                        description:
+                          "Learn the fundamentals of programming and build your own applications.",
+                        thumbnail: "https://picsum.photos/id/237/300/200",
+                      }}
+                    />
+                  </Skeleton>
+                </Grid>
+              ) : (
+                courses.map((course) => (
+                  <Grid item xs={12} sm={6} md={4} key={course.id}>
+                    <PaidCourseCard course={course} />
+                  </Grid>
+                ))
+              )}
+            </Grid>
           </div>
         </div>
       </div>

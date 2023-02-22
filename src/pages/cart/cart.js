@@ -25,6 +25,12 @@ const Cart = () => {
   const navigate = useNavigate();
   const { cart, getCartData } = useContext(GeneralContext);
 
+  useEffect(() => {
+    const courseIds = cart.data?.map((obj) => obj.course_id);
+    console.log(courseIds);
+    console.log(calculateTotal());
+  }, []);
+
   const calculateTotal = () => {
     let sum = 0;
 

@@ -30,6 +30,13 @@ const global_variables = () => {
     //notification
     getNotifications: `${base}:1099/notification/list`,
     updateSeen: `${base}:1099/notification/seen`,
+
+    //myCourse
+    getmypaidc: `${base}:1098/transactions/listpaid`,
+
+    //transactions
+    verifyTransactions: `${base}:1098/transactions/verify`,
+    initiatePyament: `${base}:1098/transactions/initialize`,
   };
 };
 

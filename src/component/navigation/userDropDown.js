@@ -138,11 +138,6 @@ const UserDropDown = () => {
                             <div className=" py-4 px-4">
                               <ul>
                                 <li className="">
-                                  <Link to="/profile?tabindex=2">
-                                    <p>Notifications</p>
-                                  </Link>
-                                </li>
-                                <li className="mt-5">
                                   <Link to="/messages">
                                     <p>Message</p>
                                   </Link>
@@ -155,6 +150,16 @@ const UserDropDown = () => {
                                 <li className="mt-5">
                                   <Link to="/profile?tabindex=1">
                                     <p>Payment Methods</p>
+                                  </Link>
+                                </li>
+                                <li className="mt-5">
+                                  <Link to="/profile?tabindex=2">
+                                    <p>Notifications</p>
+                                  </Link>
+                                </li>
+                                <li className="mt-5">
+                                  <Link to="/profile?tabindex=3">
+                                    <p>Transactions</p>
                                   </Link>
                                 </li>
 

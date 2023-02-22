@@ -12,28 +12,95 @@ import {
   Typography,
 } from "@mui/material";
 import { Payment } from "@mui/icons-material";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import GeneralContext from "../../context/general_context";
 import { useNavigate } from "react-router-dom";
 import { formatCedis } from "../../component/Helpers/money";
+import localforage from "localforage";
+import { Services } from "../../mixing/services";
+import global_variables from "../../mixing/urls";
+import { displayErrMsg, displayLoading } from "../../component/alerts/alerts";
 
 const CheckOut = () => {
   const navigate = useNavigate();
-  const { cart, cartLoading } = useContext(GeneralContext);
+  const [loading, setLoading] = useState(true);
+  const [cart, setCart] = useState(true);
+  const [email, setEmail] = useState("");
+  const [lname, setLname] = useState("");
+  const [fname, setFname] = useState("");
+  const [courses, setCourses] = useState([]);
 
-  const checkAndRedirect = () => {
-    if (cart.data?.length === 0) {
-      navigate("/cart");
+  const getCart = async () => {
+    setLoading(true);
+    const userdata = await localforage.getItem("userdata");
+    setEmail(userdata.email);
+    setLname(userdata.last_name);
+    setFname(userdata.first_name);
+    // console.log(userdata);
+    try {
+      const res = await (
+        await Services()
+      ).get(
+        global_variables().getCart +
+          `?user_id=${userdata.user_id}&query_fields=price,status,image,course_id,cart_id,description`
+      );
+      setCart(res.data?.data);
+      const courseIds = res.data?.data?.data?.map((obj) => obj.course_id);
+      console.log(courseIds);
+      setCourses(courseIds);
+      setLoading(false);
+      if (res.data?.data?.data?.length === 0) {
+        navigate("/cart");
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
 
+  const calculateTotal = () => {
+    let sum = 0;
+
+    for (let i = 0; i < cart.data?.length; i++) {
+      sum += cart.data[i].price;
+    }
+
+    return sum;
+  };
+
   useEffect(() => {
-    checkAndRedirect();
+    getCart();
   }, []);
+
+  const startPayemnt = async () => {
+    displayLoading("loading....");
+
+    const userdata = await localforage.getItem("userdata");
+
+    const init_data = {
+      email: email,
+      amount: calculateTotal(),
+      courses: courses,
+    };
+    try {
+      const res = await (
+        await Services()
+      ).post(
+        global_variables().initiatePyament + `/${userdata.user_id}`,
+        init_data
+      );
+
+      console.log(res.data?.payload?.authorization_url);
+      window.location.href = res.data?.payload?.authorization_url;
+    } catch (error) {
+      console.log(error);
+      displayErrMsg("There was an error initializeing payment", () => {});
+    }
+  };
 
   return (
     <>
       <NavigationBar />
+      {/* {JSON.stringify(courses)} */}
       <div className="p-10">
         {/* <Typography variant="h4" component="h1" className="mb-10">
           Checkout
@@ -67,6 +134,27 @@ const CheckOut = () => {
                 </Card>
               );
             })}
+
+            <Card>
+              <CardContent>
+                <Grid container spacing={2}>
+                  <Grid item xs={8}>
+                    <Typography variant="subtitle1" component="h3">
+                      Total
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography
+                      variant="subtitle1"
+                      component="h3"
+                      align="right"
+                    >
+                      {formatCedis(calculateTotal())}
+                    </Typography>
+                  </Grid>
+                </Grid>
+              </CardContent>
+            </Card>
           </Grid>
           <Grid item xs={12} md={6}>
             <Card>
@@ -74,35 +162,34 @@ const CheckOut = () => {
                 <Typography variant="h6" component="h2" className="mb-4">
                   Payment Information
                 </Typography>
-                <FormControl component="fieldset">
-                  <FormLabel component="legend">Payment Method</FormLabel>
-                  <div className="flex justify-between my-2">
-                    <Button>Card</Button>
-                    <Button>Momo</Button>
-                  </div>
-                </FormControl>
                 <Divider className="my-4" />
                 <div className="my-3">
                   <TextField
                     fullWidth
-                    label="Name on Card"
+                    label="Email"
                     variant="outlined"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
-                <div className="mb-3">
-                  <TextField fullWidth label="Card Number" variant="outlined" />
-                </div>
-                <div></div>
                 <Grid container spacing={2}>
                   <Grid item xs={6}>
                     <TextField
                       fullWidth
-                      label="Expiration Date"
+                      label="First name"
                       variant="outlined"
+                      value={fname}
+                      onChange={(e) => setFname(e.target.value)}
                     />
                   </Grid>
                   <Grid item xs={6}>
-                    <TextField fullWidth label="CVV" variant="outlined" />
+                    <TextField
+                      fullWidth
+                      label="Last name"
+                      variant="outlined"
+                      value={lname}
+                      onChange={(e) => setLname(e.target.value)}
+                    />
                   </Grid>
                 </Grid>
               </CardContent>
@@ -115,7 +202,8 @@ const CheckOut = () => {
             variant="contained"
             endIcon={<Payment />}
             className="ml-auto"
-            disabled={cartLoading}
+            disabled={loading}
+            onClick={startPayemnt}
           >
             Complete purchase
           </Button>

@@ -214,8 +214,9 @@ const MyCartIcon = () => {
                             </p>
                             <div className="mt-6">
                               <Link
-                                to="#"
+                                to="/checkout"
                                 className="flex items-center justify-center rounded-md border border-transparent bg-secondary-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-secondary-700"
+                                // onClick={() => navigate("/checkout")}
                               >
                                 Checkout
                               </Link>

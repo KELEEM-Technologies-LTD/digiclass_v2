@@ -10,6 +10,7 @@ import PaymentSettings from "./sections/payment";
 import ProfileSection from "./sections/profile_settings";
 import { HashLoader } from "react-spinners";
 import Transactions from "./sections/transactions";
+import { displaySuccMsg } from "../../component/alerts/alerts";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -21,13 +22,21 @@ const Profile = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState([]);
+  const searchParams = new URLSearchParams(window.location.search);
+  const tabindex = searchParams.get("tabindex");
+  const success = searchParams.get("success");
 
   useEffect(() => {
-    const searchParams = new URLSearchParams(window.location.search);
-    const tabindex = searchParams.get("tabindex");
     setSelectedIndex(parseInt(tabindex));
     getUserInformation();
+    checkSuccess();
   }, []);
+
+  const checkSuccess = () => {
+    if (success) {
+      displaySuccMsg("Transaction verified", () => {});
+    }
+  };
 
   const getUserInformation = async () => {
     setLoading(true);

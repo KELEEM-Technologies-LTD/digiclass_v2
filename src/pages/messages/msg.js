@@ -1,4 +1,7 @@
-import React from "react";
+import { Avatar } from "@mui/material";
+import React, { useState } from "react";
+import MessageLeft from "./components/message_left";
+import MessageRight from "./components/message_right";
 
 const MessageWindow = () => {
   const contacts = [
@@ -8,47 +11,53 @@ const MessageWindow = () => {
     { id: 4, name: "Alice Johnson" },
   ];
 
+  const [showDrawer, setShowDrawer] = useState(true);
+
+  const toggleDrawer = () => {
+    setShowDrawer(!showDrawer);
+  };
+
   return (
-    <div className="flex">
+    <div className="flex flex-col md:flex-row">
       {/* Side navigation */}
       <div
-        className="flex-none w-64 bg-[white] shadow-md h-[80vh] flex flex-col"
-        style={{ maxHeight: "80vh", overflowY: "scroll" }}
+        className="flex-none hidden md:block md:w-64 bg-[white] shadow-md flex flex-col"
+        style={{ maxHeight: "80vh", minHeight: "80vh", overflowY: "scroll" }}
       >
         <div className="p-4 font-bold">Contacts</div>
         <div className="flex-grow overflow-y-scroll">
-          {contacts.map((contact, index) => (
+          {contacts.map((contact) => (
             <div
-              key={index}
-              className="px-4 py-2 hover:bg-primary-200 cursor-pointer"
+              className="flex px-4 py-2 text-[black] hover:bg-primary-200 cursor-pointer"
+              key={contact.id}
             >
-              {contact.name}
+              <Avatar>AE</Avatar>
+              <div className="ml-3 mt-2">{contact.name}</div>
             </div>
           ))}
         </div>
       </div>
       {/* Main content */}
-      <div className="flex-grow bg-primary-100 h-[80vh] flex flex-col justify-end">
+      <div
+        className="flex-grow bg-primary-100 flex flex-col justify-end"
+        style={{ maxHeight: "80vh", minHeight: "80vh", overflowY: "scroll" }}
+      >
         <div className="flex-grow overflow-y-scroll">
           {/* Example messages */}
-          <div className="p-4">
-            <div className="flex justify-end">
-              <div className="bg-secondary-600 rounded-lg py-2 px-4 text-[white] max-w-xs">
-                Hello! How are you?
-              </div>
-            </div>
-            <div className="text-primary-500 text-sm mt-1 text-right">
-              10:05 AM
-            </div>
-          </div>
-          <div className="p-4">
-            <div className="flex">
-              <div className="bg-[white] rounded-lg py-2 px-4 max-w-xs">
-                I'm good, thanks! How about you?
-              </div>
-            </div>
-            <div className="text-primary-500 text-sm mt-1">10:07 AM</div>
-          </div>
+          <MessageRight />
+          <MessageLeft />
+          <MessageRight />
+          <MessageLeft />
+          <MessageRight />
+          <MessageLeft />
+          <MessageRight />
+          <MessageLeft />
+          <MessageRight />
+          <MessageLeft />
+          <MessageRight />
+          <MessageLeft />
+          <MessageRight />
+          <MessageLeft />
         </div>
         <div className="p-4 bg-[white]">
           <div className="flex">
@@ -65,6 +74,42 @@ const MessageWindow = () => {
           </div>
         </div>
       </div>
+      {/* Drawer button */}
+      <div className="md:hidden fixed bottom-4 right-4">
+        <button
+          className="bg-secondary-600 text-[white] px-4 py-2 rounded-lg"
+          onClick={toggleDrawer}
+        >
+          Contacts
+        </button>
+      </div>
+      {/* Drawer */}
+      {showDrawer && (
+        <div className="md:hidden fixed inset-0 bg-primary-500 bg-opacity-50">
+          <div className="bg-white shadow-md h-full flex flex-col w-64">
+            <div className="p-4 font-bold">Contacts</div>
+            <div className="flex-grow overflow-y-scroll">
+              {contacts.map((contact) => (
+                <div
+                  className="flex px-4 py-2 text-[black] hover:bg-primary-200 cursor-pointer"
+                  key={contact.id}
+                >
+                  <Avatar>AE</Avatar>
+                  <div className="ml-3 mt-2">{contact.name}</div>
+                </div>
+              ))}
+            </div>
+            <div className="p-4">
+              <button
+                className="bg-[red] text-white px-4 py-2 rounded-lg"
+                onClick={toggleDrawer}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -40,6 +40,11 @@ const global_variables = () => {
 
     //messages
     sendMessage: `${base}:1913/api/v1/messages`,
+    getContactList: `${base}:3000/messages/contact`,
+    getRequestList: `${base}:3000/messages/request`,
+    getMsgName: `${base}:3000/messages/name`,
+    getMsg: `${base}:3000/messages/chats`,
+    sendMsg: `${base}:3000/messages/send`,
   };
 };
 

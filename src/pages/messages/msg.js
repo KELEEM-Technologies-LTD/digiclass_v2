@@ -1,15 +1,55 @@
 import { Avatar } from "@mui/material";
-import React, { useState } from "react";
-import MessageLeft from "./components/message_left";
-import MessageRight from "./components/message_right";
+import localforage from "localforage";
+import React, { useEffect, useState } from "react";
+import { Services } from "../../mixing/services";
+import global_variables from "../../mixing/urls";
+import Chats from "./components/chats";
+import ContactCard from "./components/contact_card";
 
 const MessageWindow = () => {
-  const contacts = [
-    { id: 1, name: "John Doe" },
-    { id: 2, name: "Jane Doe" },
-    { id: 3, name: "Bob Smith" },
-    { id: 4, name: "Alice Johnson" },
-  ];
+  const [loading, setLoading] = useState(true);
+  const [contactlist, setContactList] = useState([]);
+  const [req, setReq] = useState([]);
+  const [chatToShow, setChatToShow] = useState("");
+  const [active, setActive] = useState("");
+
+  const getContactList = async () => {
+    setLoading(true);
+    const user = await localforage.getItem("userdata");
+    // console.log(user);
+    try {
+      const res = await (
+        await Services()
+      ).post(global_variables().getContactList, {
+        sender: user.user_id,
+      });
+      // console.log(res.data?.payload);
+      setContactList(res.data?.payload);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getRequest = async () => {
+    const user = await localforage.getItem("userdata");
+    // console.log(user);
+    try {
+      const res = await (
+        await Services()
+      ).post(global_variables().getRequestList, {
+        sender: user.user_id,
+      });
+      console.log(res.data?.payload);
+      setReq(res.data?.payload);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getContactList();
+    getRequest();
+  }, []);
 
   const [showDrawer, setShowDrawer] = useState(true);
 
@@ -22,81 +62,73 @@ const MessageWindow = () => {
       {/* Side navigation */}
       <div
         className="flex-none hidden md:block md:w-64 bg-[white] shadow-md flex flex-col"
-        style={{ maxHeight: "80vh", minHeight: "80vh", overflowY: "scroll" }}
+        style={{ maxHeight: "86vh", minHeight: "86vh", overflowY: "scroll" }}
       >
-        <div className="p-4 font-bold">Contacts</div>
+        <div className="p-4 font-bold text-center">Messages</div>
         <div className="flex-grow overflow-y-scroll">
-          {contacts.map((contact) => (
-            <div
-              className="flex px-4 py-2 text-[black] hover:bg-primary-200 cursor-pointer"
-              key={contact.id}
-            >
-              <Avatar>AE</Avatar>
-              <div className="ml-3 mt-2">{contact.name}</div>
-            </div>
+          {contactlist.map((contact, index) => (
+            <ContactCard
+              key={index}
+              reciever={contact.reciever}
+              sender={contact.sender}
+              setChatToShow={setChatToShow}
+              chatToShow={chatToShow}
+              toggleDrawer={toggleDrawer}
+              active={active}
+              setActive={setActive}
+            />
+          ))}
+          <hr className="mx-5 mt-5" />
+          <p className="p-4 font-bold text-center">Chat request</p>
+          {req.map((contact, index) => (
+            <ContactCard
+              key={index}
+              reciever={contact.sender}
+              sender={contact.sender}
+              setChatToShow={setChatToShow}
+              chatToShow={chatToShow}
+              toggleDrawer={toggleDrawer}
+              active={active}
+              setActive={setActive}
+            />
           ))}
         </div>
       </div>
       {/* Main content */}
       <div
         className="flex-grow bg-primary-100 flex flex-col justify-end"
-        style={{ maxHeight: "80vh", minHeight: "80vh", overflowY: "scroll" }}
+        style={{ maxHeight: "86vh", minHeight: "86vh", overflowY: "scroll" }}
       >
-        <div className="flex-grow overflow-y-scroll">
-          {/* Example messages */}
-          <MessageRight />
-          <MessageLeft />
-          <MessageRight />
-          <MessageLeft />
-          <MessageRight />
-          <MessageLeft />
-          <MessageRight />
-          <MessageLeft />
-          <MessageRight />
-          <MessageLeft />
-          <MessageRight />
-          <MessageLeft />
-          <MessageRight />
-          <MessageLeft />
-        </div>
-        <div className="p-4 bg-[white]">
-          <div className="flex">
-            <div className="flex-grow">
-              <input
-                type="text"
-                className="w-full border-primary-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-secondary-600"
-                placeholder="Type a message..."
-              />
-            </div>
-            <button className="ml-4 bg-secondary-600 text-[white] px-4 py-2 rounded-lg">
-              Send
-            </button>
-          </div>
-        </div>
+        <Chats chatid={chatToShow} />
       </div>
       {/* Drawer button */}
-      <div className="md:hidden fixed bottom-4 right-4">
+      <div className="md:hidden fixed top-12 left-4">
         <button
-          className="bg-secondary-600 text-[white] px-4 py-2 rounded-lg"
+          className="bg-secondary-400 text-[white] px-4 py-2 rounded-lg"
           onClick={toggleDrawer}
         >
-          Contacts
+          Messages
         </button>
       </div>
       {/* Drawer */}
       {showDrawer && (
         <div className="md:hidden fixed inset-0 bg-primary-500 bg-opacity-50">
           <div className="bg-white shadow-md h-full flex flex-col w-64">
-            <div className="p-4 font-bold">Contacts</div>
+            <div className="p-4 font-bold text-[black] text-center">
+              Messages
+            </div>
             <div className="flex-grow overflow-y-scroll">
-              {contacts.map((contact) => (
-                <div
-                  className="flex px-4 py-2 text-[black] hover:bg-primary-200 cursor-pointer"
-                  key={contact.id}
-                >
-                  <Avatar>AE</Avatar>
-                  <div className="ml-3 mt-2">{contact.name}</div>
-                </div>
+              {contactlist.map((contact, index) => (
+                <ContactCard
+                  key={index}
+                  reciever={contact.reciever}
+                  setChatToShow={setChatToShow}
+                  chatToShow={chatToShow}
+                  toggleDrawer={toggleDrawer}
+                  sender={contact.sender}
+                  active={active}
+                  setActive={setActive}
+                />
               ))}
             </div>
             <div className="p-4">

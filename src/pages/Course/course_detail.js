@@ -92,7 +92,6 @@ const CourseDetail = () => {
 
   useLayoutEffect(() => {
     getCourseDetail();
-    getReviews();
   }, []);
 
   return (
@@ -167,9 +166,6 @@ const CourseDetail = () => {
                   <Tab className="px-6 py-3 flex justify-center items-center cursor-pointer md:border-b-0 border-b border-primary-300">
                     FAQ
                   </Tab>
-                  <Tab className="px-6 py-3 flex justify-center items-center cursor-pointer md:border-b-0 border-b border-primary-300">
-                    Notes
-                  </Tab>
                 </Tab.List>
                 <div className="grid md:grid-cols-12 grid-cols-1">
                   <div className="col-span-9">
@@ -188,13 +184,13 @@ const CourseDetail = () => {
                               reviews={review}
                               courseid={course.course_id}
                               reload={getReviews}
+                              allow={false}
                             />
                           </div>
                         </Tab.Panel>
                         <Tab.Panel>
                           <AboutAuthor instructor={instructor} />
                         </Tab.Panel>
-                        <Tab.Panel>Content 4</Tab.Panel>
                       </Tab.Panels>
                     </div>
                   </div>

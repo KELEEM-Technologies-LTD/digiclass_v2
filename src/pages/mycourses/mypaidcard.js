@@ -1,5 +1,6 @@
-import { Typography, Grid, Card, CardContent } from "@mui/material";
+import { Typography, Card, CardContent } from "@mui/material";
 import { ArrowRight } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 const styles = {
   root: {
@@ -13,6 +14,8 @@ const styles = {
   courseCard: {
     cursor: "pointer",
     transition: "transform 0.3s ease-in-out",
+    maxHeight: "520px",
+    minHeight: "520px",
     "&:hover": {
       transform: "translateY(-2px)",
     },
@@ -52,6 +55,8 @@ const styles = {
 };
 
 const PaidCourseCard = ({ course }) => {
+  const navigate = useNavigate();
+  // console.log(course);
   return (
     <Card style={styles.courseCard} onClick={() => {}}>
       <CardContent style={styles.courseCardContent}>
@@ -70,7 +75,10 @@ const PaidCourseCard = ({ course }) => {
         <Typography style={styles.courseDescription}>
           {course.description}
         </Typography>
-        <div style={styles.courseButton}>
+        <div
+          style={styles.courseButton}
+          onClick={() => navigate(`/my-course/${course.course_id}`)}
+        >
           View Course <ArrowRight />
         </div>
       </CardContent>

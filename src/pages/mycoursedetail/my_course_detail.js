@@ -15,6 +15,7 @@ import AboutAuthor from "../Course/sections/about_the_author";
 import { Tab } from "@headlessui/react";
 import CourseInformation from "../Course/sections/course_information";
 import Reviews from "../Course/sections/reviews";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const MyCourseDetail = () => {
   const navigate = useNavigate();
@@ -36,7 +37,7 @@ const MyCourseDetail = () => {
         global_variables().getCourses +
           `/${courseid}?query_fields=title,status,about,caption,short_description,description,about,skill_level,language,price,caption,instructor,configurations,certificate,contract_percentage,status,view_status,updatedAt,thumbnail`
       );
-      console.log(res.data.data);
+      // console.log(res.data.data);
       setCourse(res.data?.data);
 
       const token = await localforage.getItem("token");
@@ -101,85 +102,108 @@ const MyCourseDetail = () => {
           {loading ? <Skeleton width={600} height={30} /> : course.title}
         </p>
       </div>
-      <div style={{ minHeight: "100vh" }}>
-        <div className="flex flex-wrap">
-          <div className="w-full md:w-8/12">
-            <ReactPlayer
-              url="https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4"
-              controls
-              width="100%"
-              height="100%"
-              loop={true}
-              light={course.thumbnail}
-              playIcon={
-                <PlayIcon
-                  className="w-20 h-20 my-40"
-                  style={{ color: "white" }}
-                />
-              }
-              config={{
-                file: {
-                  attributes: {
-                    controlsList: "nodownload",
-                  },
-                },
-              }}
-            />
-          </div>
-          <div className="w-full md:w-4/12">
-            <CourseSection courseid={courseid} />
-          </div>
+      {loading ? (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            background: "rgba(0, 0, 0, 0.5)",
+            zIndex: 9999,
+          }}
+        >
+          <CircularProgress size={80} color="primary" />
         </div>
-        <Tab.Group>
-          <Tab.List className="flex overflow-x-scroll">
-            <Tab className="px-6 py-3 flex justify-center items-center cursor-pointer md:border-b-0 border-b border-primary-300 ">
-              Overview
-            </Tab>
-            <Tab className="px-6 py-3 flex justify-center items-center cursor-pointer md:border-b-0 border-b border-primary-300">
-              Reviews
-            </Tab>
-            <Tab className="px-6 py-3 flex justify-center items-center cursor-pointer md:border-b-0 border-b border-primary-300">
-              Author
-            </Tab>
-            <Tab className="px-6 py-3 flex justify-center items-center cursor-pointer md:border-b-0 border-b border-primary-300">
-              FAQ
-            </Tab>
-            <Tab className="px-6 py-3 flex justify-center items-center cursor-pointer md:border-b-0 border-b border-primary-300">
-              Notes
-            </Tab>
-          </Tab.List>
-          <div className="grid md:grid-cols-12 grid-cols-1">
-            <div className="col-span-9">
-              <div className="md:px-24 px-4 py-4">
-                <Tab.Panels>
-                  <Tab.Panel>
-                    <CourseInformation course={course} />
-                  </Tab.Panel>
-                  <Tab.Panel>
-                    <div className="py-3 item-center flex flex-col justify-center">
-                      <p className="text-secondary-600 font-bold text-lg">
-                        Reviews
-                      </p>
-                      <Reviews
-                        loading={reviewLoading}
-                        reviews={review}
-                        courseid={course.course_id}
-                        reload={getReviews}
-                        allow={true}
-                      />
-                    </div>
-                  </Tab.Panel>
-                  <Tab.Panel>
-                    <AboutAuthor instructor={instructor} />
-                  </Tab.Panel>
-                  <Tab.Panel>FAQ</Tab.Panel>
-                  <Tab.Panel>Notes</Tab.Panel>
-                </Tab.Panels>
-              </div>
+      ) : (
+        <div style={{ minHeight: "100vh" }}>
+          <div className="flex flex-wrap">
+            <div className="w-full md:w-8/12">
+              <ReactPlayer
+                url="https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4"
+                controls
+                width="100%"
+                height="100%"
+                loop={true}
+                light={course.thumbnail}
+                playIcon={
+                  <PlayIcon
+                    className="w-20 h-20 my-40"
+                    style={{ color: "white" }}
+                  />
+                }
+                config={{
+                  file: {
+                    attributes: {
+                      controlsList: "nodownload",
+                    },
+                  },
+                }}
+              />
+            </div>
+            <div className="w-full md:w-4/12">
+              <CourseSection courseid={courseid} />
             </div>
           </div>
-        </Tab.Group>
-      </div>
+          <Tab.Group>
+            <Tab.List className="flex overflow-x-scroll">
+              <Tab className="px-6 py-3 flex justify-center items-center cursor-pointer md:border-b-0 border-b border-primary-300 ">
+                Overview
+              </Tab>
+              <Tab className="px-6 py-3 flex justify-center items-center cursor-pointer md:border-b-0 border-b border-primary-300">
+                Reviews
+              </Tab>
+              <Tab className="px-6 py-3 flex justify-center items-center cursor-pointer md:border-b-0 border-b border-primary-300">
+                Author
+              </Tab>
+              <Tab className="px-6 py-3 flex justify-center items-center cursor-pointer md:border-b-0 border-b border-primary-300">
+                FAQ
+              </Tab>
+              <Tab className="px-6 py-3 flex justify-center items-center cursor-pointer md:border-b-0 border-b border-primary-300">
+                Notes
+              </Tab>
+            </Tab.List>
+            <div className="grid md:grid-cols-12 grid-cols-1">
+              <div className="col-span-9">
+                <div className="md:px-24 px-4 py-4">
+                  <Tab.Panels>
+                    <Tab.Panel>
+                      <CourseInformation course={course} />
+                    </Tab.Panel>
+                    <Tab.Panel>
+                      <div className="py-3 item-center flex flex-col justify-center">
+                        <p className="text-secondary-600 font-bold text-lg">
+                          Reviews
+                        </p>
+                        <Reviews
+                          loading={reviewLoading}
+                          reviews={review}
+                          courseid={course.course_id}
+                          reload={getReviews}
+                          allow={true}
+                        />
+                      </div>
+                    </Tab.Panel>
+                    <Tab.Panel>
+                      <AboutAuthor
+                        instructor={instructor}
+                        instructor_id={course.instructor}
+                        courseid={courseid}
+                      />
+                    </Tab.Panel>
+                    <Tab.Panel>FAQ</Tab.Panel>
+                    <Tab.Panel>Notes</Tab.Panel>
+                  </Tab.Panels>
+                </div>
+              </div>
+            </div>
+          </Tab.Group>
+        </div>
+      )}
 
       <Footer />
     </>

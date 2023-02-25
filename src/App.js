@@ -31,6 +31,7 @@ const MyUserCourseDetail = React.lazy(() =>
 const MyCourseCategory = React.lazy(() =>
   import("./pages/category/course_by_category")
 );
+const MyMessages = React.lazy(() => import("./pages/messages/messages"));
 
 function App() {
   return (
@@ -77,6 +78,7 @@ function App() {
                   path="/my-course/:courseid"
                   element={<MyUserCourseDetail />}
                 />
+                <Route exact path="/messages" element={<MyMessages />} />
               </Route>
             </Routes>
           </Router>

@@ -37,6 +37,9 @@ const global_variables = () => {
     //transactions
     verifyTransactions: `${base}:1098/transactions/verify`,
     initiatePyament: `${base}:1098/transactions/initialize`,
+
+    //messages
+    sendMessage: `${base}:1913/api/v1/messages`,
   };
 };
 

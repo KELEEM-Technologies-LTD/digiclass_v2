@@ -12,6 +12,7 @@ import {
 import { Services } from "../../../mixing/services";
 import global_variables from "../../../mixing/urls";
 import { Star, StarBorder, StarHalf } from "@mui/icons-material";
+import { formatCedis } from "../../../component/Helpers/money";
 
 function AboutCourse({ course_detail, instructor, loading, reviews }) {
   const [adding, setAdding] = useState(false);
@@ -100,7 +101,9 @@ function AboutCourse({ course_detail, instructor, loading, reviews }) {
           {!loading && (
             <div className="flex mt-3">
               <div className="flex items-center">
-                <p className="font-bold text-sm text-secondary-500">{rating.toFixed(1)}</p>
+                <p className="font-bold text-sm text-secondary-500">
+                  {rating.toFixed(1)}
+                </p>
                 <div className="flex gap-1 items-center ml-1">
                   {[...Array(fullStars)].map((_, i) => (
                     <Star width={14} key={i} className="text-secondary-500" />
@@ -170,7 +173,10 @@ function AboutCourse({ course_detail, instructor, loading, reviews }) {
                   <div className="w-8 h-8 border-2 border-primary-800 rounded-full border-t-2 border-t-secondary-500 animate-spin"></div>
                 </div>
               ) : (
-                <p className="text-white">Add to cart</p>
+                <p className="text-white">
+                  {" "}
+                  {formatCedis(course_detail.price)} Add to cart
+                </p>
               )}
             </button>
             <button

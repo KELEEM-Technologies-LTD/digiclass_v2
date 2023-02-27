@@ -21,7 +21,6 @@ import localforage from "localforage";
 function AboutAuthor({ instructor, instructor_id, courseid }) {
   const { isLogged } = useContext(GeneralContext);
   const [open, setOpen] = useState(false);
-  const [title, setTitle] = useState("");
   const [message, setMessage] = useState("");
   const [sending, setSending] = useState(false);
 
@@ -31,36 +30,35 @@ function AboutAuthor({ instructor, instructor_id, courseid }) {
 
   const sendmessage = async () => {
     setSending(true);
-    if (title === "" || message === "") {
-      displayWarningMsg(
-        "Please fill the form to send a message to the course instructor"
-      );
+    if (message === "") {
+      displayWarningMsg("Please type  a message to the course instructor");
       setSending(false);
     } else {
       // setSending(true);
 
       const user = await localforage.getItem("userdata");
-
-      const messageData = {
-        course_id: courseid,
-        title: title,
-        student_id: user.user_id,
-        body: message,
-        instructor_id: instructor_id,
-      };
+      // const messageData = {
+      //   course_id: courseid,
+      //   title: title,
+      //   student_id: user.user_id,
+      //   body: message,
+      //   instructor_id: instructor_id,
+      // };
       // console.log(messageData);
-
       try {
         const res = await (
           await Services()
-        ).post(global_variables().sendMessage, messageData);
+        ).post(global_variables().sendMsg, {
+          sender: user.user_id,
+          reciever: instructor_id,
+          message: message,
+        });
         displaySuccMsg(
-          "Message sent to instructor, the instructor would reply you as soon as possible",
+          "Message sent to instructor, the instructor would reply you as soon as possible, check your messages.",
           () => {}
         );
         setOpen(false);
         setSending(false);
-        setTitle("");
         setMessage("");
       } catch (error) {
         console.log(error);
@@ -147,20 +145,6 @@ function AboutAuthor({ instructor, instructor_id, courseid }) {
                           Send Author a message
                         </Dialog.Title>
                         <hr className="my-3 bg-secondary-300" />
-
-                        <div className="mb-4">
-                          <label
-                            htmlFor="title"
-                            className="block text-gray-700 font-bold mb-2"
-                          >
-                            Title
-                          </label>
-                          <input
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            value={title}
-                            onChange={(e) => setTitle(e.target.value)}
-                          />
-                        </div>
                         <div className="mb-6">
                           <label
                             htmlFor="message"
@@ -202,7 +186,6 @@ function AboutAuthor({ instructor, instructor_id, courseid }) {
                       onClick={() => {
                         setOpen(false);
                         setSending(false);
-                        setTitle("");
                         setMessage("");
                       }}
                       ref={cancelButtonRef}

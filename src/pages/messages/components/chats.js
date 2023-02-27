@@ -28,7 +28,7 @@ const Chats = ({ chatid }) => {
           reciever: chatid,
         });
 
-        console.log(res.data?.payload);
+        // console.log(res.data?.payload);
         setchats(res.data?.payload);
         setLoading(false);
       } catch (error) {

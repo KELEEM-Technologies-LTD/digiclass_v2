@@ -3,10 +3,8 @@ import InputWithIcon from "../../../component/InputFields/InputWithIcon";
 import GeneralContext from "../../../context/general_context";
 
 const HomeBanner = () => {
-  const { isLogged } = useContext(GeneralContext);
-  const user = {
-    fullname: "John Emil",
-  };
+  const { isLogged, user } = useContext(GeneralContext);
+
   return (
     <div className=" md:h-screen  md:px-16 grid md:grid-cols-2 grid-cols-1 items-center">
       <img src="./img/2.png" alt="people" className="md:hidden w-full" />
@@ -20,7 +18,7 @@ const HomeBanner = () => {
             style={{ lineHeight: "1.2em" }}
           >
             {isLogged
-              ? `Hi ${user.fullname}, you can start learning today`
+              ? `Hi ${user.first_name}, you can start learning today`
               : "Anyone, anywhere, at anytime can learn to become"}
           </p>
 

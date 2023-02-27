@@ -108,8 +108,8 @@ const MyCourses = () => {
                   </Skeleton>
                 </Grid>
               ) : (
-                courses.map((course) => (
-                  <Grid item xs={12} sm={6} md={4} key={course.id}>
+                courses.map((course, index) => (
+                  <Grid item xs={12} sm={6} md={4} key={index}>
                     <PaidCourseCard course={course} />
                   </Grid>
                 ))

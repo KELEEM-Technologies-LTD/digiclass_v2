@@ -115,7 +115,7 @@ const ProfileSection = ({ user, getUserInformation }) => {
                     <p>First Name</p>
 
                     <InputWithIcon
-                      placeholder="Full name"
+                      placeholder="First name"
                       type="text"
                       name="firstName"
                       value={fname}
@@ -127,7 +127,7 @@ const ProfileSection = ({ user, getUserInformation }) => {
                     <p>Last Name</p>
 
                     <InputWithIcon
-                      placeholder="Phone number"
+                      placeholder="Last name"
                       type="text"
                       name="lastName"
                       value={lname}
@@ -150,7 +150,7 @@ const ProfileSection = ({ user, getUserInformation }) => {
                     <p>Location</p>
 
                     <InputWithIcon
-                      placeholder="Phone number"
+                      placeholder="Location"
                       type="text"
                       value={loc}
                       onChange={(e) => setLoc(e.target.value)}

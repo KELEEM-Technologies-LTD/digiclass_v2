@@ -29,6 +29,7 @@ const CheckOut = () => {
   const [lname, setLname] = useState("");
   const [fname, setFname] = useState("");
   const [courses, setCourses] = useState([]);
+  const [total, setTotal] = useState(0);
 
   const getCart = async () => {
     setLoading(true);
@@ -46,9 +47,12 @@ const CheckOut = () => {
       );
       setCart(res.data?.data);
       const courseIds = res.data?.data?.data?.map((obj) => obj.course_id);
-      console.log(courseIds);
+      // console.log(courseIds);
       setCourses(courseIds);
       setLoading(false);
+      setTotal(calculateTotal(res.data?.data));
+      // console.log(calculateTotal(res.data?.data));
+
       if (res.data?.data?.data?.length === 0) {
         navigate("/cart");
       }
@@ -57,11 +61,11 @@ const CheckOut = () => {
     }
   };
 
-  const calculateTotal = () => {
+  const calculateTotal = (cartPassed) => {
     let sum = 0;
 
-    for (let i = 0; i < cart.data?.length; i++) {
-      sum += cart.data[i].price;
+    for (let i = 0; i < cartPassed.data?.length; i++) {
+      sum += cartPassed.data[i].price;
     }
 
     return sum;
@@ -78,7 +82,7 @@ const CheckOut = () => {
 
     const init_data = {
       email: email,
-      amount: calculateTotal(),
+      amount: total,
       courses: courses,
     };
     try {
@@ -149,7 +153,7 @@ const CheckOut = () => {
                       component="h3"
                       align="right"
                     >
-                      {formatCedis(calculateTotal())}
+                      {formatCedis(total)}
                     </Typography>
                   </Grid>
                 </Grid>
@@ -157,6 +161,9 @@ const CheckOut = () => {
             </Card>
           </Grid>
           <Grid item xs={12} md={6}>
+            <Typography variant="h5" component="h2" className="mb-4">
+              Payment information
+            </Typography>
             <Card>
               <CardContent>
                 <Typography variant="h6" component="h2" className="mb-4">

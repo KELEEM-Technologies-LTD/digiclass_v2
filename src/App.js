@@ -16,6 +16,9 @@ const MyHome = React.lazy(() => import("./pages/Home/home"));
 const MySignup = React.lazy(() => import("./pages/sign_up"));
 const MySignin = React.lazy(() => import("./pages/sign_in"));
 const MyForgotPassword = React.lazy(() => import("./pages/forgot_password"));
+const MyVerifyAndReset = React.lazy(() =>
+  import("./pages/verify_and_reset_pwd")
+);
 const MyCourseDetail = React.lazy(() => import("./pages/Course/course_detail"));
 const MyCart = React.lazy(() => import("./pages/cart/cart"));
 const MyCheckOut = React.lazy(() => import("./pages/cart/checkout"));
@@ -50,6 +53,11 @@ function App() {
                 exact
                 element={<MyForgotPassword />}
               />
+              <Route
+                path="/password/reset/verify/:verification_id"
+                exact
+                element={<MyVerifyAndReset />}
+              />
               {/* <Route path="/cart" exact element={<MyCart />} /> */}
               <Route
                 path="/course/:courseid"
@@ -61,11 +69,11 @@ function App() {
                 exact
                 element={<MyCourseCategory />}
               />
+              <Route exact path="/all" element={<MyAllCourse />} />
 
               <Route element={<MyPrivateRoute />}>
                 <Route exact path="/cart" element={<MyCart />} />
                 <Route exact path="/checkout" element={<MyCheckOut />} />
-                <Route exact path="/all" element={<MyAllCourse />} />
                 <Route exact path="/profile" element={<MyProfilePage />} />
                 <Route exact path="/my-course" element={<MyCourses />} />
                 <Route

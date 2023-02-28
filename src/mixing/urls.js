@@ -6,6 +6,7 @@ const global_variables = () => {
     signup: `${base}:2000/api/v1/auth/signup`,
     checkuser: `${base}:2000/api/v1/auth/available`,
     resetemail: `${base}:2000/api/v1/auth/reset`,
+    resetPwd: `${base}:2000/api/v1/auth/reset/verify`,
 
     //Course related
     getCourses: `${base}:1906/api/v1/courses`,
@@ -30,6 +31,7 @@ const global_variables = () => {
     //notification
     getNotifications: `${base}:1099/notification/list`,
     updateSeen: `${base}:1099/notification/seen`,
+    postNotification: `${base}:1099/notification/sendnotifcation`,
 
     //myCourse
     getmypaidc: `${base}:1098/transactions/listpaid`,

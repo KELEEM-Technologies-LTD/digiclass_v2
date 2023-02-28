@@ -55,11 +55,12 @@ const NavigationBar = () => {
 
   return (
     <>
-      <Popover className="relative bg-white">
-        <div className="mx-auto max-w-7xl px-6">
+      <Popover className="relative bg-white shadow-2xl">
+        {/* <div className="mx-auto max-w-7xl px-6"> */}
+        <div className="mx-5">
           <div className="flex items-center justify-between border-b-2 border-primary-100 py-6 md:justify-start md:space-x-10">
-            <div className="flex justify-start lg:w-0 lg:flex-1">
-              <Link to="/">
+            <div className="flex justify-start">
+              <Link to="/" className="lg:mr-10">
                 <span className="sr-only">DigiClass</span>
                 <img className="h-8 w-auto sm:h-10" src={Logo} alt="" />
               </Link>

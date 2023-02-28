@@ -70,7 +70,7 @@ const AllCourses = () => {
           await Services()
         ).get(
           global_variables().getCourses +
-            `?page=1&size=${size}&filter=${filter}=${query}`
+            `?page=1&size=${size}&filter=${filter}=${query}&query_fields=id,title,language,status,airtime,short_description,price`
         );
 
         setTotalPages(res.data?.data?.totalPages);

@@ -122,8 +122,13 @@ const Signup = () => {
           console.log(res);
 
           displaySuccMsg(
-            "Account created successfully,Logged in successfully",
-            () => {}
+            "Account created successfully, please check your email to verify your email account",
+            () => {
+              setFname("");
+              setLname("");
+              setEmail("");
+              setPwd("");
+            }
           );
         } else {
           displayErrMsg(

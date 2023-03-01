@@ -53,6 +53,8 @@ const NavigationBar = () => {
     getCategories();
   }, []);
 
+  const currentUrl = window.location.href;
+
   return (
     <>
       <Popover className="relative bg-white shadow-2xl">
@@ -166,7 +168,7 @@ const NavigationBar = () => {
                 <>
                   <MyCartIcon />
                   <Link
-                    to="/login"
+                    to={`/login?currentUrl=${currentUrl}`}
                     className="whitespace-nowrap text-base font-medium text-primary-500 hover:text-primary-900"
                   >
                     Sign in

@@ -15,6 +15,7 @@ import AboutCourse from "./sections/about_course_banner";
 import AboutAuthor from "./sections/about_the_author";
 import CourseInformation from "./sections/course_information";
 import CourseSection from "./sections/course_section";
+import OtherCourseByAuthor from "./sections/other_courses";
 import Reviews from "./sections/reviews";
 
 const CourseDetail = () => {
@@ -90,7 +91,29 @@ const CourseDetail = () => {
     }
   };
 
+  const checkCourse = async () => {
+    const user = await localforage.getItem("userdata");
+    try {
+      const res = await (
+        await Services()
+      ).get(
+        global_variables().getCourses + `/${courseid}/users/${user.user_id}`
+        // `/users/9c5a1da9f779441d84f06168ccf0574b`
+      );
+
+      console.log(res.data?.data);
+      window.location.href = `/my-course/${courseid}`;
+      // setVideos(res.data?.data?.videos[keys[0]]);
+
+      // console.log(keys);
+      // console.log(res.data?.data?.videos[keys[0]]);
+    } catch (error) {
+      console.log(error.response?.data?.message);
+    }
+  };
+
   useLayoutEffect(() => {
+    checkCourse();
     getCourseDetail();
   }, []);
 
@@ -113,7 +136,7 @@ const CourseDetail = () => {
       ) : (
         <>
           <NavigationBar />
-          <div className=" font-serif">
+          <div className="font-serif">
             <MinimalMobileHeader title={course.title} />
 
             <div className="bg-white grid md:grid-cols-12 grid-cols-1 gap-0">
@@ -205,6 +228,8 @@ const CourseDetail = () => {
                 </div>
               </div>
             )}
+            {/* other courses by the same author */}
+            <OtherCourseByAuthor author_id={course.instructor} />
           </div>
           <Footer />
         </>

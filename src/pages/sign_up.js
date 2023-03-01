@@ -91,7 +91,17 @@ const Signup = () => {
     );
 
     // console.log(google);
+    checklogin();
   }, []);
+
+  const checklogin = async () => {
+    const token = await localforage.getItem("token");
+    const user = await localforage.getItem("userdata");
+
+    if (token !== null && user !== null) {
+      window.location.href = "/";
+    }
+  };
 
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");

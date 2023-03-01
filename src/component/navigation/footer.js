@@ -1,9 +1,9 @@
 import React from "react";
-import logo from './../../assets/svgs/logo.svg'
+import logo from "./../../assets/svgs/logo.svg";
 
 const row1 = [
   {
-    text: "DigiClass foe Business",
+    text: "DigiClass for Business",
   },
   {
     text: "Teach on DigiClass",
@@ -51,7 +51,7 @@ const row3 = [
 
 function Footer() {
   return (
-    <div className="w-full px-6 py-28 md:px-16 md:bg-white bg-primary-200">
+    <div className="w-full px-6 py-10 md:px-16 md:bg-white bg-primary-200">
       <div className="md:flex md:justify-between md:flex-row  flex-col">
         <div className="flex-col flex md:mt-0 mt-4 ">
           <ul>
@@ -65,8 +65,8 @@ function Footer() {
 
         <div className="flex-col flex md:mt-0 mt-4">
           <ul>
-            {row2.map((item, index) => ( 
-              <li className="mt-2 cursor-pointer" key={index} >
+            {row2.map((item, index) => (
+              <li className="mt-2 cursor-pointer" key={index}>
                 <p className="text-lg">{item.text}</p>
               </li>
             ))}
@@ -83,7 +83,13 @@ function Footer() {
           </ul>
         </div>
       </div>
-      <img src={logo} alt="logo" className="mt-12" />
+      {/* <hr /> */}
+      <img
+        src={logo}
+        alt="logo"
+        className="mt-10 cursor-pointer"
+        onClick={() => (window.location.href = "/")}
+      />
     </div>
   );
 }

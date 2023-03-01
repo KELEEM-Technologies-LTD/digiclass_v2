@@ -26,6 +26,7 @@ const MyCourseDetail = () => {
   const [instructor, setInstructor] = useState([]);
   const [review, setReviews] = useState([]);
   const [reviewLoading, setreviewLoading] = useState(true);
+  const [videos, setVideos] = useState([]);
 
   const getCourseDetail = async () => {
     setLoading(true);
@@ -88,14 +89,35 @@ const MyCourseDetail = () => {
     }
   };
 
+  const getVideos = async () => {
+    const user = await localforage.getItem("userdata");
+    try {
+      const res = await (
+        await Services()
+      ).get(
+        global_variables().getCourses + `/${courseid}/users/${user.user_id}`
+        // `/users/9c5a1da9f779441d84f06168ccf0574b`
+      );
+
+      const keys = Object.keys(res.data?.data?.videos);
+      setVideos(res.data?.data?.videos[keys[0]]);
+
+      // console.log(keys);
+      // console.log(res.data?.data?.videos[keys[0]]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     getCourseDetail();
+    getVideos();
   }, []);
 
   return (
     <>
       <div className="bg-secondary-600 w-full py-6 px-4 flex gap-3">
-        <button onClick={() => navigate(-1)}>
+        <button onClick={() => (window.location.href = "/my-course")}>
           <ChevronLeft />
         </button>
         <p className="text-white text-lg">
@@ -123,30 +145,36 @@ const MyCourseDetail = () => {
         <div style={{ minHeight: "100vh" }}>
           <div className="flex flex-wrap">
             <div className="w-full md:w-8/12">
-              <ReactPlayer
-                url="https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4"
-                controls
-                width="100%"
-                height="100%"
-                loop={true}
-                light={course.thumbnail}
-                playIcon={
-                  <PlayIcon
-                    className="w-20 h-20 my-40"
-                    style={{ color: "white" }}
-                  />
-                }
-                config={{
-                  file: {
-                    attributes: {
-                      controlsList: "nodownload",
+              {videos ? (
+                <ReactPlayer
+                  url={videos ? videos[0].url : null}
+                  controls
+                  width="100%"
+                  height="100%"
+                  loop={true}
+                  light={course.thumbnail}
+                  playIcon={
+                    <PlayIcon
+                      className="w-20 h-20 my-40"
+                      style={{ color: "white" }}
+                    />
+                  }
+                  config={{
+                    file: {
+                      attributes: {
+                        controlsList: "nodownload",
+                      },
                     },
-                  },
-                }}
-              />
+                  }}
+                />
+              ) : (
+                <p className="text-center mt-10">
+                  No video available for this course
+                </p>
+              )}
             </div>
             <div className="w-full md:w-4/12">
-              <CourseSection courseid={courseid} />
+              <CourseSection courseid={courseid} lock={false} />
             </div>
           </div>
           <Tab.Group>

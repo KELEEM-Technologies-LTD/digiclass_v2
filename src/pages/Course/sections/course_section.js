@@ -6,7 +6,7 @@ import { Services } from "../../../mixing/services";
 import global_variables from "../../../mixing/urls";
 import SectionItem from "./section_item";
 
-const CourseSection = ({ courseid }) => {
+const CourseSection = ({ courseid, lock }) => {
   const [loading, setLoading] = useState(true);
   const [sections, setSections] = useState([]);
 
@@ -62,6 +62,7 @@ const CourseSection = ({ courseid }) => {
                     item={{
                       title: data.name,
                       duration: data.position + ":00",
+                      lock: lock,
                     }}
                   />
                 </div>

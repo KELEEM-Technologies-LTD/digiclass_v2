@@ -2,7 +2,7 @@ import { Checkbox } from "@mui/material";
 import React from "react";
 
 function SectionItem({ item }) {
-  const { title, duration } = item;
+  const { title, duration, lock } = item;
   return (
     <div className="flex mb-3 justify-between px-2">
       <div className="flex">
@@ -15,7 +15,7 @@ function SectionItem({ item }) {
           </div>
         </div>
       </div>
-      <img src="../img/lock.svg" alt="icon-lock"  />
+      {lock ? <img src="../img/lock.svg" alt="icon-lock" /> : <></>}
     </div>
   );
 }

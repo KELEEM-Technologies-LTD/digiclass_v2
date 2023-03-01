@@ -47,7 +47,11 @@ const Signin = () => {
           })
           .then(function () {
             displaySuccMsg("Logged in successfully", () => {
-              window.location.href = "/";
+              if (currentUrl !== null) {
+                window.location.href = currentUrl;
+              } else {
+                window.location.href = "/";
+              }
             });
             // displaySuccMsg('Logged in successfully', () => { window.history.back() })
           })
@@ -83,7 +87,24 @@ const Signin = () => {
     );
 
     // console.log(google);
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const currentUrl = urlParams.get("currentUrl");
+    // console.log(currentUrl);
+    setCurrentUrl(currentUrl);
+    checklogin();
   }, []);
+
+  const checklogin = async () => {
+    const token = await localforage.getItem("token");
+    const user = await localforage.getItem("userdata");
+
+    if (token !== null && user !== null) {
+      window.location.href = "/";
+    }
+  };
+
+  const [currentUrl, setCurrentUrl] = useState("");
 
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
@@ -119,7 +140,11 @@ const Signin = () => {
             })
             .then(function () {
               displaySuccMsg("Logged in successfully", () => {
-                window.location.href = "/";
+                if (currentUrl !== null) {
+                  window.location.href = currentUrl;
+                } else {
+                  window.location.href = "/";
+                }
               });
               // displaySuccMsg('Logged in successfully', () => { window.history.back() })
             })

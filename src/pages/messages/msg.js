@@ -1,4 +1,4 @@
-import { Avatar, Skeleton } from "@mui/material";
+import { Skeleton } from "@mui/material";
 import localforage from "localforage";
 import React, { useEffect, useState } from "react";
 import { Services } from "../../mixing/services";
@@ -62,7 +62,7 @@ const MessageWindow = () => {
     <div className="flex flex-col md:flex-row">
       {/* Side navigation */}
       <div
-        className="flex-none hidden md:block md:w-64 bg-[white] shadow-md flex flex-col"
+        className="flex-none hidden md:block md:w-64 bg-[white] shadow-md flex-col"
         style={{ maxHeight: "86vh", minHeight: "86vh", overflowY: "scroll" }}
       >
         <div className="p-4 font-bold text-center">Messages</div>

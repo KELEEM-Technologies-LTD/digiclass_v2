@@ -68,7 +68,6 @@ const Chats = ({ chatid }) => {
         });
 
         getChats();
-        console.log(txt);
         setTxt("");
         setSending(false);
       } catch (error) {

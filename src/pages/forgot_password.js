@@ -1,5 +1,6 @@
 import { CircularProgress } from "@mui/material";
-import { useState } from "react";
+import localforage from "localforage";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   displayErrMsg,
@@ -53,6 +54,19 @@ const ForgotPassword = () => {
     } catch (error) {
       console.log(error);
       setMessage("Error sending message");
+    }
+  };
+
+  useEffect(() => {
+    checklogin();
+  }, []);
+
+  const checklogin = async () => {
+    const token = await localforage.getItem("token");
+    const user = await localforage.getItem("userdata");
+
+    if (token !== null && user !== null) {
+      window.location.href = "/";
     }
   };
 

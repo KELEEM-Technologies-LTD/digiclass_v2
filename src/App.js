@@ -22,6 +22,7 @@ const MyVerifyAndReset = React.lazy(() =>
 const MyCourseDetail = React.lazy(() => import("./pages/Course/course_detail"));
 const MyCart = React.lazy(() => import("./pages/cart/cart"));
 const MyCheckOut = React.lazy(() => import("./pages/cart/checkout"));
+const MyBuyNow = React.lazy(() => import("./pages/cart/buynow"));
 const MyAllCourse = React.lazy(() => import("./pages/allcourses/all_course"));
 const MyProfilePage = React.lazy(() => import("./pages/profile/profile"));
 const MyCourses = React.lazy(() => import("./pages/mycourses/mycourses"));
@@ -74,6 +75,7 @@ function App() {
               <Route element={<MyPrivateRoute />}>
                 <Route exact path="/cart" element={<MyCart />} />
                 <Route exact path="/checkout" element={<MyCheckOut />} />
+                <Route exact path="/buy-now/:courseid" element={<MyBuyNow />} />
                 <Route exact path="/profile" element={<MyProfilePage />} />
                 <Route exact path="/my-course" element={<MyCourses />} />
                 <Route

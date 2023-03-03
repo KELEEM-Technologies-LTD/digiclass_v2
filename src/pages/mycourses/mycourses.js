@@ -107,6 +107,17 @@ const MyCourses = () => {
                     />
                   </Skeleton>
                 </Grid>
+              ) : courses.length === 0 ? (
+                <>
+                  <Grid item md={12}>
+                    <Typography
+                      style={styles.courseTitle}
+                      className="text-center"
+                    >
+                      You have not purchased any course from DigiClass
+                    </Typography>
+                  </Grid>
+                </>
               ) : (
                 courses.map((course, index) => (
                   <Grid item xs={12} sm={6} md={4} key={index}>

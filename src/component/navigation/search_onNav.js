@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useState } from "react";
+import { SearchIcon } from "../../assets";
 import { Services } from "../../mixing/services";
 import global_variables from "../../mixing/urls";
 import InputWithIcon from "../InputFields/InputWithIcon";
@@ -31,17 +32,29 @@ const NavBarSeacrhField = () => {
 
   return (
     <>
-      <div className="relative">
-        <InputWithIcon
+      {/* <div className="relative"> */}
+      <div
+        className="relative text-primary-600 flex-grow"
+        style={{ width: "220px" }}
+      >
+        <input
+          className="w-full px-5 py-2 rounded-full border-2 border-primary-300 focus:outline-none focus:border-blue-500"
+          type="search"
+          name="search"
           placeholder="What do you want to learn?"
-          className="flex py-2 rounded-5 bg-primary-100 justify-between text-black"
-          icon="fa fa-search text-sm text-secondary-500"
           disabled={false}
           value={inputValue}
           onChange={(event) => setInputValue(event.target.value)}
         />
+        {inputValue ? (
+          <></>
+        ) : (
+          <button type="submit" className="absolute top-0 right-0 mt-3 mr-4">
+            <SearchIcon />
+          </button>
+        )}
         <ul
-          className="absolute z-10 w-full py-2 mt-1 bg-white rounded-md shadow-lg"
+          className="absolute z-10 w-full py-2 mt-0 bg-white rounded-md shadow-lg"
           style={{ zIndex: "100" }}
         >
           {suggestions.map((item, index) => (

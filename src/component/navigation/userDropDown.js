@@ -120,52 +120,77 @@ const UserDropDown = () => {
                               </div>
                             </div>
                             <hr className="my-1 mx-5 border-t border-secondary-400" />
-                            <div className=" py-4 px-4">
+                            <div className="py-4 px-4">
                               <ul>
                                 <li className="">
-                                  <p>My Learning</p>
+                                  <Link to="/my-course">
+                                    <p className="text-primary-500 hover:text-primary-900">
+                                      My courses
+                                    </p>
+                                  </Link>
                                 </li>
-                                <li className="mt-2">
-                                  <p>My Cart</p>
+                                <li className="mt-5">
+                                  <Link to="/cart">
+                                    <p className="text-primary-500 hover:text-primary-900">
+                                      My Cart
+                                    </p>
+                                  </Link>
                                 </li>
-                                <li className="mt-2">
-                                  <p>Teach on Digiclass</p>
+                                {}
+                                <li className="mt-5">
+                                  <Link to="/signup">
+                                    <p className="text-primary-500 hover:text-primary-900">
+                                      Teach on Digiclass
+                                    </p>
+                                  </Link>
                                 </li>
                               </ul>
                             </div>
 
                             <hr className="my-1 mx-5 border-t border-secondary-400" />
-                            <div className=" py-4 px-4">
+                            <div className="py-4 px-4">
                               <ul>
                                 <li className="">
                                   <Link to="/messages">
-                                    <p>Message</p>
+                                    <p className="text-primary-500 hover:text-primary-900">
+                                      Message
+                                    </p>
                                   </Link>
                                 </li>
                                 <li className="mt-5">
                                   <Link to="/profile?tabindex=0">
-                                    <p>Account</p>
+                                    <p className="text-primary-500 hover:text-primary-900">
+                                      Account
+                                    </p>
                                   </Link>
                                 </li>
                                 <li className="mt-5">
                                   <Link to="/profile?tabindex=1">
-                                    <p>Payment Methods</p>
+                                    <p className="text-primary-500 hover:text-primary-900">
+                                      Payment Methods
+                                    </p>
                                   </Link>
                                 </li>
                                 <li className="mt-5">
                                   <Link to="/profile?tabindex=2">
-                                    <p>Notifications</p>
+                                    <p className="text-primary-500 hover:text-primary-900">
+                                      Notifications
+                                    </p>
                                   </Link>
                                 </li>
                                 <li className="mt-5">
                                   <Link to="/profile?tabindex=3">
-                                    <p>Transactions</p>
+                                    <p className="text-primary-500 hover:text-primary-900">
+                                      Transactions
+                                    </p>
                                   </Link>
                                 </li>
 
                                 <li className="mt-5">
                                   <Link to="/profile">
-                                    <p>Edit Profile</p>
+                                    <p className="text-primary-500 hover:text-primary-900">
+                                      Edit Profile
+                                    </p>
                                   </Link>
                                 </li>
                               </ul>

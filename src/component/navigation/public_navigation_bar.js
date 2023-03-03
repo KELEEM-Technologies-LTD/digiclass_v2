@@ -12,7 +12,7 @@ import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { Fragment, useContext, useState, useEffect } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import { Link } from "react-router-dom";
-import { Logo } from "../../assets";
+import { Logo, SearchIcon } from "../../assets";
 import MyCartIcon from "./cart_on_nav";
 import GeneralContext from "../../context/general_context";
 import NavBarSeacrhField from "./search_onNav";
@@ -140,7 +140,9 @@ const NavigationBar = () => {
                 )}
               </Popover>
               {isLogged ? (
-                <NavBarSeacrhField />
+                <>
+                  <NavBarSeacrhField />
+                </>
               ) : (
                 <Link
                   to="/signup"
@@ -154,10 +156,10 @@ const NavigationBar = () => {
               {isLogged ? (
                 <>
                   <Link
-                    to="/my-course"
+                    to="/all"
                     className="text-base font-medium text-primary-500 hover:text-primary-900 mt-1 mr-4"
                   >
-                    My courses
+                    All courses
                   </Link>
                   <MyFavorites />
                   <MyCartIcon />

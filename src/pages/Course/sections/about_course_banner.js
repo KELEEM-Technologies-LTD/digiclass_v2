@@ -182,7 +182,9 @@ function AboutCourse({ course_detail, instructor, loading, reviews }) {
             <button
               size="big"
               className="outlineLg border-2 py-4 border-secondary-600"
-              // onClick={()=>{localforage.setItem('token','lol');alert('lol')}}
+              onClick={() => {
+                window.location.href = `/buy-now/${course_id}`;
+              }}
             >
               <p className="text-white">Buy course now</p>
             </button>

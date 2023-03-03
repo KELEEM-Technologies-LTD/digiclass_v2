@@ -147,7 +147,7 @@ const MyCourseDetail = () => {
             <div className="w-full md:w-8/12">
               {videos ? (
                 <ReactPlayer
-                  url={videos ? videos[0].url : null}
+                  url={videos ? (videos[0] ? videos[0].url : null) : null}
                   controls
                   width="100%"
                   height="100%"

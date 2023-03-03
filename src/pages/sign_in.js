@@ -115,6 +115,8 @@ const Signin = () => {
       displayErrMsg("Please input a valid email Address");
     } else if (pwd === "") {
       displayErrMsg("Please input your password");
+    } else if (pwd.length < 8) {
+      displayErrMsg("Your password length cannot be  less than 8 digits");
     } else {
       var sigininData = {
         username: email,

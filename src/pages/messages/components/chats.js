@@ -6,6 +6,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import MessageLeft from "./message_left";
 import MessageRight from "./message_right";
 import CachedIcon from "@mui/icons-material/Cached";
+import { displayWarningMsg } from "../../../component/alerts/alerts";
 
 const Chats = ({ chatid }) => {
   const [loading, setLoading] = useState(true);
@@ -39,26 +40,42 @@ const Chats = ({ chatid }) => {
 
   useEffect(() => {
     getChats();
+
+    const intervalId = setInterval(() => {
+      getChats();
+    }, 10000); // 1 minute in milliseconds
+
+    return () => clearInterval(intervalId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chatid]);
 
   const [txt, setTxt] = useState("");
+  const [sending, setSending] = useState(false);
+  const sendMessage = async (e) => {
+    setSending(true);
+    e.preventDefault();
+    if (txt === "") {
+      displayWarningMsg("please type a message");
+      setSending(false);
+    } else {
+      try {
+        const res = await (
+          await Services()
+        ).post(global_variables().sendMsg, {
+          sender: me,
+          reciever: chatid,
+          message: txt,
+        });
 
-  const sendMessage = async () => {
-    try {
-      const res = await (
-        await Services()
-      ).post(global_variables().sendMsg, {
-        sender: me,
-        reciever: chatid,
-        message: txt,
-      });
-
-      getChats();
-      console.log(txt);
-      setTxt("");
-    } catch (error) {
-      console.log(error);
+        getChats();
+        console.log(txt);
+        setTxt("");
+        setSending(false);
+      } catch (error) {
+        setTxt("");
+        console.log(error);
+        setSending(false);
+      }
     }
   };
 
@@ -103,7 +120,7 @@ const Chats = ({ chatid }) => {
       </div>
 
       <div className="p-4 bg-primary-200">
-        <div className="flex">
+        <form onSubmit={sendMessage} className="flex">
           <div>
             <button
               className="mr-4 bg-secondary-600 text-[white] px-4 py-2 rounded-lg"
@@ -119,15 +136,22 @@ const Chats = ({ chatid }) => {
               placeholder="Type a message..."
               value={txt}
               onChange={(e) => setTxt(e.target.value)}
+              disabled={sending}
             />
           </div>
           <button
             className="ml-4 bg-secondary-600 text-[white] px-4 py-2 rounded-lg"
             onClick={sendMessage}
           >
-            Send
+            {sending ? (
+              <>
+                <CircularProgress size={20} />
+              </>
+            ) : (
+              "Send"
+            )}
           </button>
-        </div>
+        </form>
       </div>
     </>
   );

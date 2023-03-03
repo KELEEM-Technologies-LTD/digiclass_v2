@@ -1,4 +1,5 @@
 import { CircularProgress } from "@mui/material";
+import localforage from "localforage";
 import { useLayoutEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { displayErrMsg, displaySuccMsg } from "../component/alerts/alerts";
@@ -91,7 +92,17 @@ const VerifyAndResetPassword = () => {
 
   useLayoutEffect(() => {
     verifyToken();
+    checklogin();
   }, []);
+
+  const checklogin = async () => {
+    const token = await localforage.getItem("token");
+    const user = await localforage.getItem("userdata");
+
+    if (token !== null && user !== null) {
+      window.location.href = "/";
+    }
+  };
 
   return (
     <>

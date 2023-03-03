@@ -134,6 +134,7 @@ const Signup = () => {
           displaySuccMsg(
             "Account created successfully, please check your email to verify your email account",
             () => {
+              window.location.href = "/login";
               setFname("");
               setLname("");
               setEmail("");

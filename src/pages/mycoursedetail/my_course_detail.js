@@ -17,6 +17,7 @@ import CourseInformation from '../Course/sections/course_information'
 import Reviews from '../Course/sections/reviews'
 import CircularProgress from '@mui/material/CircularProgress'
 import { duration } from 'moment'
+import SectionStatus from './section_status'
 
 const MyCourseDetail = () => {
   const navigate = useNavigate()
@@ -131,11 +132,9 @@ const MyCourseDetail = () => {
           <ChevronLeft />
         </button>
         <p className='text-white text-lg'>
-          {loading ? <Skeleton width={600} height={30} /> : course.title}
+          {loading ? <Skeleton width={600} height={30} /> : course.title} -{' '}
+          {sections[currentSection]?.name}
         </p>
-        {/* <p className='text-white text-lg'>
-          {JSON.stringify()}
-        </p> */}
       </div>
       {loading ? (
         <div
@@ -200,7 +199,7 @@ const MyCourseDetail = () => {
               <hr className='my-1 mx-5 border-t border-secondary-400' />
               <div
                 className='px-4 pt-4 pb-2 text-sm text-secondary-500'
-                style={{ maxHeight: '250px', overflowY: 'scroll' }}
+                // style={{ maxHeight: '50vh', overflowY: 'scroll' }}
               >
                 {sections.map((_sections, index) => {
                   return (
@@ -214,12 +213,15 @@ const MyCourseDetail = () => {
                         />
                         <div className='flex flex-col'>
                           <p className='text-lg'>{_sections.name}</p>
-                          <div className='flex '>
+                          <div className='flex'>
                             <ClockIcon className='w-4 h-4' />
                             <p className='ml-0 text-sm'>
                               watching order: {_sections.position}
                             </p>
                           </div>
+                        </div>
+                        <div className='ml-auto'>
+                          <SectionStatus sectionid={_sections.section_id} />
                         </div>
                       </div>
                       <hr className='mx-20 mt-0 mb-2' />

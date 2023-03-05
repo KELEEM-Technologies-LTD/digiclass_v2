@@ -35,6 +35,9 @@ const global_variables = () => {
 
     //myCourse
     getmypaidc: `${base}:1098/transactions/listpaid`,
+    updateSection: `${base}:3001/adcourse/sections/complete`, //user/course/section
+    getSectionStatus: `${base}:3001/adcourse/sections`, //user/section
+    getAllCompletedSections: `${base}:3001/adcourse/sections/all`, //user/course
 
     //transactions
     verifyTransactions: `${base}:1098/transactions/verify`,

@@ -1,6 +1,12 @@
 import { Typography, Card, CardContent } from "@mui/material";
 import { ArrowRight } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import localforage from "localforage";
+import { Services } from "../../mixing/services";
+import global_variables from "../../mixing/urls";
+import ProgressBar from "./progress_bar";
+import InstructorName from "./get_instructor_name";
 
 const styles = {
   root: {
@@ -14,7 +20,7 @@ const styles = {
   courseCard: {
     cursor: "pointer",
     transition: "transform 0.3s ease-in-out",
-    maxHeight: "520px",
+    // maxHeight: "520px",
     minHeight: "520px",
     "&:hover": {
       transform: "translateY(-2px)",
@@ -23,13 +29,14 @@ const styles = {
   courseCardContent: {
     display: "flex",
     flexDirection: "column",
-    height: "100%",
+    justifyContent: "space-between",
+    minHeight: "520px",
   },
   courseImage: {
     marginBottom: 16,
   },
   courseTitle: {
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: "bold",
   },
   courseInstructor: {
@@ -56,6 +63,50 @@ const styles = {
 
 const PaidCourseCard = ({ course }) => {
   const navigate = useNavigate();
+  const [completed, setCompleted] = useState(0);
+  const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    // console.log(course);
+    getCourseSections();
+    getCourseProgress();
+  }, []);
+
+  const getCourseSections = async () => {
+    const course_id = course.course_id;
+    const user = await localforage.getItem("userdata");
+    try {
+      const res = await (
+        await Services()
+      ).get(
+        global_variables().getCourses + `/${course_id}/users/${user.user_id}`
+      );
+
+      // console.log(res.data?.data?.sections?.length);
+      setTotal(res.data?.data?.sections?.length);
+    } catch (error) {
+      // console.log(error);
+    }
+  };
+
+  const getCourseProgress = async () => {
+    const user = await localforage.getItem("userdata");
+    const course_id = course.course_id;
+    const user_id = user.user_id;
+
+    try {
+      const res = await (
+        await Services()
+      ).get(
+        global_variables().getAllCompletedSections + `/${user_id}/${course_id}`
+      );
+      // console.log(res.data.payload?.length);
+      setCompleted(res.data?.payload?.length);
+    } catch (error) {
+      // console.log(error);
+    }
+  };
+
   // console.log(course);
   return (
     <Card style={styles.courseCard} onClick={() => {}}>
@@ -67,15 +118,17 @@ const PaidCourseCard = ({ course }) => {
         />
         <Typography style={styles.courseTitle}>{course.title}</Typography>
         <Typography style={styles.courseInstructor}>
-          Instructor: {course.instructor} <br />
+          Instructor: <InstructorName instructor={course.instructor} /> <br />
           Language: {course.language} <br />
           Skill Level: {course.skill_level}
         </Typography>
-        <hr />
+        {/* {completed} / {total} */}
+        <ProgressBar total={total} completed={completed} />
         <Typography style={styles.courseDescription}>
-          {course.description}
+          {course.short_description}
         </Typography>
         <div
+          className="mt-auto"
           style={styles.courseButton}
           onClick={() => navigate(`/my-course/${course.course_id}`)}
         >

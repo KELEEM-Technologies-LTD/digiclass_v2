@@ -1,11 +1,5 @@
 import { MessageOutlined } from "@mui/icons-material";
-import React, {
-  useContext,
-  useEffect,
-  Fragment,
-  useRef,
-  useState,
-} from "react";
+import React, { useContext, Fragment, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import GeneralContext from "../../../context/general_context";
 import { Dialog, Transition } from "@headlessui/react";
@@ -65,10 +59,6 @@ function AboutAuthor({ instructor, instructor_id, courseid }) {
       }
     }
   };
-
-  useEffect(() => {
-    // console.log(instructor_id);
-  }, []);
 
   return (
     <>

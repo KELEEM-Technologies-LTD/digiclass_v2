@@ -94,18 +94,7 @@ const MyCourses = () => {
             <Grid container spacing={4}>
               {loading ? (
                 <Grid item xs={12} sm={6} md={4}>
-                  <Skeleton>
-                    <PaidCourseCard
-                      course={{
-                        id: 1,
-                        title: "Introduction to Programming",
-                        instructor: "John Doe",
-                        description:
-                          "Learn the fundamentals of programming and build your own applications.",
-                        thumbnail: "https://picsum.photos/id/237/300/200",
-                      }}
-                    />
-                  </Skeleton>
+                  <Skeleton height={400}></Skeleton>
                 </Grid>
               ) : courses.length === 0 ? (
                 <>

@@ -1,7 +1,10 @@
 import { Skeleton } from "@mui/material";
 import localforage from "localforage";
 import { useEffect, useState } from "react";
-import { displaySuccMsg } from "../../../component/alerts/alerts";
+import {
+  displayErrMsg,
+  displaySuccMsg,
+} from "../../../component/alerts/alerts";
 import NotificationCard from "../../../component/cards/NotificationCard";
 import NotificationCardRead from "../../../component/cards/NotificationCardRead";
 import { Services } from "../../../mixing/services";
@@ -25,8 +28,9 @@ const Notifications = () => {
       setNotifs(res.data?.payload);
       setLoading(false);
     } catch (err) {
-      console.log(err);
-      displaySuccMsg("Notifications not found", () => {});
+      // console.log(err);
+      displayErrMsg("Notifications not found", () => {});
+      setLoading(false);
     }
   };
 

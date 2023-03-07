@@ -4,6 +4,7 @@ import { useLayoutEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { displayErrMsg, displaySuccMsg } from "../component/alerts/alerts";
 import InputWithIcon from "../component/InputFields/InputWithIcon";
+import PasswordInput from "../component/InputFields/PasswordInput";
 import NavigationBar from "../component/navigation/public_navigation_bar";
 import { Services } from "../mixing/services";
 import global_variables from "../mixing/urls";
@@ -30,7 +31,7 @@ const VerifyAndResetPassword = () => {
           password_confirm: pwdc,
         });
 
-        console.log(res.data);
+        // console.log(res.data);
 
         try {
           const sendNotif = await (
@@ -40,6 +41,8 @@ const VerifyAndResetPassword = () => {
             heading: "Password reset notification",
             message: "You have successfully reset your account password",
           });
+
+          //send email here
 
           displaySuccMsg(res.data?.data?.message, () => {
             window.location.href = "/login";
@@ -75,7 +78,7 @@ const VerifyAndResetPassword = () => {
         await Services()
       ).get(global_variables().resetPwd + `/${verification_id}`);
       setUser(res.data.data?.user);
-      console.log(res.data.data?.user);
+      // console.log(res.data.data);
       if (res.data.data?.isValid) {
         setPageLoading(false);
       } else {
@@ -142,14 +145,14 @@ const VerifyAndResetPassword = () => {
               <p style={{ color: "red" }} className="text-center">
                 {/* {message} */}
               </p>
-              <InputWithIcon
+              <PasswordInput
                 placeholder="Password"
                 type="password"
                 className=" py-5 mb-5 border-primary-600 border flex rounded-5 bg-primary-100  justify-between"
                 value={pwd}
                 onChange={(e) => setpwd(e.target.value)}
               />
-              <InputWithIcon
+              <PasswordInput
                 placeholder="Confirm password"
                 type="password"
                 className=" py-5 border-primary-600 border flex rounded-5 bg-primary-100  justify-between"

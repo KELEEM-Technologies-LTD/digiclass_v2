@@ -49,7 +49,8 @@ function StartLearningRow() {
   }, []);
 
   return (
-    <div className=" py-2 md:pl-52  flex-col overflow-x-hidden md:flex hidden">
+    <div className="py-2 px-5 flex-col overflow-x-hidden md:flex hidden">
+      {/* md:pl-52  */}
       <div className="flex justify-between">
         <p className="text-2xl font-bold text-black font-serif">
           Let's start learning

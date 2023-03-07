@@ -125,6 +125,8 @@ const MyCourseDetail = () => {
     getVideos();
   }, []);
 
+  const [playing, setPlaying] = useState(false);
+
   return (
     <>
       <div className="bg-secondary-600 w-full py-6 px-4 flex gap-3">
@@ -164,6 +166,9 @@ const MyCourseDetail = () => {
                       ? null
                       : videos[sections[currentSection]?.section_id][0]?.url
                   }
+                  playing={playing}
+                  onPlay={() => setPlaying(true)}
+                  onPause={() => setPlaying(false)}
                   ref={playerRef}
                   controls
                   width="100%"

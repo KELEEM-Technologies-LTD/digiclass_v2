@@ -36,6 +36,7 @@ const MyCourseCategory = React.lazy(() =>
   import("./pages/category/course_by_category")
 );
 const MyMessages = React.lazy(() => import("./pages/messages/messages"));
+const MyhotReload = React.lazy(() => import("./pages/hot_reload"));
 
 function App() {
   return (
@@ -54,6 +55,7 @@ function App() {
                 exact
                 element={<MyForgotPassword />}
               />
+              <Route exact path="/reload" element={<MyhotReload />} />
               <Route
                 path="/password/reset/verify/:verification_id"
                 exact

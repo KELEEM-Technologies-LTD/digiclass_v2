@@ -145,7 +145,7 @@ const Signin = () => {
                 if (currentUrl !== null) {
                   window.location.href = currentUrl;
                 } else {
-                  window.location.href = "/";
+                  window.location.href = "/reload";
                 }
               });
               // displaySuccMsg('Logged in successfully', () => { window.history.back() })

@@ -32,7 +32,7 @@ const AllCourses = () => {
         await Services()
       ).get(
         global_variables().getCourses +
-          `?page=${p}&size=${s}&query_fields=id,title,language,status,airtime,short_description,price`
+          `?page=${p}&size=${s}&query_fields=id,title,language,status,airtime,short_description,price,instructor`
       );
 
       // console.log(res.data?.data);
@@ -70,7 +70,7 @@ const AllCourses = () => {
           await Services()
         ).get(
           global_variables().getCourses +
-            `?page=1&size=${size}&filter=${filter}=${query}&query_fields=id,title,language,status,airtime,short_description,price`
+            `?page=1&size=${size}&filter=${filter}=${query}&query_fields=id,title,language,status,airtime,short_description,price,instructor`
         );
 
         setTotalPages(res.data?.data?.totalPages);

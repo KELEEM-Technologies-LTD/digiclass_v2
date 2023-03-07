@@ -20,9 +20,9 @@ const OtherCourseByAuthor = ({ author_id }) => {
         await Services()
       ).get(
         global_variables().getCourses +
-          `?size=4&filter=instructor=${author_id}&query_fields=id,title,language,status,airtime,short_description,price`
+          `?size=4&filter=instructor=${author_id}&query_fields=id,title,language,status,airtime,short_description,price,instructor`
       );
-      console.log(res.data.data.data);
+      // console.log(res.data.data.data);
       setCourses(res.data?.data?.data);
       setLoading(false);
     } catch (err) {

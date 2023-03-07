@@ -1,7 +1,7 @@
 import localforage from "localforage";
 import { css } from "@emotion/react";
 import { HashLoader } from "react-spinners";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Services } from "../mixing/services";
 import global_variables from "../mixing/urls";
 
@@ -15,13 +15,20 @@ const HotReload = () => {
   }, []);
 
   const hotload = async () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const currentUrl = urlParams.get("currentUrl");
+
     if ((await localforage.getItem("token")) !== null) {
       const complete_user = await localforage.getItem("complete_user");
       const u = await localforage.getItem("userdata");
 
       if (complete_user) {
         console.log("Image: .............." + complete_user.profile_pic);
-        window.location.href = "/";
+        if (currentUrl !== null) {
+          window.location.href = currentUrl;
+        } else {
+          window.location.href = "/";
+        }
       } else {
         try {
           const res = await (
@@ -29,11 +36,19 @@ const HotReload = () => {
           ).get(global_variables().getUser + `/${u.user_id}`);
           console.log(res.data?.data);
           localforage.setItem("complete_user", res.data?.data).then(() => {
-            window.location.href = "/";
+            if (currentUrl !== null) {
+              window.location.href = currentUrl;
+            } else {
+              window.location.href = "/";
+            }
           });
         } catch (err) {
           // console.log(err);
-          window.location.href = "/";
+          if (currentUrl !== null) {
+            window.location.href = currentUrl;
+          } else {
+            window.location.href = "/";
+          }
           // logout_and_redirect();
         }
       }

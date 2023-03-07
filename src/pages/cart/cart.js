@@ -27,8 +27,8 @@ const Cart = () => {
 
   useEffect(() => {
     const courseIds = cart.data?.map((obj) => obj.course_id);
-    console.log(courseIds);
-    console.log(calculateTotal());
+    // console.log(courseIds);
+    // console.log(calculateTotal());
   }, []);
 
   const calculateTotal = () => {
@@ -66,7 +66,7 @@ const Cart = () => {
       <NavigationBar />
       <div className="flex flex-col">
         {/* header with tabs */}
-        <div className="flex flex-col bg-secondary-600 md:px-16 md:h-52 h-32 px-3 justify-center md:justify-end">
+        <div className="flex flex-col bg-secondary-600 md:px-16 md:h-30 h-32 px-3 justify-center md:justify-end">
           <div className="flex justify-between items-center">
             <p className="text-2xl md:text-4xl md:font-bold text-white">
               Shopping Cart

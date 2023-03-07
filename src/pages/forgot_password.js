@@ -35,10 +35,9 @@ const ForgotPassword = () => {
             await Services()
           ).get(global_variables().resetemail + `/${email}`);
           if (res.data.statusCode === 200) {
-            displaySuccMsg(
-              "Password reset link sent to you via email.",
-              () => {}
-            );
+            displaySuccMsg("Password reset link sent to you via email.", () => {
+              window.location.href = "/login";
+            });
           }
           setLoading(false);
         } catch (err) {

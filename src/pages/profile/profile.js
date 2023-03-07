@@ -16,7 +16,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const tabs = ["Profile", "Payment", "Notification"];
+const tabs = ["Profile", "Notification", "Transactions"];
 
 const Profile = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -27,7 +27,7 @@ const Profile = () => {
   const success = searchParams.get("success");
 
   useEffect(() => {
-    setSelectedIndex(parseInt(tabindex));
+    setSelectedIndex(parseInt(tabindex) ? parseInt(tabindex) : 0);
     getUserInformation();
     checkSuccess();
   }, []);
@@ -75,9 +75,9 @@ const Profile = () => {
       <NavigationBar />
       <div className="flex flex-col font-serif ">
         <Tab.Group selectedIndex={selectedIndex} onChange={setSelectedIndex}>
-          <div className="flex flex-col bg-secondary-600 md:px-16 md:h-52 h-32 px-3 justify-center md:justify-end">
+          <div className="flex flex-col bg-secondary-600 md:px-16 md:h-30 h-32 px-3 justify-center md:justify-end">
             <div className="flex justify-between items-center">
-              <p className=" text-2xl md:text-4xl md:font-bold text-white">
+              <p className="text-2xl md:text-4xl md:font-bold text-white">
                 {tabs[selectedIndex]}
               </p>
             </div>
@@ -93,7 +93,7 @@ const Profile = () => {
               >
                 Profile
               </Tab>
-              <Tab
+              {/* <Tab
                 className={({ selected }) =>
                   classNames(
                     "border-primary-100 mr-6 md:px-6 md:py-4 text-white text-lg",
@@ -102,7 +102,7 @@ const Profile = () => {
                 }
               >
                 Payment
-              </Tab>
+              </Tab> */}
               <Tab
                 className={({ selected }) =>
                   classNames(
@@ -133,9 +133,9 @@ const Profile = () => {
                   getUserInformation={getUserInformation}
                 />
               </Tab.Panel>
-              <Tab.Panel>
+              {/* <Tab.Panel>
                 <PaymentSettings user={user} />
-              </Tab.Panel>
+              </Tab.Panel> */}
               <Tab.Panel>
                 <Notifications user={user} />
               </Tab.Panel>

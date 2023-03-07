@@ -2,7 +2,9 @@ import { Tab } from "@headlessui/react";
 import { useState } from "react";
 import {
   displayErrMsg,
+  displayLoading,
   displaySuccMsg,
+  displayWarningMsg,
 } from "../../../component/alerts/alerts";
 import InputWithIcon from "../../../component/InputFields/InputWithIcon";
 import { Services } from "../../../mixing/services";
@@ -10,6 +12,9 @@ import global_variables from "../../../mixing/urls";
 import ProfilePicChange from "./profile_pict";
 import CircularProgress from "@mui/material/CircularProgress";
 import localforage from "localforage";
+import PasswordInput from "../../../component/InputFields/PasswordInput";
+import logout_and_redirect from "../../../component/hoc/logout-redirect";
+import Swal from "sweetalert2";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -66,6 +71,68 @@ const ProfileSection = ({ user, getUserInformation }) => {
       console.log(error);
       displayErrMsg(error.response?.data?.message, () => {});
       setUpdating(false);
+    }
+  };
+
+  const [pwd, setPwd] = useState("");
+  const [pwdc, setPwdC] = useState("");
+  const changePassword = (e) => {
+    e.preventDefault();
+    Swal.fire({
+      title: "Are you sure you want to reset your password?",
+      text: "An email would be sent to your email address to be used to reset your account",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      console.log(result);
+      if (result.isConfirmed) {
+        doit();
+      }
+    });
+  };
+
+  const doit = async (e) => {
+    displayLoading();
+    const userdata = await localforage.getItem("userdata");
+    // console.log(userdata.email);
+
+    try {
+      const checkres = await (
+        await Services()
+      ).get(global_variables().checkuser + `?username=${userdata.email}`);
+
+      //   console.log(checkres);
+
+      if (checkres.data?.data?.exists) {
+        try {
+          const res = await (
+            await Services()
+          ).get(global_variables().resetemail + `/${userdata.email}`);
+          if (res.data.statusCode === 200) {
+            displaySuccMsg(
+              "Password reset link sent to you via email.",
+              () => {}
+            );
+          }
+          // setLoading(false);
+        } catch (err) {
+          // setLoading(false);
+          displayErrMsg(err.response?.data?.message);
+        }
+      } else {
+        // setLoading(false);
+        displayWarningMsg(
+          `There is no user registered under ${userdata.email} please create an account now`
+        );
+      }
+      logout_and_redirect();
+    } catch (error) {
+      // console.log(error);
+      displayErrMsg("Error sending message", () => {});
+      logout_and_redirect();
     }
   };
 
@@ -202,36 +269,34 @@ const ProfileSection = ({ user, getUserInformation }) => {
               </div>
               <div className="grid grid-cols-12">
                 <div className=" md:col-span-8 col-span-12 grid md:grid-cols-2 grid-cols-1  gap-12">
-                  <div className="">
+                  {/* <div className="">
                     <p>Current password</p>
-
-                    <InputWithIcon
+                    <PasswordInput
                       placeholder="Current Password"
                       type="text"
                       className=" py-5 border-primary-600 border rounded-5 w-full  flex  bg-primary-100  justify-between"
                       name="password"
-                      // value={state.password}
-                      // onChange={handleChange}
+                      value={pwd}
+                      onChange={(e) => setPwd(e.target.value)}
                     />
                   </div>
                   <div className="">
                     <p>New Password</p>
-
-                    <InputWithIcon
+                    <PasswordInput
                       placeholder="New Password"
                       type="text"
                       className=" py-5 border-primary-600 border rounded-5 w-full  flex  bg-primary-100  justify-between"
                       name="c_password"
-                      // value={state.c_password}
-                      // onChange={handleChange}
+                      value={pwdc}
+                      onChange={(e) => setPwdC(e.target.value)}
                     />
-                  </div>
+                  </div> */}
                   <div className="text-right">
                     <button
-                      // onClick={handleUploadPassword}
+                      onClick={changePassword}
                       className="hover:bg-secondary-600 hover:text-white h-10 flex-col items-center flex rounded-5 border-secondary-600 border py-2 px-8 bg-transparent"
                     >
-                      Change Password
+                      Request Password Change
                     </button>
                   </div>
                 </div>

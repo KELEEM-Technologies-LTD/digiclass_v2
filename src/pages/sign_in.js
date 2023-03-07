@@ -48,9 +48,9 @@ const Signin = () => {
           .then(function () {
             displaySuccMsg("Logged in successfully", () => {
               if (currentUrl !== null) {
-                window.location.href = currentUrl;
+                window.location.href = "/reload?currentUrl" + currentUrl;
               } else {
-                window.location.href = "/";
+                window.location.href = "/reload";
               }
             });
             // displaySuccMsg('Logged in successfully', () => { window.history.back() })
@@ -110,7 +110,6 @@ const Signin = () => {
   const [pwd, setPwd] = useState("");
 
   const siginin = async () => {
-    displayLoading("authenticating....");
     if (email === "") {
       displayErrMsg("Please input a valid email Address");
     } else if (pwd === "") {
@@ -118,6 +117,7 @@ const Signin = () => {
     } else if (pwd.length < 8) {
       displayErrMsg("Your password length cannot be  less than 8 digits");
     } else {
+      displayLoading("authenticating....");
       var sigininData = {
         username: email,
         password: pwd,
@@ -143,7 +143,7 @@ const Signin = () => {
             .then(function () {
               displaySuccMsg("Logged in successfully", () => {
                 if (currentUrl !== null) {
-                  window.location.href = currentUrl;
+                  window.location.href = "/reload?currentUrl=" + currentUrl;
                 } else {
                   window.location.href = "/reload";
                 }

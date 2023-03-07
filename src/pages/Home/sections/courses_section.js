@@ -26,7 +26,7 @@ const CourseSection = () => {
         await Services()
       ).get(
         global_variables().getCourses +
-          `?size=4&filter=category=${course_id}&query_fields=id,title,language,status,airtime,short_description,price`
+          `?size=4&filter=category=${course_id}&query_fields=id,title,language,status,airtime,short_description,price,instructor`
       );
       //   console.log(res.data.data.data[0])
       setCourses(res.data?.data?.data);
@@ -87,6 +87,7 @@ const CourseSection = () => {
             <img src="./img/caret-right.svg" alt="caret-right" />
           </Link>
         </div>
+        {/* <div className="grid md:grid-cols-4 grid-cols-1 md:gap-2 gap-1 mt-12"></div> */}
         <div className="flex flex-wrap mt-4 md:hidden">
           {topics.map((item, index) => (
             <div

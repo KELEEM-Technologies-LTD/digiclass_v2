@@ -21,6 +21,7 @@ const VerifyAndResetPassword = () => {
     setLoading(true);
 
     if (pwd === "" || pwdc === "") {
+      setLoading(false);
       displayErrMsg("Please enter a new password and confirm it.", () => {});
     } else {
       try {
@@ -54,6 +55,7 @@ const VerifyAndResetPassword = () => {
         }
       } catch (error) {
         if (error.response?.status === 400) {
+          setLoading(false);
           displayErrMsg("please enter a strong password", () => {});
         } else if (error.response?.status === 403) {
           displayErrMsg("invalid reset token, please try again", () => {

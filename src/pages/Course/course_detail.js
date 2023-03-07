@@ -101,14 +101,14 @@ const CourseDetail = () => {
         // `/users/9c5a1da9f779441d84f06168ccf0574b`
       );
 
-      console.log(res.data?.data);
+      // console.log(res.data?.data);
       window.location.href = `/my-course/${courseid}`;
       // setVideos(res.data?.data?.videos[keys[0]]);
 
       // console.log(keys);
       // console.log(res.data?.data?.videos[keys[0]]);
     } catch (error) {
-      console.log(error.response?.data?.message);
+      // console.log(error.response?.data?.message);
     }
   };
 
@@ -144,8 +144,8 @@ const CourseDetail = () => {
                 className="col-span-9"
                 style={{
                   backgroundImage: isLogged
-                    ? "url(../img/paidcourse.png)"
-                    : `url(../img/courseimage.png)`,
+                    ? `url(${course.thumbnail})`
+                    : `url(${course.thumbnail})`,
                   backgroundSize: "cover",
                 }}
               >

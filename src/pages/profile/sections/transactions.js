@@ -22,11 +22,13 @@ const Transactions = ({ user }) => {
         await Services()
       ).get(global_variables().getTransactions + `/${uid.user_id}`);
 
-      console.log(res.data?.payload);
+      // console.log(res.data?.payload);
       setTransactions(res.data?.payload);
       setLoading(false);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+      setLoading(false);
+      displayErrMsg("Error loading transaction history", () => {});
     }
   };
 
@@ -88,7 +90,7 @@ const Transactions = ({ user }) => {
       const verify_data = {
         reference: reference,
       };
-      console.log(verify_data);
+      // console.log(verify_data);
       const user = await localforage.getItem("userdata");
       try {
         const res = await (

@@ -24,7 +24,7 @@ const HotReload = () => {
 
       if (complete_user) {
         console.log("Image: .............." + complete_user.profile_pic);
-        if (currentUrl !== null) {
+        if (currentUrl !== null && currentUrl !== "") {
           window.location.href = currentUrl;
         } else {
           window.location.href = "/";
@@ -36,7 +36,7 @@ const HotReload = () => {
           ).get(global_variables().getUser + `/${u.user_id}`);
           console.log(res.data?.data);
           localforage.setItem("complete_user", res.data?.data).then(() => {
-            if (currentUrl !== null) {
+            if (currentUrl !== null && currentUrl !== "") {
               window.location.href = currentUrl;
             } else {
               window.location.href = "/";
@@ -44,7 +44,7 @@ const HotReload = () => {
           });
         } catch (err) {
           // console.log(err);
-          if (currentUrl !== null) {
+          if (currentUrl !== null && currentUrl !== "") {
             window.location.href = currentUrl;
           } else {
             window.location.href = "/";

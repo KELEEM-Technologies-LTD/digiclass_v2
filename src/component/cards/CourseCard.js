@@ -67,7 +67,7 @@ function CourseCard({ showProgress, item }) {
         <div className="p-4 flex-grow">
           <h2 className="text-lg font-medium mb-2">{title}</h2>
           <p className="text-primary-600 text-sm mb-2">
-            <InstructorName instructor={instructor} />
+            {isLogged ? <InstructorName instructor={instructor} /> : null}
           </p>
           <div className="flex items-center mb-2">
             {[...Array(fullStars)].map((_, i) => (

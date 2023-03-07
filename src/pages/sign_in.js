@@ -17,6 +17,11 @@ import global_variables from "../mixing/urls";
 import jwtDecode from "jwt-decode";
 
 const Signin = () => {
+  const [currentUrl, setCurrentUrl] = useState("");
+
+  const [email, setEmail] = useState("");
+  const [pwd, setPwd] = useState("");
+
   const handleHandleCallbackResponse = async (response) => {
     // console.log(response);
     // console.log(response.credential);
@@ -47,8 +52,10 @@ const Signin = () => {
           })
           .then(function () {
             displaySuccMsg("Logged in successfully", () => {
-              if (currentUrl !== null) {
-                window.location.href = "/reload?currentUrl" + currentUrl;
+              const urlParams = new URLSearchParams(window.location.search);
+              const newcur = urlParams.get("currentUrl");
+              if (newcur !== null) {
+                window.location.href = `/reload?currentUrl=${newcur}`;
               } else {
                 window.location.href = "/reload";
               }
@@ -103,11 +110,6 @@ const Signin = () => {
       window.location.href = "/";
     }
   };
-
-  const [currentUrl, setCurrentUrl] = useState("");
-
-  const [email, setEmail] = useState("");
-  const [pwd, setPwd] = useState("");
 
   const siginin = async () => {
     if (email === "") {

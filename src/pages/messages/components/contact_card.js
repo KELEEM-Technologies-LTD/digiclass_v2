@@ -53,10 +53,10 @@ const ContactCard = ({
           }}
         >
           <Avatar>
-            {user.first_name[0]}
-            {user.last_name[0]}
+            {user?.first_name[0]}
+            {user?.last_name[0]}
           </Avatar>
-          <div className="ml-3 mt-2">{user.first_name}</div>
+          <div className="ml-3 mt-2">{user?.first_name}</div>
         </div>
       )}
     </>

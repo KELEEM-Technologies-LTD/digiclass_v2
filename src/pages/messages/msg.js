@@ -63,7 +63,12 @@ const MessageWindow = () => {
       {/* Side navigation */}
       <div
         className="flex-none hidden md:block md:w-64 bg-[white] shadow-md flex-col"
-        style={{ maxHeight: "86vh", minHeight: "86vh", overflowY: "scroll" }}
+        style={{
+          maxHeight: "86vh",
+          minHeight: "86vh",
+          overflowY: "scroll",
+          width: "30vw",
+        }}
       >
         <div className="p-4 font-bold text-center">Messages</div>
         <div className="flex-grow overflow-y-scroll">

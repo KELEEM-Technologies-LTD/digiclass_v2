@@ -12,7 +12,6 @@ const logos = [
 
 function Partners() {
   return (
-   
     <div className="flex flex-col">
       <div className="px-6 py-2 md:px-16">
         <p>
@@ -35,7 +34,6 @@ function Partners() {
         </span> */}
       </div>
     </div>
-    
   );
 }
 

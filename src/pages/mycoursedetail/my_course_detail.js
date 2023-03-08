@@ -3,7 +3,7 @@ import { ChevronLeft } from "../../assets";
 import Footer from "../../component/navigation/footer";
 import ReactPlayer from "react-player";
 import { useEffect, useRef, useState } from "react";
-import { ClockIcon, PlayIcon } from "@heroicons/react/20/solid";
+import { ClockIcon, PauseIcon, PlayIcon } from "@heroicons/react/20/solid";
 import CourseSection from "../Course/sections/course_section";
 import global_variables from "../../mixing/urls";
 import { Services } from "../../mixing/services";
@@ -105,7 +105,7 @@ const MyCourseDetail = () => {
       );
 
       setVideos(res.data?.data?.videos);
-      console.log(res.data?.data);
+      // console.log(res.data?.data);
       setSections(res.data?.data?.sections);
       // console.log(keys);
       // console.log(res.data?.data?.videos[keys[0]]);
@@ -125,7 +125,7 @@ const MyCourseDetail = () => {
     getVideos();
   }, []);
 
-  const [playing, setPlaying] = useState(false);
+  const [playing, setPlaying] = useState(true);
 
   return (
     <>
@@ -210,12 +210,21 @@ const MyCourseDetail = () => {
                   return (
                     <div key={index}>
                       <div className="flex mb-3 ml-5">
-                        <PlayIcon
-                          className="w-7 h-7 mr-2 cursor-pointer"
-                          onClick={() => {
-                            setCurrentSection(index);
-                          }}
-                        />
+                        {index === currentSection ? (
+                          <PauseIcon
+                            className="w-7 h-7 mr-2 cursor-pointer"
+                            onClick={() => {
+                              setCurrentSection(index);
+                            }}
+                          />
+                        ) : (
+                          <PlayIcon
+                            className="w-7 h-7 mr-2 cursor-pointer"
+                            onClick={() => {
+                              setCurrentSection(index);
+                            }}
+                          />
+                        )}
                         <div className="flex flex-col">
                           <p className="text-lg">{_sections.name}</p>
                           <div className="flex">

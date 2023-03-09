@@ -38,6 +38,7 @@ const MyCourseCategory = React.lazy(() =>
 const MyMessages = React.lazy(() => import("./pages/messages/messages"));
 const MyhotReload = React.lazy(() => import("./pages/hot_reload"));
 const MyInstructor = React.lazy(() => import("./pages/instructor/instructor"));
+const MyVerify = React.lazy(() => import("./pages/verify_email"));
 
 function App() {
   return (
@@ -79,6 +80,7 @@ function App() {
                 path="/instructor/:instructorid"
                 element={<MyInstructor />}
               />
+              <Route exact path="/verify" element={<MyVerify />} />
 
               <Route element={<MyPrivateRoute />}>
                 <Route exact path="/cart" element={<MyCart />} />

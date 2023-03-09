@@ -1,5 +1,7 @@
 import Swal from "sweetalert2";
 
+const timeToLoad = 2000;
+
 export const displayErrMsg = (err, thenFuction) => {
   Swal.fire({
     icon: "error",
@@ -7,7 +9,7 @@ export const displayErrMsg = (err, thenFuction) => {
     showConfirmButton: false,
     text: err,
     position: "top-right",
-    timer: 4000,
+    timer: timeToLoad,
     timerProgressBar: true,
   }).then(() => {
     thenFuction();
@@ -21,7 +23,7 @@ export const displaySuccMsg = (msg, thenFunction) => {
     showConfirmButton: false,
     text: msg,
     position: "top-right",
-    timer: 4000,
+    timer: timeToLoad,
     timerProgressBar: true,
   }).then(() => {
     thenFunction();

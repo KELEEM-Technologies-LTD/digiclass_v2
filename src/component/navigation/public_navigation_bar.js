@@ -230,6 +230,18 @@ const NavigationBar = () => {
                           </span>
                         </Link>
                         <Link
+                          to="/all"
+                          className="-m-3 flex items-center rounded-md p-3 hover:bg-primary-50"
+                        >
+                          <AcademicCapIcon
+                            className="h-6 w-6 flex-shrink-0 text-secondary-600"
+                            aria-hidden="true"
+                          />
+                          <span className="ml-3 text-base font-medium text-primary-900">
+                            All courses
+                          </span>
+                        </Link>
+                        <Link
                           to="/my-course"
                           className="-m-3 flex items-center rounded-md p-3 hover:bg-primary-50"
                         >

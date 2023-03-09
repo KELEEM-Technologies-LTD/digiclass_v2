@@ -65,7 +65,7 @@ function CourseCard({ showProgress, item }) {
           />
         </div>
         <div className="p-4 flex-grow">
-          <h2 className="text-lg font-medium mb-2">{title}</h2>
+          <h2 className="text-lg text-bold font-bold mb-2">{title}</h2>
           <p className="text-primary-600 text-sm mb-2">
             {isLogged ? <InstructorName instructor={instructor} /> : null}
           </p>
@@ -83,9 +83,7 @@ function CourseCard({ showProgress, item }) {
             <p className="text-primary-600 text-sm">({rating.toFixed(1)})</p>
           </div>
           <div className="flex justify-between items-center">
-            <p className="text-lg font-medium text-green-500">
-              {formatCedis(price)}
-            </p>
+            <p className="text-lg font-bold">{formatCedis(price)}</p>
             <p className="text-primary-600 text-sm line-through">
               {formatCedis(price * 1.35)}
             </p>

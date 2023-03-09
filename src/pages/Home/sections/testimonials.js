@@ -5,7 +5,7 @@ import TestimonialCard from "../../../component/cards/TestimonialCard";
 function Community() {
   const isLoggedIn = false;
   return (
-    <div className="flex-col flex py-10  md:py-10">
+    <div className="flex-col flex py-5  md:py-5">
       <>
         <div className="flex-col flex justify-center items-center">
           <p className="font-bold md:text-3xl text-2xl  text-dark">
@@ -20,17 +20,17 @@ function Community() {
             {
               name: "John Emil",
               position: "Fullstack developer",
-              says: "When potential customers are researching you online, they're getting to know you through the content on your website. So understandably, many of them might be skeptical or hesitant to trust you right away.",
+              says: "When potential customers are researching you online.",
             },
             {
               name: "Uncle Drew",
               position: "Comedy/Sport Analyst",
-              says: "After draining his life savings to enter a team in the Rucker Classic street ball tournament in Harlem, Dax is dealt a series of setbacks, including losing his team to his longtime rival. Desperate to win the tournament and the cash prize, Dax stumbles upon the man, the myth, the legend Uncle Drew.",
+              says: "After draining his life savings to enter a team in the Rucker Classic",
             },
             {
               name: "Steph Curry",
               position: "Professional basketball player",
-              says: "Wardell Stephen Curry II is an American professional basketball player for the Golden State Warriors of the National Basketball Association.",
+              says: "Wardell Stephen Curry II is an American professional.",
             },
           ].map((_data, index) => {
             return <TestimonialCard key={index} data={_data} />;

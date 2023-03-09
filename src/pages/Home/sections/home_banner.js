@@ -41,7 +41,7 @@ const HomeBanner = () => {
       </div>
 
       <div className="hidden md:block relative">
-        {isLogged ? (
+        {/* {isLogged ? (
           <>
             <div className="absolute top-0 left-0">
               <img src="img/grillbg.svg" alt="bg" />
@@ -56,20 +56,20 @@ const HomeBanner = () => {
             </div>
           </>
         ) : (
-          <>
-            <div className="absolute top-0 left-0">
-              <img src="img/grillbg.svg" alt="bg" />
-            </div>
+            )} */}
+        <>
+          <div className="absolute top-0 left-0">
+            <img src="img/grillbg.svg" alt="bg" />
+          </div>
 
-            <div className="relative z-10">
-              <img src="img/1.png" alt="bg" />
-            </div>
+          <div className="relative z-10">
+            <img src="img/1.png" alt="bg" />
+          </div>
 
-            <div className="absolute bottom-0 right-0 z-0 ">
-              <img src="img/grillbg.svg" alt="bg" />
-            </div>
-          </>
-        )}
+          <div className="absolute bottom-0 right-0 z-0 ">
+            <img src="img/grillbg.svg" alt="bg" />
+          </div>
+        </>
       </div>
     </div>
   );

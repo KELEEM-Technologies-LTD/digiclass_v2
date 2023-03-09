@@ -24,13 +24,13 @@ const Home = () => {
       {isLogged ? <StartLearningRow /> : null}
       <AddSection />
       <DigiClassBusiness />
+      <JoinDigiClass />
       {isLogged ? (
         <></>
       ) : (
         <>
           <Partners />
           <About />
-          <JoinDigiClass />
         </>
       )}
 

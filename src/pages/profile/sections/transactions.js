@@ -2,6 +2,7 @@ import localforage from "localforage";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
+import { Link } from "react-router-dom";
 import { displayErrMsg } from "../../../component/alerts/alerts";
 import { formatCedis } from "../../../component/Helpers/money";
 import { Services } from "../../../mixing/services";
@@ -57,7 +58,9 @@ const Transactions = ({ user }) => {
           {row.items?.map((_item, index) => {
             return (
               <li className="mb-1 list-disc" key={index}>
-                <CourseNameById id={_item} />
+                <Link to={`/my-course/${_item}`}>
+                  <CourseNameById id={_item} />
+                </Link>
               </li>
             );
           })}

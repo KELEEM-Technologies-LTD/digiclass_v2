@@ -108,13 +108,23 @@ const CourseSection = () => {
           ))}
         </div>
         <div className="grid md:grid-cols-4 grid-cols-1 md:gap-2 gap-1 mt-12">
-          {laoding
-            ? ["", "", "", ""].map((d, index) => {
-                return <CourseSpinner key={index} />;
-              })
-            : courses.map((item, index) => {
+          {laoding ? (
+            ["", "", "", ""].map((d, index) => {
+              return <CourseSpinner key={index} />;
+            })
+          ) : (
+            <>
+              {courses.map((item, index) => {
                 return <CourseCard item={item} key={index} />;
               })}
+              <div className="flex justify-end  md:hidden">
+                <Link className="text-accent mr-3" to="/all">
+                  See All Courses
+                </Link>
+                <img src="./img/caret-right.svg" alt="caret-right" />
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>

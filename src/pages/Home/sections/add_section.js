@@ -17,20 +17,21 @@ const AddSection = () => {
             className="block md:hidden w-full"
           />
         </div>
-        <div className="absolute bottom-0 w-full  flex justify-center items-center ">
-          {/* <Button
-                size="big"
-                className="outlineLg  px-16 m-4 py-5"
-                color={"secondary"}
-              >
-                <p className="text-white">Call to Action</p>
-              </Button> */}
-          <Link to="#"
+        {/* <div className="absolute bottom-0 w-full  flex justify-center items-center ">
+          <button
+            size="big"
+            className="outlineLg  px-16 m-4 py-5"
+            color={"secondary"}
+          >
+            <p className="text-white">Call to Action</p>
+          </button>
+          <Link
+            to="#"
             className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-2 border border-transparent bg-secondary-600 px-4 py-2 text-base font-medium text-white shadow-xl hover:bg-secondary-800"
           >
             Call to Action
           </Link>
-        </div>
+        </div> */}
       </div>
 
       <div className="flex-col justify-center px-4 py-8 md-py-0 md:px-0  hidden md:block md:flex">
@@ -42,7 +43,8 @@ const AddSection = () => {
             Get courses from GHC 15.99 and stay ahead.
           </p>
         </div>
-        <Link to="/signup"
+        <Link
+          to="/signup"
           className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-2 border border-transparent bg-secondary-600 px-10 py-4 text-base font-medium text-white shadow-xl w-10 hover:bg-secondary-800"
         >
           Join Now
@@ -50,7 +52,6 @@ const AddSection = () => {
       </div>
     </div>
   );
-}
+};
 
-
-export default AddSection
+export default AddSection;

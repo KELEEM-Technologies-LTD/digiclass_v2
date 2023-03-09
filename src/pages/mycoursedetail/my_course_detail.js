@@ -11,7 +11,7 @@ import localforage from "localforage";
 import { displayErrMsg } from "../../component/alerts/alerts";
 import logout_and_redirect from "../../component/hoc/logout-redirect";
 import Skeleton from "@mui/material/Skeleton";
-import AboutAuthor from "../Course/sections/about_the_author";
+import AboutAuthor from "./sections/about_the_author";
 import { Tab } from "@headlessui/react";
 import CourseInformation from "../Course/sections/course_information";
 import Reviews from "../Course/sections/reviews";
@@ -172,7 +172,7 @@ const MyCourseDetail = () => {
                   ref={playerRef}
                   controls
                   width="100%"
-                  height="100%"
+                  height="60vh"
                   loop={true}
                   light={course.thumbnail}
                   playIcon={
@@ -204,7 +204,7 @@ const MyCourseDetail = () => {
               <hr className="my-1 mx-5 border-t border-secondary-400" />
               <div
                 className="px-4 pt-4 pb-2 text-sm text-secondary-500"
-                // style={{ maxHeight: '50vh', overflowY: 'scroll' }}
+                style={{ minHeight: "60vh", overflowY: "scroll" }}
               >
                 {sections.map((_sections, index) => {
                   return (

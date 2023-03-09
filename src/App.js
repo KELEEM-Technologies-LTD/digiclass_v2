@@ -37,6 +37,7 @@ const MyCourseCategory = React.lazy(() =>
 );
 const MyMessages = React.lazy(() => import("./pages/messages/messages"));
 const MyhotReload = React.lazy(() => import("./pages/hot_reload"));
+const MyInstructor = React.lazy(() => import("./pages/instructor/instructor"));
 
 function App() {
   return (
@@ -73,6 +74,11 @@ function App() {
                 element={<MyCourseCategory />}
               />
               <Route exact path="/all" element={<MyAllCourse />} />
+              <Route
+                exact
+                path="/instructor/:instructorid"
+                element={<MyInstructor />}
+              />
 
               <Route element={<MyPrivateRoute />}>
                 <Route exact path="/cart" element={<MyCart />} />

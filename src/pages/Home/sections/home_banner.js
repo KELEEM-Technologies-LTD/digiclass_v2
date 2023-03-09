@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import InputWithIcon from "../../../component/InputFields/InputWithIcon";
 import GeneralContext from "../../../context/general_context";
+import SearchHomeBanner from "./search_course_on_banner";
 
 const HomeBanner = () => {
   const { isLogged, user } = useContext(GeneralContext);
@@ -29,14 +30,9 @@ const HomeBanner = () => {
               ? "Get courses from GHC 15.99 and stay ahead"
               : "Anywhere anytime. Enjoy Learning"}
           </p>
-          {!isLogged ? (
-            <InputWithIcon
-              placeholder={"What do you want to learn?"}
-              className="md:w-11/12  w-full mt-6 flex h-14  bg-primary-100  justify-between"
-              icon="fa fa-search text-2xl text-secondary-500"
-              id="search"
-            />
-          ) : null}
+          {/* {!isLogged ?  */}
+          <SearchHomeBanner />
+          {/* : null} */}
         </div>
       </div>
 

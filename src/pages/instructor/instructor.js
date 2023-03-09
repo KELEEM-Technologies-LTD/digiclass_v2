@@ -1,60 +1,69 @@
-import { useState } from "react";
-import { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Pagination } from "@mui/material";
+import { useContext, useLayoutEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import CourseCard from "../../component/cards/CourseCard";
 import Footer from "../../component/navigation/footer";
 import NavigationBar from "../../component/navigation/public_navigation_bar";
+import CourseSpinner from "../../component/spinners/course_spinner";
+import GeneralContext from "../../context/general_context";
 import { Services } from "../../mixing/services";
 import global_variables from "../../mixing/urls";
-import { Pagination } from "@mui/material";
-import CourseSpinner from "../../component/spinners/course_spinner";
-import CourseCard from "../../component/cards/CourseCard";
+import InstructorName from "../mycourses/get_instructor_name";
 
-const CourseCategory = () => {
-  const navigate = useNavigate();
-  const { categoryid, name } = useParams();
-  const size = 20;
+const Instructor = () => {
+  const { instructorid } = useParams();
+  const { isLogged } = useContext(GeneralContext);
+  const size = 8;
   const [loading, setLoading] = useState(true);
   const [courses, setCourses] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
   const [cpage, setCpage] = useState(1);
 
-  const getCourseInCategories = async (p) => {
-    try {
-      const res = await (
-        await Services()
-      ).get(
-        global_variables().getCourses +
-          `?page=${p}&size=${size}&filter=category=${categoryid}&query_fields=id,title,language,status,airtime,short_description,price`
-      );
+  const getCourses = async (p) => {
+    if (instructorid) {
+      try {
+        const res = await (
+          await Services()
+        ).get(
+          global_variables().getCourses +
+            `?page=${p}&size=${size}&filter=instructor=${instructorid}&query_fields=id,title,language,status,airtime,short_description,price,category,instructor`
+        );
 
-      //   console.log(res.data?.data);
-      setTotalPages(res.data?.data?.totalPages);
-      setLoading(false);
-      setCourses(res.data?.data?.data);
-    } catch (error) {
-      console.log(error);
+        //   console.log(res.data?.data);
+        setTotalPages(res.data?.data?.totalPages);
+        setLoading(false);
+        setCourses(res.data?.data?.data);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      window.location.href = "/";
     }
   };
 
-  useEffect(() => {
-    getCourseInCategories(cpage);
+  useLayoutEffect(() => {
+    getCourses(cpage);
   }, []);
 
   const handleChange = (event, value) => {
-    console.log(value);
-    getCourseInCategories(value);
+    // console.log(value);
+    getCourses(value);
     setCpage(value);
   };
-
   return (
     <>
       <NavigationBar />
       <div className="flex flex-col font-serif">
         <div className="flex flex-col bg-secondary-600 md:px-16 px-3 justify-end">
-          <div className="flex justify-between items-center">
-            <p className=" text-2xl md:text-4xl md:font-bold text-white py-7">
-              {name}
+          <div className="items-center">
+            <p className="text-2xl md:text-4xl md:font-bold text-white pt-7">
+              Other courses by the same Instructor
             </p>
+            {isLogged ? (
+              <p className="text-md md:text-lg text-white mb-5">
+                <InstructorName instructor={instructorid} />
+              </p>
+            ) : null}
           </div>
         </div>
         <div className="mt-12 md:px-16 px-3">
@@ -93,4 +102,4 @@ const CourseCategory = () => {
   );
 };
 
-export default CourseCategory;
+export default Instructor;

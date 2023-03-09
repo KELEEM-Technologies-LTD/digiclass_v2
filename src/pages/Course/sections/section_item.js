@@ -6,7 +6,7 @@ function SectionItem({ item }) {
   return (
     <div className="flex mb-3 justify-between px-2">
       <div className="flex">
-        <Checkbox />
+        <Checkbox disabled={true} />
         <div className="flex flex-col">
           <p className="text-lg">{title}</p>
           <div className="flex ">
@@ -15,7 +15,7 @@ function SectionItem({ item }) {
           </div>
         </div>
       </div>
-      {lock ? <img src="../img/lock.svg" alt="icon-lock" /> : <></>}
+      <img src="../img/lock.svg" alt="icon-lock" />
     </div>
   );
 }

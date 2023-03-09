@@ -89,9 +89,7 @@ function AboutCourse({ course_detail, instructor, loading, reviews }) {
   const hasHalfStar = rating % 1 !== 0;
 
   return (
-    <div
-      className={`flex py-20 md:px-24 px-3 md:flex-row items-center flex-col-reverse  md:gap-40 bg-black opacity-80 h-full`}
-    >
+    <div className="flex py-20 md:px-24 px-3 md:flex-row items-center flex-col-reverse  md:gap-40 bg-black opacity-80 h-100">
       <>
         <div className="flex flex-col md:mt-0 mt-6  ">
           <p className="md:text-4xl text-3xl font-bold text-white opacity-100">

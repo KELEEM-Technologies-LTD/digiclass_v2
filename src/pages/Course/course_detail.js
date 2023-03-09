@@ -143,22 +143,22 @@ const CourseDetail = () => {
               <div
                 className="col-span-9"
                 style={{
-                  backgroundImage: isLogged
-                    ? `url(${course.thumbnail})`
-                    : `url(${course.thumbnail})`,
+                  backgroundImage: `url(${course.thumbnail})`,
                   backgroundSize: "cover",
+                  backgroundRepeat: "no-repeat",
                 }}
               >
-                <div>
-                  <AboutCourse
-                    course_detail={course}
-                    instructor={instructor}
-                    loading={reviewLoading}
-                    reviews={review}
-                  />
-                </div>
+                <AboutCourse
+                  course_detail={course}
+                  instructor={instructor}
+                  loading={reviewLoading}
+                  reviews={review}
+                />
               </div>
-              <div className="col-span-3">
+              <div
+                className="col-span-3"
+                style={{ maxHeight: "70vh", overflowY: "hidden" }}
+              >
                 {isLogged ? (
                   <CourseSection courseid={course.course_id} />
                 ) : (

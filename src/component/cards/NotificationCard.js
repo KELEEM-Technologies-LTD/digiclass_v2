@@ -1,29 +1,15 @@
 import { CircularProgress } from "@mui/material";
 import localforage from "localforage";
 import moment from "moment";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import GeneralContext from "../../context/general_context";
 import { Services } from "../../mixing/services";
 import global_variables from "../../mixing/urls";
 import { displayErrMsg, displaySuccMsg } from "../alerts/alerts";
 
-function NotificationCard({ data, getNotifications }) {
+function NotificationCard({ data }) {
+  const { getNotifications } = useContext(GeneralContext);
   const [seen, setSeen] = useState(false);
-  const [viewed, setViewed] = useState(false);
-
-  const checkViewed = async () => {
-    const userData = await localforage.getItem("userdata");
-    if (data.view.includes(userData.user_id)) {
-      setViewed(true);
-    } else {
-      setViewed(false);
-    }
-
-    // console.log(data);
-  };
-
-  useEffect(() => {
-    checkViewed();
-  }, []);
 
   const { heading, message, date, id } = data;
 
@@ -38,25 +24,16 @@ function NotificationCard({ data, getNotifications }) {
         user_id: userData.user_id,
       });
 
-      console.log(res);
       displaySuccMsg(res.data?.message, () => {});
       getNotifications();
-      setViewed(true);
     } catch (error) {
       displayErrMsg("Error updating notification status", () => {});
     }
-
-    console.log(id);
   };
 
   return (
     <div
-      className={
-        viewed
-          ? `hidden`
-          : null +
-            ` flex justify-between item-center md:gap-1 gap-4 border-primary-300 border-b py-6 md:px-3`
-      }
+      className={` flex justify-between item-center md:gap-1 gap-4 border-primary-300 border-b py-6 md:px-3`}
     >
       <div>
         <button

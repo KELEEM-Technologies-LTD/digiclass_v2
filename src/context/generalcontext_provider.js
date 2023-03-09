@@ -11,11 +11,29 @@ const GeneralContextProvider = (props) => {
   const [complete_user, setcomplete_user] = useState([]);
   const [cartLoading, setCartLoading] = useState(false);
   const [cart, setCart] = useState([]);
+  const [notifications, setNotification] = useState([]);
+  const [notifLoading, setNotifLoadding] = useState(true);
 
   useEffect(() => {
     checkStatus();
     getCartData();
+    getNotifications();
   }, []);
+
+  const getNotifications = async () => {
+    const userdata = await localforage.getItem("userdata");
+    try {
+      const res = await (
+        await Services()
+      ).get(global_variables().getNotifications + `/${userdata.user_id}`);
+
+      // console.log(res.data?.payload);
+      setNotification(res.data?.payload);
+      setNotifLoadding(false);
+    } catch (err) {
+      setNotifLoadding(false);
+    }
+  };
 
   const checkStatus = async () => {
     try {
@@ -84,6 +102,10 @@ const GeneralContextProvider = (props) => {
         cart,
         cartLoading,
         getCartData,
+        notifications,
+        setNotification,
+        getNotifications,
+        notifLoading,
       }}
     >
       {props.children}

@@ -1,42 +1,28 @@
 import { Skeleton } from "@mui/material";
 import localforage from "localforage";
-import { useEffect, useState } from "react";
-import {
-  displayErrMsg,
-  displaySuccMsg,
-} from "../../../component/alerts/alerts";
+import { useContext, useEffect, useState } from "react";
 import NotificationCard from "../../../component/cards/NotificationCard";
 import NotificationCardRead from "../../../component/cards/NotificationCardRead";
-import { Services } from "../../../mixing/services";
-import global_variables from "../../../mixing/urls";
+import GeneralContext from "../../../context/general_context";
 
 const Notifications = () => {
-  const [loading, setLoading] = useState(true);
-  const [notifs, setNotifs] = useState([]);
+  const { notifLoading, notifications, user } = useContext(GeneralContext);
 
-  const getNotifications = async () => {
-    // setLoading(true);
-    // console.log("triggered");
-
-    const userdata = await localforage.getItem("userdata");
-    try {
-      const res = await (
-        await Services()
-      ).get(global_variables().getNotifications + `/${userdata.user_id}`);
-
-      // console.log(res.data?.payload);
-      setNotifs(res.data?.payload);
-      setLoading(false);
-    } catch (err) {
-      // console.log(err);
-      displayErrMsg("Notifications not found", () => {});
-      setLoading(false);
-    }
-  };
+  const [viewed, setViewed] = useState([]);
+  const [notViewed, setNotViewed] = useState([]);
 
   useEffect(() => {
-    getNotifications();
-  }, []);
+    const seenArr = notifications.filter((obj) =>
+      obj.view.includes(user.user_id)
+    );
+
+    const notSeenArr = notifications.filter(
+      (obj) => !obj.view.includes(user.user_id)
+    );
+
+    setViewed(seenArr);
+    setNotViewed(notSeenArr);
+  }, [notifications]);
 
   return (
     <>
@@ -44,31 +30,25 @@ const Notifications = () => {
         <p className="my-2 font-bold text-lg text-black">
           Recent Notifications
         </p>
-        {loading ? (
+        {notifLoading ? (
           <>
             <Skeleton height={80} />
             <Skeleton height={80} />
           </>
         ) : (
-          notifs.map((data, index) => {
-            return (
-              <NotificationCard
-                key={index}
-                data={data}
-                getNotifications={getNotifications}
-              />
-            );
+          notViewed.map((data, index) => {
+            return <NotificationCard key={index} data={data} />;
           })
         )}
 
         <p className="my-2 font-bold text-lg mt-7">Read Notifications</p>
-        {loading ? (
+        {notifLoading ? (
           <>
             <Skeleton height={80} />
             <Skeleton height={80} />
           </>
         ) : (
-          notifs.map((data, index) => {
+          viewed.map((data, index) => {
             return <NotificationCardRead key={index} data={data} />;
           })
         )}

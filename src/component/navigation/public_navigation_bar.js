@@ -161,7 +161,7 @@ const NavigationBar = () => {
                   >
                     All courses
                   </Link>
-                  <MyFavorites />
+                  {/* <MyFavorites /> */}
                   <MyCartIcon />
                   <MyNotificationIcon />
                   <UserDropDown />

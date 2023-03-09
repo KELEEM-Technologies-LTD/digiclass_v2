@@ -3,7 +3,33 @@ import { Link } from "react-router-dom";
 const JoinDigiClass = () => {
   return (
     <>
-      <div className="md:flex md:justify-between md:flex-row-reverse bg-[white] py-4 md:px-16 mt-10 flex-col">
+      <div className="flex flex-col md:flex-row items-center justify-between bg-gray-100 rounded-lg shadow-lg p-8">
+        <div className="md:w-1/2 md:pr-8">
+          <h3 className="text-4xl font-bold mb-4">
+            Take the next step toward your personal and professional goals with
+            DigiClass.
+          </h3>
+          <p className="text-gray-700 text-lg mb-8">
+            Join now to receive personalized recommendations from the full
+            DigiClass catalog.
+          </p>
+          <Link
+            to="/signup"
+            className="bg-secondary-500 hover:bg-secondary-700 text-white font-bold py-2 px-4 rounded"
+          >
+            Join now
+          </Link>
+        </div>
+        <div className="md:w-1/2 md:mt-0 mt-8">
+          <img
+            src="./img/TeachOnDigiClass.jpg"
+            alt="banner"
+            className="w-full md:bg-none bg-cover bg-center rounded-lg shadow-lg"
+          />
+        </div>
+      </div>
+
+      {/* <div className="md:flex md:justify-between md:flex-row-reverse bg-[white] py-4 md:px-16 mt-10 flex-col">
         <div className="relative hidden md:block ">
           <div className="absolute top-0 left-0">
             <img src="./img/grillbg.svg" alt="bg" />
@@ -46,7 +72,7 @@ const JoinDigiClass = () => {
             Join Now
           </Link>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

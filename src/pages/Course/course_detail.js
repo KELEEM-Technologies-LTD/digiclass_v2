@@ -212,7 +212,10 @@ const CourseDetail = () => {
                           </div>
                         </Tab.Panel>
                         <Tab.Panel>
-                          <AboutAuthor instructor={instructor} />
+                          <AboutAuthor
+                            instructor={instructor}
+                            course_detail={course}
+                          />
                         </Tab.Panel>
                       </Tab.Panels>
                     </div>

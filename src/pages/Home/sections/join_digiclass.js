@@ -20,11 +20,11 @@ const JoinDigiClass = () => {
             Join now
           </Link>
         </div>
-        <div className="md:w-1/2 md:mt-0 mt-8">
+        <div className="md:w-1/2 md:mt-0 mt-8 md:ml-20 md:pl-10">
           <img
             src="./img/TeachOnDigiClass.jpg"
             alt="banner"
-            className="w-full md:bg-none bg-cover bg-center rounded-lg shadow-lg"
+            className="w-64 md:bg-none bg-cover bg-center rounded-lg shadow-lg"
           />
         </div>
       </div>

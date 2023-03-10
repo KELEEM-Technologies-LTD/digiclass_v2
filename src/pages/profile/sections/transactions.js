@@ -8,6 +8,7 @@ import { formatCedis } from "../../../component/Helpers/money";
 import { Services } from "../../../mixing/services";
 import global_variables from "../../../mixing/urls";
 import CourseNameById from "./courseNameById";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
 const Transactions = ({ user }) => {
   const [loading, setLoading] = useState(true);
@@ -57,9 +58,9 @@ const Transactions = ({ user }) => {
         <ul>
           {row.items?.map((_item, index) => {
             return (
-              <li className="mb-1 list-disc" key={index}>
+              <li className="mb-3 list-disc" key={index}>
                 <Link to={`/my-course/${_item}`}>
-                  <CourseNameById id={_item} />
+                  <CourseNameById id={_item} /> <OpenInNewIcon />
                 </Link>
               </li>
             );

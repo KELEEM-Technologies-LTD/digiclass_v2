@@ -11,8 +11,9 @@ import { CircularProgress } from "@mui/material";
 import { Services } from "../../../mixing/services";
 import global_variables from "../../../mixing/urls";
 import localforage from "localforage";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
-function AboutAuthor({ instructor, instructor_id, courseid }) {
+function AboutAuthor({ instructor, instructor_id }) {
   const { isLogged } = useContext(GeneralContext);
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
@@ -76,6 +77,9 @@ function AboutAuthor({ instructor, instructor_id, courseid }) {
                 <div className="ml-4">
                   <p className="font-bold text-lg text-black">
                     {first_name + " " + last_name}
+                    <Link to={`/instructor/${instructor_id}`}>
+                      <OpenInNewIcon />
+                    </Link>
                   </p>
                   <div className="flex justify-between">
                     <p>{user_role}</p>

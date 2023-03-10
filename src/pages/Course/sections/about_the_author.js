@@ -1,21 +1,10 @@
-import { MessageOutlined } from "@mui/icons-material";
-import React, { useContext, Fragment, useRef, useState } from "react";
+import React, { useContext, Fragment, useRef } from "react";
 import { Link } from "react-router-dom";
 import GeneralContext from "../../../context/general_context";
-import { Dialog, Transition } from "@headlessui/react";
-import {
-  displaySuccMsg,
-  displayWarningMsg,
-} from "../../../component/alerts/alerts";
-import { CircularProgress } from "@mui/material";
-import { Services } from "../../../mixing/services";
-import global_variables from "../../../mixing/urls";
-import localforage from "localforage";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
-function AboutAuthor({ instructor, instructor_id, courseid }) {
+function AboutAuthor({ instructor, course_detail }) {
   const { isLogged } = useContext(GeneralContext);
-
-  const cancelButtonRef = useRef(null);
 
   const { first_name, last_name, resume, user_role } = instructor;
 
@@ -34,7 +23,10 @@ function AboutAuthor({ instructor, instructor_id, courseid }) {
                 </div>
                 <div className="ml-4">
                   <p className="font-bold text-lg text-black">
-                    {first_name + " " + last_name}
+                    {first_name + " " + last_name}{" "}
+                    <Link to={`/instructor/${course_detail.instructor}`}>
+                      <OpenInNewIcon />
+                    </Link>
                   </p>
                   <div className="flex justify-between">
                     <p>{user_role}</p>

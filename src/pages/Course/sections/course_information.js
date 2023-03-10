@@ -5,7 +5,7 @@ import Reviews from "./reviews";
 import GeneralContext from "../../../context/general_context";
 import { Link } from "react-router-dom";
 
-const CourseInformation = ({ course }) => {
+const CourseInformation = ({ course, completed }) => {
   const { isLogged } = useContext(GeneralContext);
 
   const { about, skill_level, language, caption, description } = course;
@@ -63,12 +63,14 @@ const CourseInformation = ({ course }) => {
         <p className="text-lg">Certificates</p>
         <div className="">
           <p>get Digiclass certificate by completing entire course</p>
-          <button
-            //   onClick={() => history.push("/certificate")}
-            className="border border-secondary-600 px-6 py-2 mt-6 rounded-5"
-          >
-            <p>Digiclass certificate</p>
-          </button>
+          {completed ? (
+            <button
+              //   onClick={() => history.push("/certificate")}
+              className="border border-secondary-600 px-6 py-2 mt-6 rounded-5"
+            >
+              <p>Digiclass certificate</p>
+            </button>
+          ) : null}
         </div>
       </div>
       <hr />
@@ -83,7 +85,6 @@ const CourseInformation = ({ course }) => {
       </div>
 
       <hr />
-      
     </>
   );
 };

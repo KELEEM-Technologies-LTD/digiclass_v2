@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const AddSection = () => {
   return (
-    <div className="md:flex md:justify-between md:flex-row-reverse  py-4 md:px-16  md:mt-4 flex-col">
+    <div className="md:flex md:justify-between md:flex-row-reverse  py-4 md:px-16  md:mt-4 flex-col bg-[white]">
       <div className="hidden md:block">
         <div className="">
           <img src="./img/ad.png" alt="bg" className="" />

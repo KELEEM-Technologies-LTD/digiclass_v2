@@ -83,7 +83,9 @@ function CourseCard({ showProgress, item }) {
             <p className="text-primary-600 text-sm">({rating.toFixed(1)})</p>
           </div>
           <div className="flex justify-between items-center">
-            <p className="text-lg font-bold">{formatCedis(price)}</p>
+            <p className="text-md text-[black] font-bold">
+              {formatCedis(price)}
+            </p>
             <p className="text-primary-600 text-sm line-through">
               {formatCedis(price * 1.35)}
             </p>

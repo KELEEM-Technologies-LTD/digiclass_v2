@@ -35,10 +35,13 @@ const MyUserCourseDetail = React.lazy(() =>
 const MyCourseCategory = React.lazy(() =>
   import("./pages/category/course_by_category")
 );
-const MyMessages = React.lazy(() => import("./pages/messages/messages"));
+// const MyMessages = React.lazy(() => import("./pages/messages/messages"));
 const MyhotReload = React.lazy(() => import("./pages/hot_reload"));
 const MyInstructor = React.lazy(() => import("./pages/instructor/instructor"));
 const MyVerify = React.lazy(() => import("./pages/verify_email"));
+const MyMessaging = React.lazy(() => import("./pages/messages/main"));
+const MyMobileMessages = React.lazy(() => import("./pages/messages/mobile"));
+const MyMobileChat = React.lazy(() => import("./pages/messages/mobilechat"));
 
 function App() {
   return (
@@ -49,6 +52,7 @@ function App() {
             <Routes>
               {/* Public Routes  */}
               <Route path="/" exact element={<MyHome />} />
+              <Route path="/testpage" exact element={<MyMessaging />} />
               <Route path="/*" exact element={<MyEror404 />} />
               <Route path="/signup" exact element={<MySignup />} />
               <Route path="/login" exact element={<MySignin />} />
@@ -98,7 +102,17 @@ function App() {
                   path="/my-course/:courseid"
                   element={<MyUserCourseDetail />}
                 />
-                <Route exact path="/messages" element={<MyMessages />} />
+                <Route exact path="/messages" element={<MyMessaging />} />
+                <Route
+                  exact
+                  path="/messages/mobile"
+                  element={<MyMobileMessages />}
+                />
+                <Route
+                  exact
+                  path="/messages/mobile/:chatid"
+                  element={<MyMobileChat />}
+                />
               </Route>
             </Routes>
           </Router>

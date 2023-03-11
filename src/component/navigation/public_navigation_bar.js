@@ -254,7 +254,7 @@ const NavigationBar = () => {
                           </span>
                         </Link>
                         <Link
-                          to="/messages"
+                          to="/messages/mobile"
                           className="-m-3 flex items-center rounded-md p-3 hover:bg-primary-50"
                         >
                           <EnvelopeIcon
@@ -262,7 +262,7 @@ const NavigationBar = () => {
                             aria-hidden="true"
                           />
                           <span className="ml-3 text-base font-medium text-primary-900">
-                            Messages
+                            My Messages
                           </span>
                         </Link>
                         <Link

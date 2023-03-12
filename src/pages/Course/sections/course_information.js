@@ -1,9 +1,7 @@
 import { useContext } from "react";
 import SkillCard from "../components/skill_card";
 import "react-loading-skeleton/dist/skeleton.css";
-import Reviews from "./reviews";
 import GeneralContext from "../../../context/general_context";
-import { Link } from "react-router-dom";
 
 const CourseInformation = ({ course, completed }) => {
   const { isLogged } = useContext(GeneralContext);

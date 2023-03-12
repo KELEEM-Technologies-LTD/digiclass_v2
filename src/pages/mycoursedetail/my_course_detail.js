@@ -18,6 +18,7 @@ import Reviews from "../Course/sections/reviews";
 import CircularProgress from "@mui/material/CircularProgress";
 import { duration } from "moment";
 import SectionStatus from "./section_status";
+import is_course_complete from "./sections/is_course_completed";
 
 const MyCourseDetail = () => {
   const navigate = useNavigate();
@@ -115,15 +116,18 @@ const MyCourseDetail = () => {
   };
 
   const playerRef = useRef(null);
-  const handleJumpToTime = (time) => {
-    const timetosecs = time * 60;
-    playerRef.current.seekTo(timetosecs); // jump to 1 minute (60 seconds) in the video
-  };
 
   useEffect(() => {
     getCourseDetail();
     getVideos();
+    check();
   }, []);
+
+  const [completed, setCompleted] = useState(false);
+  const check = async () => {
+    const result = await is_course_complete(courseid);
+    setCompleted(result);
+  };
 
   const [playing, setPlaying] = useState(true);
 
@@ -271,7 +275,10 @@ const MyCourseDetail = () => {
                 <div className="md:px-24 px-4 py-4">
                   <Tab.Panels>
                     <Tab.Panel>
-                      <CourseInformation course={course} />
+                      <CourseInformation
+                        course={course}
+                        completed={completed}
+                      />
                     </Tab.Panel>
                     <Tab.Panel>
                       <div className="py-3 item-center flex flex-col justify-center">

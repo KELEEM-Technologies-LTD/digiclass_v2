@@ -3,76 +3,49 @@ import { Link } from "react-router-dom";
 const JoinDigiClass = () => {
   return (
     <>
-      <div className="flex flex-col md:flex-row items-center justify-between bg-gray-100 rounded-lg shadow-lg p-8">
-        <div className="md:w-1/2 md:pr-8">
-          <h3 className="text-4xl font-bold mb-4">
-            Take the next step toward your personal and professional goals with
-            DigiClass.
-          </h3>
-          <p className="text-gray-700 text-lg mb-8">
-            Join now to receive personalized recommendations from the full
-            DigiClass catalog.
-          </p>
-          <Link
-            to="/signup"
-            className="bg-secondary-500 hover:bg-secondary-700 text-white font-bold py-2 px-4 rounded"
-          >
-            Join now
-          </Link>
-        </div>
-        <div className="md:w-1/2 md:mt-0 mt-8 md:ml-20 md:pl-10">
-          <img
-            src="./img/TeachOnDigiClass.jpg"
-            alt="banner"
-            className="w-64 md:bg-none bg-cover bg-center rounded-lg shadow-lg"
-          />
-        </div>
-      </div>
-
-      {/* <div className="md:flex md:justify-between md:flex-row-reverse bg-[white] py-4 md:px-16 mt-10 flex-col">
-        <div className="relative hidden md:block ">
-          <div className="absolute top-0 left-0">
-            <img src="./img/grillbg.svg" alt="bg" />
+      <section class="bg-white dark:bg-primary-900">
+        <div class="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
+          <div class="mr-auto place-self-center lg:col-span-7">
+            <h1 class="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white">
+              Payments tool for software companies
+            </h1>
+            <p class="max-w-2xl mb-6 font-light text-primary-500 lg:mb-8 md:text-lg lg:text-xl dark:text-primary-400">
+              From checkout to global sales tax compliance, companies around the
+              world use Flowbite to simplify their payment stack.
+            </p>
+            <a
+              href="#"
+              class="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900"
+            >
+              Get started
+              <svg
+                class="w-5 h-5 ml-2 -mr-1"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+            </a>
+            <a
+              href="#"
+              class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-primary-900 border border-primary-300 rounded-lg hover:bg-primary-100 focus:ring-4 focus:ring-primary-100 dark:text-white dark:border-primary-700 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+            >
+              Speak to Sales
+            </a>
           </div>
-
-          <div className="relative z-10">
-            <img src="./img/TeachOnDigiClass.png" alt="bg" className="w-64" />
-          </div>
-
-          <div className="absolute bottom-0 right-0 z-0 ">
-            <img src="./img/grillbg.svg" alt="bg" />
-          </div>
-        </div>
-
-        <div className="block md:hidden">
-          <div className="relative w-full">
+          <div class="hidden lg:mt-0 lg:col-span-5 lg:flex">
             <img
-              src="./img/TeachOnDigiClass.jpg"
-              alt="bg"
-              className="block md:hidden w-full"
+              src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/hero/phone-mockup.png"
+              alt="mockup"
             />
           </div>
         </div>
-
-        <div className="flex flex-col justify-center px-4 py-8 md-py-0 md:px-0">
-          <p className="font-bold md:text-3xl text-2xl md:w-8/12 text-dark">
-            Take the next step toward your personal and professional goals with
-            DigiClass.
-          </p>
-          <div className="mt-2 ">
-            <p className="leading-2 text-2xl md:w-7/12">
-              Join now to receive personalized recommendations from the full
-              DigiClass catalog.
-            </p>
-          </div>
-          <Link
-            to="/signup"
-            className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-2 border border-transparent bg-secondary-600 px-10 py-4 text-base font-medium text-white shadow-xl w-10 hover:bg-secondary-800"
-          >
-            Join Now
-          </Link>
-        </div>
-      </div> */}
+      </section>
     </>
   );
 };

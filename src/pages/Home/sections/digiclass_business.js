@@ -48,7 +48,66 @@ const DigiClassBusiness = () => {
         </div>
       </div> */}
 
-      <section className="px-20">
+      <section class="bg-white dark:bg-primary-800">
+        <div class="container flex flex-col px-6 py-10 mx-auto space-y-6 lg:h-[32rem] lg:py-16 lg:flex-row lg:items-center">
+          <div class="w-full lg:w-1/2">
+            <div class="lg:max-w-lg">
+              <h1 class="text-3xl font-bold tracking-wide text-primary-800 dark:text-white lg:text-5xl">
+                Upskill your team with DigiClass Business
+              </h1>
+
+              <div class="mt-8 space-y-5">
+                <p class="flex items-center -mx-2 text-primary-700 dark:text-primary-200">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-6 h-6 mx-2 text-secondary-500"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+
+                  <span class="mx-2">
+                    <span className="font-bold text-secondary-500">87%</span> of
+                    people learning for professional development
+                    <span className="font-bold text-secondary-500">
+                      {" "}
+                      report career benefits
+                    </span>{" "}
+                    like getting a promotion, a raise, or starting a new career
+                  </span>
+                </p>
+              </div>
+            </div>
+
+            <div class="w-full mt-8 bg-transparent border rounded-md lg:max-w-sm dark:border-primary-700 focus-within:border-secondary-400 focus-within:ring focus-within:ring-secondary-300 dark:focus-within:border-secondary-400 focus-within:ring-opacity-40">
+              <Link
+                to="/signup"
+                target="_blank"
+                className="bg-[#2a2b2b] hover:bg-[black] text-[white] font-bold py-4 px-8 mr-4 text-lg"
+              >
+                Get DigiClass Business
+              </Link>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-center w-full h-96 lg:w-1/2">
+            <img
+              class="object-cover w-full h-full mx-auto rounded-md lg:max-w-2xl"
+              src="./img/Digiclassbusiness.jpg"
+              alt="glasses photo"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* <section className="px-20">
         <div className="max-w-screen-xl mx-auto px-20 py-8 md:py-16 flex flex-col md:flex-row items-center">
           <div className="md:w-1/2 text-center md:text-left">
             <img src="./img/loading.gif" alt="DigiClassBusiness" />
@@ -91,7 +150,7 @@ const DigiClassBusiness = () => {
             />
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* <section data-purpose="teach-on-udemy" className="bg-[gray] py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

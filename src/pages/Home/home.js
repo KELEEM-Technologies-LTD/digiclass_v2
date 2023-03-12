@@ -24,7 +24,7 @@ const Home = () => {
       {isLogged ? <StartLearningRow /> : null}
       <AddSection />
       <DigiClassBusiness />
-      <JoinDigiClass />
+      {/* <JoinDigiClass /> */}
       {isLogged ? (
         <></>
       ) : (

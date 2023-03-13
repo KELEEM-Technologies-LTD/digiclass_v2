@@ -13,7 +13,7 @@ const HomeBanner = () => {
       <div className="flex flex-col justify-center md:px-0 md:mt-0 mt-4 px-5   ">
         <div className="">
           <p
-            className={` font-bold md:text-4xl lg:text-5xl text-4xl  text-dark ${
+            className={`text-3xl font-bold tracking-wide text-primary-800 dark:text-white lg:text-5xl ${
               isLogged ? "font-serif" : ""
             }`}
             style={{ lineHeight: "1.2em" }}
@@ -23,9 +23,7 @@ const HomeBanner = () => {
               : "Anyone, anywhere, at anytime can learn to become"}
           </p>
 
-          <p
-            className={`md:mt-4 mt-2 text-2xl ${isLogged ? "font-serif" : ""}`}
-          >
+          <p className={`md:mt-4 mt-2 text-xl ${isLogged ? "font-serif" : ""}`}>
             {isLogged
               ? "Get courses from GHC 15.99 and stay ahead"
               : "Anywhere anytime. Enjoy Learning"}

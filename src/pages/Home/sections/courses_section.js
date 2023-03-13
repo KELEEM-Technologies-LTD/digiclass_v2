@@ -53,7 +53,7 @@ const CourseSection = () => {
   return (
     <div className="bg-primary-100 py-10">
       <div className=" flex-col  flex px-6 py-4 md:px-16    ">
-        <p className="font-bold md:text-3xl text-xl  text-dark">
+        <p className="font-bold md:text-3xl text-2xl tracking-wide text-primary-800">
           <>
             {isLogged
               ? "Topics recomended for you "
@@ -61,7 +61,7 @@ const CourseSection = () => {
           </>
         </p>
         <div
-          className=" hidden md:flex md:justify-between border-b-1 border-primary-400 "
+          className="hidden md:flex md:justify-between border-b-1 border-primary-400"
           style={{ borderBottomWidth: "1px" }}
         >
           <div className="flex justify-between">
@@ -97,9 +97,9 @@ const CourseSection = () => {
                 getCourses(item.category_id);
               }}
               style={{ borderWidth: "1px" }}
-              className={` text-primary-600 mr-4 mt-1 flex justify-center items-center bg-primary-200 px-5 py-2 border-primary-500 rounded-full ${
+              className={`text-[black] mr-4 mt-1 flex justify-center items-center bg-primary-200 px-5 py-2 border-primary-500 rounded-full ${
                 selected === item.category_id
-                  ? "bg-secondary-800 text-white border-primary-100 border-0"
+                  ? "bg-secondary-500 text-[#FFFFFF] border-primary-200 border-0"
                   : ""
               } `}
             >

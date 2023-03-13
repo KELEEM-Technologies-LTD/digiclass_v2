@@ -203,9 +203,9 @@ const NavigationBar = () => {
             <div className="divide-y-2 divide-primary-50 rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
               <div className="px-5 pt-5 pb-6">
                 <div className="flex items-center justify-between">
-                  <div>
+                  <Link to="/">
                     <img className="h-8 w-auto" src={Logo} alt="Your Company" />
-                  </div>
+                  </Link>
                   <div className="-mr-2">
                     <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-primary-400 hover:bg-primary-100 hover:text-primary-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-secondary-500">
                       <span className="sr-only">Close menu</span>
@@ -266,7 +266,7 @@ const NavigationBar = () => {
                           </span>
                         </Link>
                         <Link
-                          to="/profile?tabindex=1"
+                          to="/profile?tabindex=2"
                           className="-m-3 flex items-center rounded-md p-3 hover:bg-primary-50"
                         >
                           <CreditCardIcon
@@ -274,7 +274,7 @@ const NavigationBar = () => {
                             aria-hidden="true"
                           />
                           <span className="ml-3 text-base font-medium text-primary-900">
-                            Payment Methods
+                            Transactions
                           </span>
                         </Link>
                         <Link

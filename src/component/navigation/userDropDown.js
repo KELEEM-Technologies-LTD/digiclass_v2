@@ -164,22 +164,22 @@ const UserDropDown = () => {
                                     </p>
                                   </Link>
                                 </li>
-                                <li className="mt-5">
+                                {/* <li className="mt-5">
                                   <Link to="/profile?tabindex=1">
                                     <p className="text-primary-500 hover:text-primary-900">
                                       Payment Methods
                                     </p>
                                   </Link>
-                                </li>
+                                </li> */}
                                 <li className="mt-5">
-                                  <Link to="/profile?tabindex=2">
+                                  <Link to="/profile?tabindex=1">
                                     <p className="text-primary-500 hover:text-primary-900">
                                       Notifications
                                     </p>
                                   </Link>
                                 </li>
                                 <li className="mt-5">
-                                  <Link to="/profile?tabindex=3">
+                                  <Link to="/profile?tabindex=2">
                                     <p className="text-primary-500 hover:text-primary-900">
                                       Transactions
                                     </p>

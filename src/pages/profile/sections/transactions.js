@@ -41,20 +41,17 @@ const Transactions = ({ user }) => {
   const columns = [
     {
       name: "#",
-      cell: (row, index) => index + 1,
+      selector: (row, index) => index + 1,
       width: "5%",
     },
     {
       name: "Amount",
-      cell: (row) => formatCedis(row.amount),
-    },
-    {
-      name: "Transaction Ref",
-      cell: (row) => row.reference,
+      selector: (row) => formatCedis(row.amount),
+      width: "15%",
     },
     {
       name: "Course(s) purchase",
-      cell: (row) => (
+      selector: (row) => (
         <ul>
           {row.items?.map((_item, index) => {
             return (
@@ -67,15 +64,21 @@ const Transactions = ({ user }) => {
           })}
         </ul>
       ),
-      width: "30%",
+      width: "35%",
+    },
+    {
+      name: "Transaction Ref",
+      selector: (row) => row.reference,
+      width: "15%",
     },
     {
       name: "Date",
-      cell: (row) => moment(row.add_date).format("Do MMM YYYY"),
+      selector: (row) => moment(row.add_date).format("Do MMM YYYY"),
+      width: "15%",
     },
     {
       name: "status",
-      cell: (row) =>
+      selector: (row) =>
         row.status ? (
           "Completed"
         ) : (
@@ -86,6 +89,7 @@ const Transactions = ({ user }) => {
             verify
           </p>
         ),
+      width: "15",
     },
   ];
 
